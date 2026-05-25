@@ -241,11 +241,11 @@
 - [ ] ETL 加 logging
 - [ ] fetcher 加 retry
 
-### Phase 7：測試覆蓋 ⬜
-- [ ] normalizer unit tests
-- [ ] validator unit tests
-- [ ] ETL integration test
-- [ ] CI 加入 test step
+### Phase 7：測試覆蓋 ✅
+- [x] normalizer unit tests (33 tests)
+- [x] validator unit tests
+- [x] ETL integration test (pipeline + retry)
+- [x] CI 加入 test step
 
 ### Phase 8：功能擴展 ⬜
 - [ ] STATCloud API 串接

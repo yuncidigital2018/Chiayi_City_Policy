@@ -6,3 +6,4 @@ openpyxl>=3.1  # for XLS files
 jinja2>=3.1    # for Markdown generation
 click>=8.1     # CLI
 duckdb>=1.0    # optional: query processed data
+pytest>=8.0    # testing
