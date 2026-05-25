@@ -205,29 +205,49 @@
 - [x] SDD 文件
 - [x] 資料來源設定檔
 
-### Phase 1：資料源設定與 ETL 架構
-- [ ] 整理所有資料源設定
-- [ ] 設計 ETL 腳本骨架
-- [ ] Data Fetcher 模組
-- [ ] Data Normalizer 模組
+### Phase 1：資料源設定與 ETL 架構 ✅
+- [x] 整理所有資料源設定
+- [x] 設計 ETL 腳本骨架
+- [x] Data Fetcher 模組
+- [x] Data Normalizer 模組
 
-### Phase 2：資料抓取與清洗
-- [ ] 實作各資料源的 fetcher
-- [ ] 欄位標準化與統一 schema
-- [ ] 產出 processed CSV
+### Phase 2：資料抓取與清洗 ✅
+- [x] 實作各資料源的 fetcher
+- [x] 欄位標準化與統一 schema
+- [x] 產出 processed CSV
 
-### Phase 3：Markdown 知識庫
-- [ ] Jinja2 模板設計
-- [ ] Markdown Generator
-- [ ] 內容驗證
+### Phase 3：Markdown 知識庫 ✅
+- [x] Jinja2 模板設計
+- [x] Markdown Generator
+- [x] 內容驗證
 
-### Phase 4：互動式網站
-- [ ] 前端框架搭建
-- [ ] 儀表板頁面
-- [ ] 敘事頁
-- [ ] RWD 優化
+### Phase 4：互動式網站 ✅
+- [x] 前端框架搭建
+- [x] 儀表板頁面
+- [x] 敘事頁
+- [x] RWD 優化
 
-### Phase 5：排程與部署
-- [ ] CI/CD pipeline
-- [ ] crontab 設定
-- [ ] 部署設定
+### Phase 5：排程與部署 ✅
+- [x] CI/CD pipeline
+- [x] GitHub Actions monthly cron
+- [x] Netlify 部署設定
+
+### Phase 6：Bug 修復 & 品質強化 🔄
+- [x] 修復 Narratives.jsx import bug
+- [x] 修正 index.html title
+- [x] 補上 favicon.svg
+- [x] 更新 SDD checkbox
+- [ ] 新增 etl/validator.py
+- [ ] ETL 加 logging
+- [ ] fetcher 加 retry
+
+### Phase 7：測試覆蓋 ⬜
+- [ ] normalizer unit tests
+- [ ] validator unit tests
+- [ ] ETL integration test
+- [ ] CI 加入 test step
+
+### Phase 8：功能擴展 ⬜
+- [ ] STATCloud API 串接
+- [ ] 前端年份/區域篩選器
+- [ ] 多縣市架構抽象化

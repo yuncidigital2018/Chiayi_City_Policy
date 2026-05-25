@@ -19,6 +19,7 @@ from etl.fetcher import fetch_all
 from etl.normalizer import run_normalization
 from etl.fund_normalizer import run_fund_normalization
 from etl.md_generator import run_markdown_generation
+from etl.validator import validate_all
 
 # Setup logging
 logging.basicConfig(
@@ -124,6 +125,28 @@ def run_pipeline(force: bool, skip_fetch: bool, skip_normalize: bool, skip_gener
         logger.info("=== Phase 3: Generate ===")
         md_paths = run_markdown_generation(all_processed)
         logger.info(f"Generate: {len(md_paths)} Markdown files created")
+
+    # Validate
+    logger.info("=== Phase 4: Validate ===")
+    val_results = validate_all()
+    val_failed = sum(1 for r in val_results if not r.passed)
+    if val_failed:
+        logger.warning(f"Validation: {val_failed} table(s) have issues")
+    else:
+        logger.info("Validation: all tables passed ✅")
+
+
+@cli.command()
+def validate():
+    """Validate processed data quality."""
+    logger.info("Running data validation...")
+    results = validate_all()
+    failed = sum(1 for r in results if not r.passed)
+    if failed:
+        logger.error(f"Validation failed for {failed} table(s)")
+        sys.exit(1)
+    else:
+        logger.info("All validations passed ✅")
 
 
 @cli.command()

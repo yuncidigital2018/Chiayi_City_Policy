@@ -1,4 +1,4 @@
-import { useData, formatNumber, formatChange } from '../hooks/useData'
+import { useData, formatNumber, formatChange, formatBudget } from '../hooks/useData'
 
 export default function Narratives() {
   const { data: population } = useData('population_annual.json')

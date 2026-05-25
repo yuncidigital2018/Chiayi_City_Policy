@@ -90,8 +90,45 @@ def fetch_source(source: dict[str, Any], force: bool = False) -> Path | None:
         return None
 
 
-def _fetch_open_chiayi_api(source: dict) -> str | None:
-    """Fetch data from Open Chiayi API using oid + rid."""
+def _request_with_retry(
+    source_id: str,
+    max_retries: int,
+    method: str,
+    url: str,
+    **kwargs,
+) -> str | None:
+    """HTTP request with exponential backoff retry."""
+    import time as _time
+
+    last_error = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            resp = requests.request(
+                method, url,
+                headers={"User-Agent": USER_AGENT},
+                timeout=kwargs.pop("timeout", 30),
+                verify=False,
+                **kwargs,
+            )
+            resp.raise_for_status()
+            text = resp.text.strip()
+            if not text or len(text) < 10:
+                logger.warning(f"{source_id}: empty response (attempt {attempt})")
+                return None
+            return text
+        except requests.RequestException as e:
+            last_error = e
+            if attempt < max_retries:
+                wait = 2 ** attempt
+                logger.warning(f"{source_id}: attempt {attempt} failed ({e}), retry in {wait}s...")
+                _time.sleep(wait)
+
+    logger.error(f"{source_id}: all {max_retries} attempts failed: {last_error}")
+    return None
+
+
+def _fetch_open_chiayi_api(source: dict, max_retries: int = 3) -> str | None:
+    """Fetch data from Open Chiayi API using oid + rid with retry."""
     oid = source.get("oid", "")
     rid = source.get("rid", "")
 
@@ -100,56 +137,33 @@ def _fetch_open_chiayi_api(source: dict) -> str | None:
         return None
 
     params = {"oid": oid, "rid": rid}
-    resp = requests.get(
-        OPEN_CHIAYI_API,
-        params=params,
-        headers={"User-Agent": USER_AGENT},
-        timeout=30,
-        verify=False,  # Government sites have bad SSL certs
+    return _request_with_retry(
+        source["id"], max_retries,
+        "GET", OPEN_CHIAYI_API, params=params,
     )
-    resp.raise_for_status()
-
-    # Open Chiayi returns CSV text directly
-    text = resp.text.strip()
-    if not text or len(text) < 10:
-        return None
-
-    return text
 
 
 def _fetch_download(source: dict) -> str | None:
-    """Direct file download (CSV/XML/XLS)."""
+    """Direct file download (CSV/XML/XLS) with retry."""
     url = source.get("url", "")
     if not url:
         logger.warning(f"No URL for source {source['id']}")
         return None
-
-    resp = requests.get(
-        url,
-        headers={"User-Agent": USER_AGENT},
-        timeout=60,
-        verify=False,
-    )
-    resp.raise_for_status()
-    return resp.text
+    return _request_with_retry(source["id"], 3, "GET", url, timeout=60)
 
 
 def _fetch_and_parse_html(source: dict) -> str | None:
-    """Fetch and parse HTML table data (for 戶政服務網 etc.)."""
+    """Fetch and parse HTML table data with retry."""
     url = source.get("url", "")
     if not url:
         logger.warning(f"No URL for source {source['id']}")
         return None
 
-    resp = requests.get(
-        url,
-        headers={"User-Agent": USER_AGENT},
-        timeout=60,
-        verify=False,
-    )
-    resp.raise_for_status()
+    text = _request_with_retry(source["id"], 3, "GET", url, timeout=60)
+    if not text:
+        return None
 
-    tree = html.fromstring(resp.text)
+    tree = html.fromstring(text)
     tables = tree.xpath("//table")
     if not tables:
         logger.warning(f"No tables found at {url}")
