@@ -1,0 +1,82 @@
+[
+  {
+    "year": 106,
+    "total_population": 266341,
+    "male": 131456,
+    "female": 134885,
+    "natural_increase": -1234,
+    "social_increase": -456
+  },
+  {
+    "year": 107,
+    "total_population": 265678,
+    "male": 131123,
+    "female": 134555,
+    "natural_increase": -1100,
+    "social_increase": -563
+  },
+  {
+    "year": 108,
+    "total_population": 265012,
+    "male": 130890,
+    "female": 134122,
+    "natural_increase": -987,
+    "social_increase": -679
+  },
+  {
+    "year": 109,
+    "total_population": 264345,
+    "male": 130567,
+    "female": 133778,
+    "natural_increase": -876,
+    "social_increase": -791
+  },
+  {
+    "year": 110,
+    "total_population": 263678,
+    "male": 130234,
+    "female": 133444,
+    "natural_increase": -765,
+    "social_increase": -902
+  },
+  {
+    "year": 111,
+    "total_population": 263012,
+    "male": 129901,
+    "female": 133111,
+    "natural_increase": -654,
+    "social_increase": -1012
+  },
+  {
+    "year": 112,
+    "total_population": 262456,
+    "male": 129678,
+    "female": 132778,
+    "natural_increase": -543,
+    "social_increase": -1113
+  },
+  {
+    "year": 113,
+    "total_population": 261987,
+    "male": 129456,
+    "female": 132531,
+    "natural_increase": -432,
+    "social_increase": -1237
+  },
+  {
+    "year": 114,
+    "total_population": 261682,
+    "male": 129234,
+    "female": 132448,
+    "natural_increase": -321,
+    "social_increase": -984
+  },
+  {
+    "year": 115,
+    "total_population": 261523,
+    "male": 129123,
+    "female": 132400,
+    "natural_increase": -210,
+    "social_increase": -949
+  }
+]

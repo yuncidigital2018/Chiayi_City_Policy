@@ -1,0 +1,42 @@
+[
+  {
+    "fiscal_year": 115,
+    "function_category": "一般政務支出",
+    "amount": 4119924
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "教育科學文化支出",
+    "amount": 7473982
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "經濟發展支出",
+    "amount": 2888998
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "社會福利支出",
+    "amount": 3591575
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "社區發展及環境保護支出",
+    "amount": 1220254
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "退休撫卹支出",
+    "amount": 1396167
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "債務支出",
+    "amount": 7100
+  },
+  {
+    "fiscal_year": 115,
+    "function_category": "補助及其他支出",
+    "amount": 427000
+  }
+]

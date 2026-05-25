@@ -1,0 +1,42 @@
+[
+  {
+    "fiscal_year": 115,
+    "source_category": "稅課收入",
+    "amount": 4500000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "罰款及賠償收入",
+    "amount": 80000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "規費收入",
+    "amount": 150000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "財產收入",
+    "amount": 200000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "營業盈餘及事業收入",
+    "amount": 50000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "補助收入",
+    "amount": 3500000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "捐獻及贈與收入",
+    "amount": 10000
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "其他收入",
+    "amount": 120000
+  }
+]
