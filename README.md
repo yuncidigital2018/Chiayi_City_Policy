@@ -70,10 +70,36 @@ python -m etl.main run --force
 
 - [x] Phase 0: 專案初始化
 - [x] Phase 1: 資料源設定與 ETL 架構
-- [ ] Phase 2: 資料抓取與清洗（需填入 OID 後執行）
-- [ ] Phase 3: Markdown 知識庫
-- [ ] Phase 4: 互動式網站
-- [ ] Phase 5: 排程與部署
+- [x] Phase 2: 資料抓取與清洗（真實預算資料 + 人口樣本）
+- [x] Phase 3: Markdown 知識庫（4 份報告自動生成）
+- [x] Phase 4: 互動式網站（Vite + React + Chart.js）
+- [x] Phase 5: GitHub Actions 排程 + Netlify 部署設定
+
+## 部署
+
+### 前端（Netlify）
+
+1. 在 [Netlify](https://app.netlify.com) 登入 GitHub
+2. "Add new site" → "Import an existing project" → 選擇 `Chiayi_City_Policy`
+3. 設定：
+   - Base directory: `web`
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+4. 或直接使用 `netlify.toml`（已包含在 repo 中）
+
+每次 push 到 main 會自動重新 build + deploy。
+
+### 資料更新
+
+```bash
+# 本地執行完整 pipeline
+bash scripts/update_all.sh
+
+# 強制重新抓取
+bash scripts/update_all.sh --force
+```
+
+GitHub Actions 每月 1 日自動執行。
 
 ## License
 
