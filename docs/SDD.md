@@ -97,6 +97,137 @@
      - 儀表板：圖表與互動篩選。
      - 敘事頁：引用 Markdown 片段＋圖表。
 
-### 3.2 技術建議（可依環境微調）
+### 3.2 技術建議
 
-（待補充）
+| 層 | 技術 | 說明 |
+|----|------|------|
+| ETL & Markdown 生成 | Python (pandas) | 優先 Python，處理資料清洗與 Markdown 產出 |
+| 前端（靜態） | Astro / Next.js (SSG) + React | 偏靜態內容網站 |
+| 前端（儀表板） | Vite + React | 偏單頁儀表板 |
+| 圖表 | Chart.js / Recharts | 視框架選擇 |
+| 部署 | Vercel / Netlify / 自家靜態伺服器 | CI/CD 自動 build |
+
+---
+
+## 4. SDD：Software Design Description
+
+### 4.1 功能需求（FR）
+
+| ID | 需求 | 說明 |
+|----|------|------|
+| FR-1 | 資料抓取與更新 | 從 Open Chiayi、data.gov.tw、戶政服務網、STATCloud 自動抓取指定資料集 |
+| FR-2 | ETL 更新 | 支援重新執行（每日或每週） |
+| FR-3 | 資料清洗彙整 | 將不同年度、不同來源資料整併成統一 schema |
+| FR-4 | 邏輯表產出 | 產出 population_annual, population_district_village_monthly, population_structure, budget_revenue_by_source, budget_expenditure_by_function, budget_expenditure_by_agency |
+| FR-5 | Markdown 生成 | 依章節架構自動產出 Markdown 檔案（含表格與關鍵指標） |
+| FR-6 | 前端可解析 | Markdown 檔案要能被前端框架解析 |
+| FR-7 | 互動儀表板 | 可選年份／區／主題的人口與預算儀表板 |
+| FR-8 | 敘事頁 | 用 Markdown 文字解釋趨勢與城市定位 |
+| FR-9 | RWD | 支援桌機與手機 |
+| FR-10 | 排程更新 | 定期執行資料更新、Markdown 生成與前端重新 build/deploy |
+
+### 4.2 非功能需求（NFR）
+
+| ID | 需求 | 說明 |
+|----|------|------|
+| NFR-1 | 快取 fallback | API 失敗時採用上次成功的快取 |
+| NFR-2 | 效能 | ETL + frontend build 在 10 分鐘內完成 |
+| NFR-3 | 載入時間 | 前端首屏 3 秒內 |
+| NFR-4 | 可維護性 | 程式碼可讀性高，適合後續維護 |
+
+### 4.3 系統模組與責任
+
+1. **DataSource Config 模組** — `config/datasources.yml`
+2. **Data Fetcher 模組** — 讀取設定、HTTP 下載、儲存到 `data/raw/`
+3. **Data Normalizer / ETL 模組** — 欄位對應、型別轉換、輸出到 `data/processed/`
+4. **Markdown Generator 模組** — Jinja2 模板生成 Markdown 到 `content/`
+5. **Web App / Frontend 模組** — 從 processed JSON 讀取資料，提供 `/`、`/population`、`/budget`、`/narratives`
+6. **Scheduler / DevOps 模組** — CI/CD 或 crontab 觸發 pipeline
+
+### 4.4 資料模型（簡化）
+
+#### PopulationAnnual
+| 欄位 | 類型 | 說明 |
+|------|------|------|
+| year | int | 年度 |
+| total_population | int | 總人口 |
+| male | int | 男性 |
+| female | int | 女性 |
+| natural_increase | int | 自然增減 |
+| social_increase | int | 社會增減 |
+
+#### PopulationVillageMonthly
+| 欄位 | 類型 | 說明 |
+|------|------|------|
+| year | int | 年度 |
+| month | int | 月份 |
+| district | str | 東區/西區 |
+| village | str | 里名 |
+| households | int | 戶數 |
+| population | int | 人口數 |
+
+#### PopulationStructure
+| 欄位 | 類型 | 說明 |
+|------|------|------|
+| year | int | 年度 |
+| district | str | 區域 |
+| age_group | str | 0-14, 15-64, 65+ |
+| population | int | 人口數 |
+| low_income_households | int | 中低收入戶數 |
+
+#### BudgetRevenueBySource
+| 欄位 | 類型 | 說明 |
+|------|------|------|
+| fiscal_year | int | 會計年度 |
+| source_category | str | 地方稅、統籌分配款、補助款等 |
+| amount | int | 金額（千元） |
+
+#### BudgetExpenditureByFunction
+| 欄位 | 類型 | 說明 |
+|------|------|------|
+| fiscal_year | int | 會計年度 |
+| function_category | str | 教育、社福、建設等 |
+| amount | int | 金額（千元） |
+
+#### BudgetExpenditureByAgency
+| 欄位 | 類型 | 說明 |
+|------|------|------|
+| fiscal_year | int | 會計年度 |
+| agency_name | str | 機關名稱 |
+| amount | int | 金額（千元） |
+
+---
+
+## 5. 開發分階段任務
+
+### Phase 0：專案初始化 ✅
+- [x] 建立 repo 與專案骨架
+- [x] SDD 文件
+- [x] 資料來源設定檔
+
+### Phase 1：資料源設定與 ETL 架構
+- [ ] 整理所有資料源設定
+- [ ] 設計 ETL 腳本骨架
+- [ ] Data Fetcher 模組
+- [ ] Data Normalizer 模組
+
+### Phase 2：資料抓取與清洗
+- [ ] 實作各資料源的 fetcher
+- [ ] 欄位標準化與統一 schema
+- [ ] 產出 processed CSV
+
+### Phase 3：Markdown 知識庫
+- [ ] Jinja2 模板設計
+- [ ] Markdown Generator
+- [ ] 內容驗證
+
+### Phase 4：互動式網站
+- [ ] 前端框架搭建
+- [ ] 儀表板頁面
+- [ ] 敘事頁
+- [ ] RWD 優化
+
+### Phase 5：排程與部署
+- [ ] CI/CD pipeline
+- [ ] crontab 設定
+- [ ] 部署設定

@@ -18,15 +18,41 @@
 │   └── datasources.yml     # 資料來源設定（OID、API、排程）
 ├── data/
 │   ├── raw/                # 原始抓取的資料
-│   └── cleaned/            # 清洗後的 CSV/Parquet
+│   └── processed/          # 清洗後的 CSV
 ├── docs/
 │   └── SDD.md              # 系統設計文件
-├── markdown/
+├── content/
 │   ├── population/         # 人口主題 Markdown
 │   └── budget/             # 預算主題 Markdown
-├── app/                    # 互動式網站
-├── etl/                    # ETL 腳本（待建立）
+├── app/                    # 互動式網站（待開發）
+├── etl/
+│   ├── __init__.py
+│   ├── config_loader.py    # 讀取 datasources.yml
+│   ├── fetcher.py          # 資料抓取模組
+│   ├── normalizer.py       # 資料清洗與標準化
+│   ├── md_generator.py     # Markdown 產生器
+│   └── main.py             # CLI 入口
+├── requirements.txt        # Python 依賴
 └── README.md
+```
+
+## 快速開始
+
+```bash
+# 安裝依賴
+pip install -r requirements.txt
+
+# 完整 pipeline
+python -m etl.main run
+
+# 分步執行
+python -m etl.main fetch          # 抓取原始資料
+python -m etl.main normalize      # 清洗 → processed/
+python -m etl.main generate       # 產生 Markdown → content/
+python -m etl.main status         # 查看目前狀態
+
+# 強制重新抓取
+python -m etl.main run --force
 ```
 
 ## 資料來源
@@ -42,13 +68,12 @@
 
 ## 開發狀態
 
-- [x] 專案初始化
-- [x] SDD 文件
-- [x] 資料來源設定檔
-- [ ] ETL 腳本開發
-- [ ] Markdown 產生器
-- [ ] 互動式網站
-- [ ] 排程更新機制
+- [x] Phase 0: 專案初始化
+- [x] Phase 1: 資料源設定與 ETL 架構
+- [ ] Phase 2: 資料抓取與清洗（需填入 OID 後執行）
+- [ ] Phase 3: Markdown 知識庫
+- [ ] Phase 4: 互動式網站
+- [ ] Phase 5: 排程與部署
 
 ## License
 
