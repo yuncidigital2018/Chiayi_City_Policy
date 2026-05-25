@@ -1,0 +1,212 @@
+[
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境污染防治基金",
+    "item": "基金來源",
+    "amount": 16730,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境污染防治基金",
+    "item": "基金用途",
+    "amount": 16367,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境污染防治基金",
+    "item": "賸餘",
+    "amount": 363,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境污染防治基金",
+    "item": "基金來源",
+    "amount": 15470,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境污染防治基金",
+    "item": "基金用途",
+    "amount": 17764,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市公益彩券盈餘分配基金",
+    "item": "基金來源",
+    "amount": 168942,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市公益彩券盈餘分配基金",
+    "item": "基金用途",
+    "amount": 274524,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市公益彩券盈餘分配基金",
+    "item": "賸餘",
+    "amount": -105582,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市公益彩券盈餘分配基金",
+    "item": "基金來源",
+    "amount": 150719,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市公益彩券盈餘分配基金",
+    "item": "基金用途",
+    "amount": 261369,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市身心障礙者就業基金",
+    "item": "基金來源",
+    "amount": 1673,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市身心障礙者就業基金",
+    "item": "基金用途",
+    "amount": 7035,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市身心障礙者就業基金",
+    "item": "賸餘",
+    "amount": -5362,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市身心障礙者就業基金",
+    "item": "基金來源",
+    "amount": 2090,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市身心障礙者就業基金",
+    "item": "基金用途",
+    "amount": 5870,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市地方教育發展基金",
+    "item": "基金來源",
+    "amount": 4734335,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市地方教育發展基金",
+    "item": "基金用途",
+    "amount": 4819378,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市地方教育發展基金",
+    "item": "賸餘",
+    "amount": -85043,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市地方教育發展基金",
+    "item": "基金來源",
+    "amount": 4704456,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市地方教育發展基金",
+    "item": "基金用途",
+    "amount": 4717102,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境教育基金",
+    "item": "基金來源",
+    "amount": 6496,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境教育基金",
+    "item": "基金用途",
+    "amount": 6689,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境教育基金",
+    "item": "賸餘",
+    "amount": -193,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境教育基金",
+    "item": "基金來源",
+    "amount": 7878,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "嘉義市環境教育基金",
+    "item": "基金用途",
+    "amount": 7460,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "合計",
+    "item": "基金來源",
+    "amount": 4928176,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "合計",
+    "item": "基金用途",
+    "amount": 5123993,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "合計",
+    "item": "賸餘",
+    "amount": -195817,
+    "category": "current"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "合計",
+    "item": "基金來源",
+    "amount": 4880613,
+    "category": "previous"
+  },
+  {
+    "fund_type": "政事型基金",
+    "fund_name": "合計",
+    "item": "基金用途",
+    "amount": 4845835,
+    "category": "previous"
+  }
+]

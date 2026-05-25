@@ -1,0 +1,170 @@
+[
+  {
+    "fund_type": "作業基金",
+    "item": "業務收入",
+    "fund_name": "合計",
+    "amount": 498222
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "投融資業務收入",
+    "fund_name": "合計",
+    "amount": 460000
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "不動產投資收入",
+    "fund_name": "合計",
+    "amount": 460000
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "醫療收入",
+    "fund_name": "合計",
+    "amount": 5002
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "門診醫療收入",
+    "fund_name": "合計",
+    "amount": 4798
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "其他醫療收入",
+    "fund_name": "合計",
+    "amount": 204
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "徵收收入",
+    "fund_name": "合計",
+    "amount": 1200
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "都市計畫變更回饋代金收入",
+    "fund_name": "合計",
+    "amount": 1200
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "其他業務收入",
+    "fund_name": "合計",
+    "amount": 32020
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "其他補助收入",
+    "fund_name": "合計",
+    "amount": 32020
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "業務成本與費用",
+    "fund_name": "合計",
+    "amount": 510958
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "投融資業務成本",
+    "fund_name": "合計",
+    "amount": 460000
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "不動產投資成本",
+    "fund_name": "合計",
+    "amount": 460000
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "醫療成本",
+    "fund_name": "合計",
+    "amount": 5299
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "門診醫療成本",
+    "fund_name": "合計",
+    "amount": 5299
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "管理及總務費用",
+    "fund_name": "合計",
+    "amount": 45659
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "管理費用及總務費用",
+    "fund_name": "合計",
+    "amount": 45659
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "業務賸餘(短絀－ )",
+    "fund_name": "合計",
+    "amount": -12736
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "業務外收入",
+    "fund_name": "合計",
+    "amount": 3189
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "財務收入",
+    "fund_name": "合計",
+    "amount": 2216
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "利息收入",
+    "fund_name": "合計",
+    "amount": 2216
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "其他業務外收入",
+    "fund_name": "合計",
+    "amount": 973
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "雜項收入",
+    "fund_name": "合計",
+    "amount": 973
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "業務外費用",
+    "fund_name": "合計",
+    "amount": 428
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "其他業務外費用",
+    "fund_name": "合計",
+    "amount": 428
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "雜項費用",
+    "fund_name": "合計",
+    "amount": 428
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "業務外賸餘(短絀－)",
+    "fund_name": "合計",
+    "amount": 2761
+  },
+  {
+    "fund_type": "作業基金",
+    "item": "本期賸餘(短絀－)",
+    "fund_name": "合計",
+    "amount": -9975
+  }
+]

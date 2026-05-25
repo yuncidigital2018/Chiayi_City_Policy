@@ -87,3 +87,40 @@ sources:
   schedule: yearly
   output: data/raw/fund_affairs.csv
   data_gov_tw_id: 52387
+
+# Historical revenue (106-114) — for YoY comparison
+- id: budget_revenue_114
+  name: 114年度歲入來源別
+  source: data.chiayi.gov.tw
+  type: api
+  oid: f6a1738a-7d73-4238-88e7-cfda69fdf9fd
+  rid: cd37dcf5-c077-411f-b749-7e7c87a123c5
+  schedule: yearly
+  output: data/raw/budget_revenue_114.csv
+
+- id: budget_revenue_113
+  name: 113年度歲入來源別
+  source: data.chiayi.gov.tw
+  type: api
+  oid: f6a1738a-7d73-4238-88e7-cfda69fdf9fd
+  rid: 9a733eac-2142-4c4c-b767-851e7f65f560
+  schedule: yearly
+  output: data/raw/budget_revenue_113.csv
+
+- id: budget_revenue_112
+  name: 112年度歲入來源別
+  source: data.chiayi.gov.tw
+  type: api
+  oid: f6a1738a-7d73-4238-88e7-cfda69fdf9fd
+  rid: 123eea35-b2e2-453e-b987-59e424e72f5e
+  schedule: yearly
+  output: data/raw/budget_revenue_112.csv
+
+- id: budget_revenue_111
+  name: 111年度歲入來源別
+  source: data.chiayi.gov.tw
+  type: api
+  oid: f6a1738a-7d73-4238-88e7-cfda69fdf9fd
+  rid: f34992dd-d7fe-439f-a3e5-618b786d9590
+  schedule: yearly
+  output: data/raw/budget_revenue_111.csv

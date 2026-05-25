@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js'
-import { Bar, Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
+import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { useData, formatNumber, formatBudget } from '../hooks/useData'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 // Color palette for top-level categories
 const CAT_COLORS = [
@@ -109,6 +109,12 @@ export default function Budget() {
   const { data: expFunc, loading: expFuncLoading } = useData('budget_expenditure_by_function.json')
   const { data: expAgency, loading: expAgencyLoading } = useData('budget_expenditure_by_agency.json')
 
+  // Historical revenue files (will be populated as more years are fetched)
+  const { data: rev114 } = useData('budget_revenue_114.json')
+  const { data: rev113 } = useData('budget_revenue_113.json')
+  const { data: rev112 } = useData('budget_revenue_112.json')
+  const { data: rev111 } = useData('budget_revenue_111.json')
+
   if (revLoading || expFuncLoading || expAgencyLoading) return <div className="container"><p>載入中...</p></div>
 
   // Only L1 items for charts and totals
@@ -127,6 +133,29 @@ export default function Budget() {
   }))
 
   const agencyTop = [...(expAgency || [])].sort((a, b) => Number(b.amount) - Number(a.amount)).slice(0, 10)
+
+  // Revenue trend: compute total per available year
+  const revenueTrend = []
+  const revYears = { 111: rev111, 112: rev112, 113: rev113, 114: rev114, 115: revenue }
+  for (const [yr, data] of Object.entries(revYears)) {
+    if (data?.length) {
+      const total = data.reduce((s, r) => s + Number(r.amount), 0)
+      revenueTrend.push({ year: parseInt(yr), total })
+    }
+  }
+  revenueTrend.sort((a, b) => a.year - b.year)
+
+  // YoY changes
+  const yoyChanges = []
+  for (let i = 1; i < revenueTrend.length; i++) {
+    const prev = revenueTrend[i - 1]
+    const curr = revenueTrend[i]
+    yoyChanges.push({
+      year: curr.year,
+      change: curr.total - prev.total,
+      pct: prev.total > 0 ? ((curr.total - prev.total) / prev.total * 100).toFixed(1) : 0
+    })
+  }
 
   return (
     <>
@@ -161,6 +190,46 @@ export default function Budget() {
 
       {/* Charts */}
       <div className="chart-grid">
+        {revenueTrend.length > 1 && (
+          <div className="chart-card">
+            <h3>📈 歲入歷年趨勢</h3>
+            <Line
+              data={{
+                labels: revenueTrend.map(r => `${r.year}年`),
+                datasets: [{
+                  label: '歲入總額（千元）',
+                  data: revenueTrend.map(r => r.total),
+                  borderColor: '#10b981',
+                  backgroundColor: 'rgba(16,185,129,0.1)',
+                  fill: true,
+                  tension: 0.3,
+                }]
+              }}
+              options={{
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { ticks: { callback: v => formatNumber(v) } } }
+              }}
+            />
+            <table className="data-table" style={{marginTop: 16}}>
+              <thead>
+                <tr><th>年度</th><th style={{textAlign:'right'}}>歲入（千元）</th><th style={{textAlign:'right'}}>YoY</th></tr>
+              </thead>
+              <tbody>
+                {yoyChanges.map(c => (
+                  <tr key={c.year}>
+                    <td>{c.year}年</td>
+                    <td style={{textAlign:'right'}}>{formatNumber(revenueTrend.find(r => r.year === c.year)?.total || 0)}</td>
+                    <td style={{textAlign:'right', color: Number(c.change) >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}}>
+                      {Number(c.change) >= 0 ? '+' : ''}{formatNumber(c.change)} ({c.pct}%)
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
         <div className="chart-card">
           <h3>歲入來源結構</h3>
           <Doughnut

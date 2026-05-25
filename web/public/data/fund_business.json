@@ -1,0 +1,440 @@
+[
+  {
+    "fund_type": "營業基金",
+    "item": "營業收入",
+    "fund_name": "合計",
+    "amount": 102124
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 64605
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 37519
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "勞務收入",
+    "fund_name": "合計",
+    "amount": 68802
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "勞務收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 35478
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "勞務收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 33324
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費收入",
+    "fund_name": "合計",
+    "amount": 68802
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 35478
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 33324
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業收入",
+    "fund_name": "合計",
+    "amount": 33322
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 29127
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 4195
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業資產租金收入",
+    "fund_name": "合計",
+    "amount": 500
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業資產租金收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 500
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "政府補助收入",
+    "fund_name": "合計",
+    "amount": 1847
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "政府補助收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 1837
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "政府補助收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 10
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業收入",
+    "fund_name": "合計",
+    "amount": 30975
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 26790
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 4185
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業費用",
+    "fund_name": "合計",
+    "amount": 93627
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 61301
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業費用",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 32326
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "業務費用",
+    "fund_name": "合計",
+    "amount": 30154
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "業務費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 20315
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "業務費用",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 9839
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "業務費用",
+    "fund_name": "合計",
+    "amount": 30154
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "業務費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 20315
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "業務費用",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 9839
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費用",
+    "fund_name": "合計",
+    "amount": 63473
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 40986
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費用",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 22487
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費用",
+    "fund_name": "合計",
+    "amount": 63473
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 40986
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "管理費用",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 22487
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業利益(損失-)",
+    "fund_name": "合計",
+    "amount": 8497
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業利益(損失-)",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 3304
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業利益(損失-)",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 5193
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外收入",
+    "fund_name": "合計",
+    "amount": 995
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 836
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 159
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "財務收入",
+    "fund_name": "合計",
+    "amount": 399
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "財務收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 250
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "財務收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 149
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "利息收入",
+    "fund_name": "合計",
+    "amount": 330
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "利息收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 250
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "利息收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 80
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "投資收益",
+    "fund_name": "合計",
+    "amount": 69
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "投資收益",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 69
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業外收入",
+    "fund_name": "合計",
+    "amount": 596
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業外收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 586
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業外收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 10
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "什項收入",
+    "fund_name": "合計",
+    "amount": 596
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "什項收入",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 586
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "什項收入",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 10
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外費用",
+    "fund_name": "合計",
+    "amount": 5
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 5
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業外費用",
+    "fund_name": "合計",
+    "amount": 5
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "其他營業外費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 5
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "什項費用",
+    "fund_name": "合計",
+    "amount": 5
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "什項費用",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 5
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外利益(損失-)",
+    "fund_name": "合計",
+    "amount": 990
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外利益(損失-)",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 831
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "營業外利益(損失-)",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 159
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "稅前純益(純損-)",
+    "fund_name": "合計",
+    "amount": 9487
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "稅前純益(純損-)",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 4135
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "稅前純益(純損-)",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 5352
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "所得稅費用(利益-)",
+    "fund_name": "合計",
+    "amount": 1601
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "所得稅費用(利益-)",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 703
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "所得稅費用(利益-)",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 898
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "本期純益(純損-)",
+    "fund_name": "合計",
+    "amount": 7886
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "本期純益(純損-)",
+    "fund_name": "嘉義魚市場股份有限公司",
+    "amount": 3432
+  },
+  {
+    "fund_type": "營業基金",
+    "item": "本期純益(純損-)",
+    "fund_name": "嘉義市果菜市場股份有限公司",
+    "amount": 4454
+  }
+]

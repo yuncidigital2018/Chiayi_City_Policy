@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard'
 import Population from './pages/Population'
 import Budget from './pages/Budget'
+import Funds from './pages/Funds'
 import Narratives from './pages/Narratives'
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/population" element={<Population />} />
           <Route path="/budget" element={<Budget />} />
+          <Route path="/funds" element={<Funds />} />
           <Route path="/narratives" element={<Narratives />} />
         </Routes>
       </main>

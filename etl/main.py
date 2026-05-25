@@ -17,6 +17,7 @@ import click
 from etl.config_loader import load_datasources
 from etl.fetcher import fetch_all
 from etl.normalizer import run_normalization
+from etl.fund_normalizer import run_fund_normalization
 from etl.md_generator import run_markdown_generation
 
 # Setup logging
@@ -114,12 +115,14 @@ def run_pipeline(force: bool, skip_fetch: bool, skip_normalize: bool, skip_gener
     if not skip_normalize:
         logger.info("=== Phase 2: Normalize ===")
         processed_paths = run_normalization(raw_paths)
-        success = sum(1 for v in processed_paths.values() if v is not None)
+        fund_paths = run_fund_normalization(raw_paths)
+        all_processed = {**processed_paths, **fund_paths}
+        success = sum(1 for v in all_processed.values() if v is not None)
         logger.info(f"Normalize: {success} tables produced")
 
     if not skip_generate:
         logger.info("=== Phase 3: Generate ===")
-        md_paths = run_markdown_generation(processed_paths)
+        md_paths = run_markdown_generation(all_processed)
         logger.info(f"Generate: {len(md_paths)} Markdown files created")
 
 

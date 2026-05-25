@@ -24,6 +24,9 @@ const tables = [
   { input: 'budget_revenue_by_source.csv', output: 'budget_revenue_by_source.json' },
   { input: 'budget_expenditure_by_function.csv', output: 'budget_expenditure_by_function.json' },
   { input: 'budget_expenditure_by_agency.csv', output: 'budget_expenditure_by_agency.json' },
+  { input: 'fund_operating.csv', output: 'fund_operating.json' },
+  { input: 'fund_business.csv', output: 'fund_business.json' },
+  { input: 'fund_affairs.csv', output: 'fund_affairs.json' },
 ];
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
