@@ -1,0 +1,134 @@
+# 資料來源設定檔
+# 定義所有開放資料來源的 OID、API endpoint 與更新頻率
+
+sources:
+  # ========================
+  # 人口相關
+  # ========================
+
+  # 嘉義市戶政服務網 - 歷年人口統計
+  - id: population_yearly
+    name: "嘉義市歷年人口統計"
+    source: "household.chiayi.gov.tw"
+    type: "web_scrape"  # 或 api，依實際可用介面決定
+    url: "https://household.chiayi.gov.tw/popul01/Statistics.aspx"
+    schedule: "monthly"
+    output: "data/raw/population_yearly.csv"
+
+  # 嘉義市戶政服務網 - 區里戶數及人口數
+  - id: population_village
+    name: "嘉義市區里戶數及人口數"
+    source: "household.chiayi.gov.tw"
+    type: "web_scrape"
+    url: "https://household.chiayi.gov.tw/popul01/Statistics.aspx?Parser=99,7,38,,,,,,,,"
+    schedule: "monthly"
+    output: "data/raw/population_village.csv"
+
+  # 嘉義市戶政服務網 - 戶籍登記分析
+  - id: household_registration
+    name: "戶籍登記分析表"
+    source: "household.chiayi.gov.tw"
+    type: "web_scrape"
+    url: "https://household.chiayi.gov.tw/popul06/List.aspx"
+    schedule: "monthly"
+    output: "data/raw/household_registration.csv"
+
+  # Open Chiayi - 東區各里人口統計
+  - id: chiayi_east_village
+    name: "嘉義市東區人口各里統計"
+    source: "data.chiayi.gov.tw"
+    type: "api"
+    oid: ""  # 待填入實際 OID
+    api_url: "https://data.chiayi.gov.tw/opendata/api/getResource"
+    schedule: "monthly"
+    output: "data/raw/east_village_population.csv"
+
+  # Open Chiayi - 西區各里人口統計
+  - id: chiayi_west_village
+    name: "嘉義市西區各里人口統計"
+    source: "data.gov.tw"
+    type: "api"
+    oid: ""  # 待填入實際 OID
+    schedule: "monthly"
+    output: "data/raw/west_village_population.csv"
+
+  # 內政部 STATCloud - 行政區人口統計
+  - id: moi_statcloud
+    name: "內政部 STATCloud 行政區人口"
+    source: "segis.moi.gov.tw"
+    type: "api"
+    url: "https://segis.moi.gov.tw/STATCloud/QueryInterfaceView"
+    schedule: "monthly"
+    output: "data/raw/moi_population.csv"
+
+  # 中低收入戶統計
+  - id: low_income
+    name: "嘉義市中低收入戶統計"
+    source: "data.chiayi.gov.tw"
+    type: "api"
+    oid: ""  # 待填入實際 OID
+    schedule: "quarterly"
+    output: "data/raw/low_income.csv"
+
+  # ========================
+  # 預算相關
+  # ========================
+
+  # Open Chiayi - 歲入來源別預算總表
+  - id: budget_revenue
+    name: "嘉義市政府歲入來源別預算總表"
+    source: "data.chiayi.gov.tw"
+    type: "api"
+    oid: "f6a1738a-7d73-4238-88e7-cfda69fdf9fd"
+    api_url: "https://data.chiayi.gov.tw/opendata/api/getResource"
+    schedule: "yearly"
+    output: "data/raw/budget_revenue.csv"
+
+  # Open Chiayi - 歲出政事別預算總表
+  - id: budget_expenditure_policy
+    name: "嘉義市總預算歲出政事別預算總表"
+    source: "data.chiayi.gov.tw"
+    type: "api"
+    oid: "d9303734-6e8f-4ff4-92bb-65e6caba2265"
+    api_url: "https://data.chiayi.gov.tw/opendata/api/getResource"
+    schedule: "yearly"
+    output: "data/raw/budget_expenditure_policy.csv"
+
+  # Open Chiayi - 歲出機關別預算總表
+  - id: budget_expenditure_dept
+    name: "嘉義市總預算歲出機關別預算總表"
+    source: "data.chiayi.gov.tw"
+    type: "api"
+    oid: ""  # 待填入實際 OID
+    schedule: "yearly"
+    output: "data/raw/budget_expenditure_dept.csv"
+
+  # SCIDM - 歷年歲入預算
+  - id: scidm_revenue
+    name: "SCIDM 歲入來源別預算總表（歷年）"
+    source: "scidm.nchc.org.tw"
+    type: "download"
+    url: "https://scidm.nchc.org.tw/dataset/best_wish52350"
+    schedule: "yearly"
+    output: "data/raw/scidm_revenue.csv"
+
+  # SCIDM - 歷年歲出預算
+  - id: scidm_expenditure
+    name: "SCIDM 歲出機關別預算總表（歷年）"
+    source: "scidm.nchc.org.tw"
+    type: "download"
+    url: "https://scidm.nchc.org.tw/dataset/best_wish52350"
+    schedule: "yearly"
+    output: "data/raw/scidm_expenditure.csv"
+
+  # ========================
+  # 基金與其他
+  # ========================
+
+  - id: fund_budget
+    name: "營業基金及政事型基金預算"
+    source: "data.chiayi.gov.tw"
+    type: "api"
+    oid: ""  # 待填入實際 OID
+    schedule: "yearly"
+    output: "data/raw/fund_budget.csv"
