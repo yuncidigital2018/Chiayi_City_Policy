@@ -27,6 +27,7 @@ const tables = [
   { input: 'fund_operating.csv', output: 'fund_operating.json' },
   { input: 'fund_business.csv', output: 'fund_business.json' },
   { input: 'fund_affairs.csv', output: 'fund_affairs.json' },
+  { input: 'county_population_comparison.csv', output: 'county_population_comparison.json' },
 ];
 
 mkdirSync(OUTPUT_DIR, { recursive: true });

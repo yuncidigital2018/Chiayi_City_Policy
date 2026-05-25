@@ -36,9 +36,17 @@ jobs:
         run: |
           python -m etl.main run-pipeline --force
 
+      - name: Fetch cross-county comparison
+        run: python -m etl.main compare
+
       - name: Run tests
         run: |
           python -m pytest tests/ -v --tb=short
+
+      - name: Detect data changes
+        id: changes
+        run: |
+          python -m etl.main changes
 
       - name: Generate frontend JSON data
         working-directory: web
@@ -54,7 +62,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/processed/ content/ web/public/data/
+          git add data/processed/ content/ web/public/data/ data/.data_snapshot.json
           git commit -m "chore: auto-update data & content ($(date '+%Y-%m-%d'))"
           git push
 

@@ -20,6 +20,8 @@ from etl.normalizer import run_normalization
 from etl.fund_normalizer import run_fund_normalization
 from etl.md_generator import run_markdown_generation
 from etl.validator import validate_all
+from etl.cross_county import run_cross_county_pipeline
+from etl.change_detector import detect_changes, format_report
 
 # Setup logging
 logging.basicConfig(
@@ -137,6 +139,21 @@ def run_pipeline(force: bool, skip_fetch: bool, skip_normalize: bool, skip_gener
 
 
 @cli.command()
+@click.option("--year", default=114, help="ROC year to fetch (default: 114)")
+def compare(year: int):
+    """Fetch cross-county population comparison data."""
+    logger.info(f"Fetching county comparison for year {year}...")
+    df = run_cross_county_pipeline([year])
+    if df is not None:
+        chiayi = df[df["county"] == "嘉義市"]
+        if not chiayi.empty:
+            r = chiayi.iloc[0]
+            logger.info(f"嘉義市: 第 {int(r['rank'])}/{len(df)} 名, 人口 {int(r['population']):,}")
+    else:
+        logger.error("Failed to fetch county comparison data")
+
+
+@cli.command()
 def validate():
     """Validate processed data quality."""
     logger.info("Running data validation...")
@@ -147,6 +164,14 @@ def validate():
         sys.exit(1)
     else:
         logger.info("All validations passed ✅")
+
+
+@cli.command()
+def changes():
+    """Detect data changes since last run."""
+    result = detect_changes()
+    report = format_report(result)
+    logger.info(report)
 
 
 @cli.command()

@@ -247,7 +247,8 @@
 - [x] ETL integration test (pipeline + retry)
 - [x] CI 加入 test step
 
-### Phase 8：功能擴展 ⬜
-- [ ] STATCloud API 串接
-- [ ] 前端年份/區域篩選器
+### Phase 8：功能擴展 🔄
+- [x] 內政部戶政司 API 串接（跨縣市人口比較）
+- [x] 前端比較頁（排名圖表 + 排序切換）
+- [x] 資料異動偵測（change_detector.py + snapshot）
 - [ ] 多縣市架構抽象化

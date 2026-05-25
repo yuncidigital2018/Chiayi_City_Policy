@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import Population from './pages/Population'
 import Budget from './pages/Budget'
 import Funds from './pages/Funds'
+import Comparison from './pages/Comparison'
 import Narratives from './pages/Narratives'
 
 export default function App() {
@@ -16,11 +17,12 @@ export default function App() {
           <Route path="/population" element={<Population />} />
           <Route path="/budget" element={<Budget />} />
           <Route path="/funds" element={<Funds />} />
+          <Route path="/comparison" element={<Comparison />} />
           <Route path="/narratives" element={<Narratives />} />
         </Routes>
       </main>
       <footer className="footer">
-        <p>嘉義市人口與財政開放資料系統 · Data from <a href="https://data.chiayi.gov.tw" target="_blank" rel="noopener">Open Chiayi</a></p>
+        <p>嘉義市人口與財政開放資料系統 · Data from <a href="https://data.chiayi.gov.tw" target="_blank" rel="noopener">Open Chiayi</a> & <a href="https://www.ris.gov.tw" target="_blank" rel="noopener">內政部戶政司</a></p>
       </footer>
     </div>
   )

@@ -239,6 +239,36 @@ body {
   line-height: 1.8;
 }
 
+/* Buttons */
+.btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.btn:hover { background: #f8fafc; }
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.btn-primary:hover { background: #1557b0; }
+.btn-outline {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+/* Highlight row */
+.highlight-row td {
+  background: #e8f0fe !important;
+  font-weight: 600;
+}
+
 /* Footer */
 .footer {
   text-align: center;

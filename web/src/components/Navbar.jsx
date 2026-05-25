@@ -10,6 +10,7 @@ export default function Navbar() {
           <NavLink to="/population">人口</NavLink>
           <NavLink to="/budget">預算</NavLink>
           <NavLink to="/funds">基金</NavLink>
+          <NavLink to="/comparison">比較</NavLink>
           <NavLink to="/narratives">敘事</NavLink>
         </div>
       </div>
