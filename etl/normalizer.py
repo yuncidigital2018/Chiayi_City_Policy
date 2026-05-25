@@ -5,8 +5,6 @@ from typing import Any
 
 import pandas as pd
 
-from etl.config_loader import load_datasources, get_source_by_id
-
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -55,13 +53,13 @@ SCHEMA_BUDGET_EXPENDITURE_AGENCY = {
 
 
 def _clean_column_names(df: pd.DataFrame) -> pd.DataFrame:
-    """Strip whitespace from column names and standardize."""
+    """Strip whitespace from column names."""
     df.columns = df.columns.str.strip()
     return df
 
 
 def _convert_schema(df: pd.DataFrame, schema: dict[str, str]) -> pd.DataFrame:
-    """Apply schema types to a DataFrame, with safe conversion."""
+    """Apply schema types with safe conversion."""
     for col, dtype in schema.items():
         if col in df.columns:
             try:
@@ -89,23 +87,27 @@ def normalize_population_annual(raw_path: Path | str | None) -> pd.DataFrame | N
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    # Map columns (adjust based on actual source columns)
+    # Map columns to standard schema
     col_map = {}
     for col in df.columns:
-        if "年度" in col or "年" == col.strip():
+        c = col.strip()
+        if c == "年度":
             col_map[col] = "year"
-        elif "總計" in col or "總人口" in col:
+        elif c == "總人口":
             col_map[col] = "total_population"
-        elif "男" in col and "人口" in col:
+        elif c == "男性":
             col_map[col] = "male"
-        elif "女" in col and "人口" in col:
+        elif c == "女性":
             col_map[col] = "female"
-        elif "自然" in col:
+        elif c == "自然增減":
             col_map[col] = "natural_increase"
-        elif "社會" in col:
+        elif c == "社會增減":
             col_map[col] = "social_increase"
 
     df = df.rename(columns=col_map)
+    # Keep only standard columns
+    standard_cols = ["year", "total_population", "male", "female", "natural_increase", "social_increase"]
+    df = df[[c for c in standard_cols if c in df.columns]]
     df = _convert_schema(df, SCHEMA_POPULATION_ANNUAL)
     return df
 
@@ -121,20 +123,23 @@ def normalize_population_village(raw_path: Path | str | None) -> pd.DataFrame | 
 
     col_map = {}
     for col in df.columns:
-        if "年" in col and len(col.strip()) <= 4:
+        c = col.strip()
+        if c == "年度":
             col_map[col] = "year"
-        elif "月" in col:
+        elif c == "月份":
             col_map[col] = "month"
-        elif "區" in col or "行政區" in col:
+        elif c in ("行政區", "區"):
             col_map[col] = "district"
-        elif "里" in col:
+        elif c in ("村里別", "里"):
             col_map[col] = "village"
-        elif "戶" in col:
+        elif c == "戶數":
             col_map[col] = "households"
-        elif "人口" in col or "人" in col:
+        elif c == "人口數":
             col_map[col] = "population"
 
     df = df.rename(columns=col_map)
+    standard_cols = ["year", "month", "district", "village", "households", "population"]
+    df = df[[c for c in standard_cols if c in df.columns]]
     df = _convert_schema(df, SCHEMA_POPULATION_VILLAGE)
     return df
 
@@ -143,7 +148,7 @@ def normalize_population_village(raw_path: Path | str | None) -> pd.DataFrame | 
 # Budget normalizers
 # ========================
 
-def normalize_budget_revenue(raw_path: Path | str | None) -> pd.DataFrame | None:
+def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
     """Normalize revenue-by-source budget data."""
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_revenue: no raw data found")
@@ -152,21 +157,21 @@ def normalize_budget_revenue(raw_path: Path | str | None) -> pd.DataFrame | None
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    col_map = {}
-    for col in df.columns:
-        if "年度" in col or "會計" in col:
-            col_map[col] = "fiscal_year"
-        elif "來源" in col or "類別" in col or "科目" in col:
-            col_map[col] = "source_category"
-        elif "預算" in col or "金額" in col or "數" in col:
-            col_map[col] = "amount"
+    # Map: keep only top-level categories (款 level, no sub-items)
+    # Skip rows where 款 is empty (those are sub-items)
+    df = df[df["款"].notna() & (df["款"].astype(str).str.strip() != "")].copy()
 
-    df = df.rename(columns=col_map)
-    df = _convert_schema(df, SCHEMA_BUDGET_REVENUE)
-    return df
+    result = pd.DataFrame({
+        "fiscal_year": [fiscal_year] * len(df),
+        "source_category": df["名稱及編號"].str.strip().values,
+        "amount": pd.to_numeric(df["本年度預算數"], errors="coerce").fillna(0).values,
+    })
+
+    result = _convert_schema(result, SCHEMA_BUDGET_REVENUE)
+    return result
 
 
-def normalize_budget_expenditure_function(raw_path: Path | str | None) -> pd.DataFrame | None:
+def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
     """Normalize expenditure-by-function (政事別) budget data."""
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_expenditure_function: no raw data found")
@@ -175,21 +180,21 @@ def normalize_budget_expenditure_function(raw_path: Path | str | None) -> pd.Dat
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    col_map = {}
-    for col in df.columns:
-        if "年度" in col:
-            col_map[col] = "fiscal_year"
-        elif "政事" in col or "功能" in col or "類別" in col:
-            col_map[col] = "function_category"
-        elif "預算" in col or "金額" in col or "數" in col:
-            col_map[col] = "amount"
+    # Keep only top-level categories (款 level)
+    df = df[df["款"].notna() & (df["款"].astype(str).str.strip() != "") &
+            (df["項"].isna() | (df["項"].astype(str).str.strip() == ""))].copy()
 
-    df = df.rename(columns=col_map)
-    df = _convert_schema(df, SCHEMA_BUDGET_EXPENDITURE_FUNCTION)
-    return df
+    result = pd.DataFrame({
+        "fiscal_year": [fiscal_year] * len(df),
+        "function_category": df["名稱"].str.strip().values,
+        "amount": pd.to_numeric(df["合計金額"], errors="coerce").fillna(0).values,
+    })
+
+    result = _convert_schema(result, SCHEMA_BUDGET_EXPENDITURE_FUNCTION)
+    return result
 
 
-def normalize_budget_expenditure_agency(raw_path: Path | str | None) -> pd.DataFrame | None:
+def normalize_budget_expenditure_agency(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
     """Normalize expenditure-by-agency (機關別) budget data."""
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_expenditure_agency: no raw data found")
@@ -198,56 +203,45 @@ def normalize_budget_expenditure_agency(raw_path: Path | str | None) -> pd.DataF
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    col_map = {}
-    for col in df.columns:
-        if "年度" in col:
-            col_map[col] = "fiscal_year"
-        elif "機關" in col or "單位" in col:
-            col_map[col] = "agency_name"
-        elif "預算" in col or "金額" in col or "數" in col:
-            col_map[col] = "amount"
+    result = pd.DataFrame({
+        "fiscal_year": [fiscal_year] * len(df),
+        "agency_name": df["名稱"].str.strip().values,
+        "amount": pd.to_numeric(df["合計金額"], errors="coerce").fillna(0).values,
+    })
 
-    df = df.rename(columns=col_map)
-    df = _convert_schema(df, SCHEMA_BUDGET_EXPENDITURE_AGENCY)
-    return df
+    result = _convert_schema(result, SCHEMA_BUDGET_EXPENDITURE_AGENCY)
+    return result
 
 
 # ========================
 # Orchestrator
 # ========================
 
-# Mapping from logical table name to (normalizer function, source_id)
 NORMALIZER_MAP = {
-    "population_annual": (normalize_population_annual, None),
-    "population_village_monthly": (normalize_population_village, None),
-    "budget_revenue_by_source": (normalize_budget_revenue, "budget_revenue"),
-    "budget_expenditure_by_function": (normalize_budget_expenditure_function, "budget_expenditure_policy"),
-    "budget_expenditure_by_agency": (normalize_budget_expenditure_agency, "budget_expenditure_dept"),
+    "population_annual": (normalize_population_annual, "population_annual", {}),
+    "population_village_monthly": (normalize_population_village, "population_village_monthly", {}),
+    "budget_revenue_by_source": (normalize_budget_revenue, "budget_revenue_115", {"fiscal_year": 115}),
+    "budget_expenditure_by_function": (normalize_budget_expenditure_function, "budget_expenditure_policy_115", {"fiscal_year": 115}),
+    "budget_expenditure_by_agency": (normalize_budget_expenditure_agency, "budget_expenditure_dept_115", {"fiscal_year": 115}),
 }
 
 
 def run_normalization(raw_paths: dict[str, Path] | None = None) -> dict[str, Path]:
-    """Run all normalizers and save processed CSVs.
-
-    Args:
-        raw_paths: Dict mapping source_id → raw file path (from fetcher)
-
-    Returns:
-        Dict mapping table_name → processed file path
-    """
+    """Run all normalizers and save processed CSVs."""
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     results = {}
 
-    for table_name, (normalizer_fn, source_id) in NORMALIZER_MAP.items():
+    for table_name, (normalizer_fn, raw_filename, kwargs) in NORMALIZER_MAP.items():
         # Find raw data
-        if raw_paths and source_id and source_id in raw_paths:
-            raw_path = raw_paths[source_id]
+        if raw_paths and raw_filename in raw_paths:
+            raw_path = raw_paths[raw_filename]
         else:
-            # Search raw directory for matching file
-            raw_path = _find_raw_file(table_name)
+            raw_path = RAW_DIR / f"{raw_filename}.csv"
+            if not raw_path.exists():
+                raw_path = None
 
         logger.info(f"Normalizing {table_name} (raw={raw_path})...")
-        df = normalizer_fn(raw_path)
+        df = normalizer_fn(raw_path, **kwargs)
 
         if df is not None and not df.empty:
             output_path = PROCESSED_DIR / f"{table_name}.csv"
@@ -259,13 +253,3 @@ def run_normalization(raw_paths: dict[str, Path] | None = None) -> dict[str, Pat
             results[table_name] = None
 
     return results
-
-
-def _find_raw_file(table_name: str) -> Path | None:
-    """Search raw directory for a matching CSV file."""
-    if not RAW_DIR.exists():
-        return None
-    for f in RAW_DIR.iterdir():
-        if f.suffix == ".csv" and table_name.split("_")[0] in f.stem:
-            return f
-    return None

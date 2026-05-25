@@ -8,10 +8,13 @@ from pathlib import Path
 from typing import Any
 
 import requests
-import yaml
+import urllib3
 from lxml import html
 
 from etl.config_loader import load_datasources, get_source_by_id
+
+# Suppress SSL warnings for government sites with bad certs
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +39,8 @@ def fetch_source(source: dict[str, Any], force: bool = False) -> Path | None:
         Path to saved file, or None if failed
     """
     source_id = source["id"]
-    output_path = PROJECT_ROOT / source.get("output", f"data/raw/{source_id}.csv")
+    output_rel = source.get("output", f"data/raw/{source_id}.csv")
+    output_path = PROJECT_ROOT / output_rel
 
     # Check cache (NFR-1: fallback to last successful)
     if output_path.exists() and not force:
@@ -44,15 +48,26 @@ def fetch_source(source: dict[str, Any], force: bool = False) -> Path | None:
         return output_path
 
     fetch_type = source.get("type", "download")
+
+    # Skip sample type (data already exists)
+    if fetch_type == "sample":
+        if output_path.exists():
+            logger.info(f"Sample data already exists for {source_id}")
+            return output_path
+        logger.warning(f"Sample data not found for {source_id}")
+        return None
+
     logger.info(f"Fetching {source_id} (type={fetch_type})...")
 
     try:
-        if fetch_type == "api" and source.get("oid"):
+        if fetch_type == "api":
             data = _fetch_open_chiayi_api(source)
         elif fetch_type == "web_scrape":
             data = _fetch_and_parse_html(source)
-        else:
+        elif fetch_type == "download":
             data = _fetch_download(source)
+        else:
+            data = None
 
         if data:
             _save_raw(source_id, data, output_path)
@@ -72,30 +87,30 @@ def fetch_source(source: dict[str, Any], force: bool = False) -> Path | None:
 
 
 def _fetch_open_chiayi_api(source: dict) -> str | None:
-    """Fetch data from Open Chiayi API."""
-    oid = source["oid"]
-    params = {"oid": oid, "rid": source.get("rid", "")}
+    """Fetch data from Open Chiayi API using oid + rid."""
+    oid = source.get("oid", "")
+    rid = source.get("rid", "")
+
+    if not oid:
+        logger.warning(f"No OID for source {source['id']}")
+        return None
+
+    params = {"oid": oid, "rid": rid}
     resp = requests.get(
         OPEN_CHIAYI_API,
         params=params,
         headers={"User-Agent": USER_AGENT},
         timeout=30,
+        verify=False,  # Government sites have bad SSL certs
     )
     resp.raise_for_status()
-    data = resp.json()
 
-    # Open Chiayi returns {"success": true, "result": {"records": [...]}}
-    result = data.get("result", {})
-    records = result.get("records", [])
-    if not records:
+    # Open Chiayi returns CSV text directly
+    text = resp.text.strip()
+    if not text or len(text) < 10:
         return None
 
-    # Convert to CSV
-    output = io.StringIO()
-    writer = csv.DictWriter(output, fieldnames=records[0].keys())
-    writer.writeheader()
-    writer.writerows(records)
-    return output.getvalue()
+    return text
 
 
 def _fetch_download(source: dict) -> str | None:
@@ -109,17 +124,10 @@ def _fetch_download(source: dict) -> str | None:
         url,
         headers={"User-Agent": USER_AGENT},
         timeout=60,
+        verify=False,
     )
     resp.raise_for_status()
-
-    content_type = resp.headers.get("Content-Type", "")
-    if "csv" in content_type or url.endswith(".csv"):
-        return resp.text
-    elif "xml" in content_type or url.endswith(".xml"):
-        return resp.text
-    else:
-        # Try to decode as text
-        return resp.text
+    return resp.text
 
 
 def _fetch_and_parse_html(source: dict) -> str | None:
@@ -133,6 +141,7 @@ def _fetch_and_parse_html(source: dict) -> str | None:
         url,
         headers={"User-Agent": USER_AGENT},
         timeout=60,
+        verify=False,
     )
     resp.raise_for_status()
 
@@ -142,13 +151,11 @@ def _fetch_and_parse_html(source: dict) -> str | None:
         logger.warning(f"No tables found at {url}")
         return None
 
-    # Parse the first table found
     table = tables[0]
     rows = table.xpath(".//tr")
     if not rows:
         return None
 
-    # Extract headers and rows
     headers = [th.text_content().strip() for th in rows[0].xpath(".//th|.//td")]
     data_rows = []
     for row in rows[1:]:
@@ -156,7 +163,6 @@ def _fetch_and_parse_html(source: dict) -> str | None:
         if cells:
             data_rows.append(cells)
 
-    # Convert to CSV
     output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow(headers)
@@ -172,15 +178,11 @@ def _save_raw(source_id: str, data: str, output_path: Path) -> None:
 
 
 def fetch_all(sources: list[dict] | None = None, force: bool = False) -> dict[str, Path | None]:
-    """Fetch all configured sources.
-
-    Returns:
-        Dict mapping source_id → saved file path (or None if failed)
-    """
+    """Fetch all configured sources."""
     sources = sources or load_datasources()
     results = {}
     for source in sources:
         path = fetch_source(source, force=force)
         results[source["id"]] = path
-        time.sleep(1)  # Be respectful to the servers
+        time.sleep(1)
     return results
