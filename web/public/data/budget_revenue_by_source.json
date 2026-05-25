@@ -2,41 +2,51 @@
   {
     "fiscal_year": 115,
     "source_category": "稅課收入",
-    "amount": 4500000
+    "amount": 14041776
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "工程受益費收入",
+    "amount": 1
   },
   {
     "fiscal_year": 115,
     "source_category": "罰款及賠償收入",
-    "amount": 80000
+    "amount": 24908
   },
   {
     "fiscal_year": 115,
     "source_category": "規費收入",
-    "amount": 150000
+    "amount": 222566
+  },
+  {
+    "fiscal_year": 115,
+    "source_category": "信託管理收入",
+    "amount": 1
   },
   {
     "fiscal_year": 115,
     "source_category": "財產收入",
-    "amount": 200000
+    "amount": 60905
   },
   {
     "fiscal_year": 115,
     "source_category": "營業盈餘及事業收入",
-    "amount": 50000
+    "amount": 353978
   },
   {
     "fiscal_year": 115,
-    "source_category": "補助收入",
-    "amount": 3500000
+    "source_category": "補助及協助收入",
+    "amount": 4776267
   },
   {
     "fiscal_year": 115,
     "source_category": "捐獻及贈與收入",
-    "amount": 10000
+    "amount": 51
   },
   {
     "fiscal_year": 115,
     "source_category": "其他收入",
-    "amount": 120000
+    "amount": 344547
   }
 ]

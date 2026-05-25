@@ -74,19 +74,21 @@ BUDGET_EXPENDITURE_TEMPLATE = Template("""# 歲出預算結構
 
 ## {{ fiscal_year }} 年度歲出（政事別）
 
-| 政事別 | 金額（千元） | 占比 |
-|--------|-------------|------|
-{% for row in expenditure_rows %}
-| {{ row.function_category }} | {{ row.amount | default('—') }} | {{ row.percentage | default('—') }}% |
-{% endfor %}
+{% for item in expenditure_tree %}
+{% if item.level == 1 %}
+### {{ item.idx }}. {{ item.function_category }} — {{ item.amount_fmt }}（{{ item.percentage }}%）
 
+| 子項目 | 經常門 | 資本門 | 合計（千元） |
+|--------|--------|--------|-------------|{% for child in item.children %}
+| {{ child.function_category }} | {{ child.recurring_fmt }} | {{ child.capital_fmt }} | {{ child.amount_fmt }} |{% endfor %}
+
+{% endif %}
+{% endfor %}
 ## 機關別預算 Top 10
 
 | 機關 | 金額（千元） | 占比 |
-|------|-------------|------|
-{% for row in agency_top %}
-| {{ row.agency_name }} | {{ row.amount | default('—') }} | {{ row.percentage | default('—') }}% |
-{% endfor %}
+|------|-------------|------|{% for row in agency_top %}
+| {{ row.agency_name }} | {{ row.amount | default('—') }} | {{ row.percentage | default('—') }}% |{% endfor %}
 """)
 
 POPULATION_VILLAGE_TEMPLATE = Template("""# 區里人口分布
@@ -197,18 +199,63 @@ def generate_budget_revenue(df: pd.DataFrame | None) -> str | None:
     )
 
 
+def _fmt(n):
+    """Format number with commas, handle None/NaN."""
+    try:
+        if n is None or (isinstance(n, float) and n != n):  # NaN check
+            return '—'
+        return f"{int(n):,}"
+    except (ValueError, TypeError):
+        return str(n)
+
+
 def generate_budget_expenditure(df_func: pd.DataFrame | None, df_agency: pd.DataFrame | None) -> str | None:
-    """Generate budget expenditure Markdown."""
+    """Generate budget expenditure Markdown with hierarchical structure."""
     if df_func is None or df_func.empty:
         return None
 
     generated_at = datetime.now().strftime("%Y-%m-%d")
-    expenditure_rows = df_func.to_dict("records")
 
-    # Calculate percentages
-    total = df_func["amount"].sum()
-    for row in expenditure_rows:
-        row["percentage"] = f"{row['amount'] / total * 100:.1f}" if total > 0 else "—"
+    # Build tree: L1 items with L2 children
+    tree = []
+    children_map = {}
+    l1_items = []
+
+    for _, row in df_func.iterrows():
+        level = int(row.get('level', 1))
+        parent = str(row.get('parent_code', '')).strip()
+        if level == 1:
+            l1_items.append(row)
+            children_map[parent] = []
+        elif level == 2 and parent:
+            if parent not in children_map:
+                children_map[parent] = []
+            children_map[parent].append(row)
+
+    total = df_func[df_func['level'] == 1]['amount'].sum()
+
+    expenditure_tree = []
+    for idx, item in enumerate(l1_items, 1):
+        parent = str(item.get('parent_code', '')).strip()
+        pct = f"{item['amount'] / total * 100:.1f}" if total > 0 else '0.0'
+        children = []
+        for child in children_map.get(parent, []):
+            children.append({
+                'function_category': child['function_category'],
+                'recurring_fmt': _fmt(child.get('recurring')),
+                'capital_fmt': _fmt(child.get('capital')),
+                'amount_fmt': _fmt(child.get('amount')),
+            })
+        expenditure_tree.append({
+            'idx': idx,
+            'level': 1,
+            'function_category': item['function_category'],
+            'recurring_fmt': _fmt(item.get('recurring')),
+            'capital_fmt': _fmt(item.get('capital')),
+            'amount_fmt': _fmt(item.get('amount')),
+            'percentage': pct,
+            'children': children,
+        })
 
     # Agency top 10
     agency_top = []
@@ -222,7 +269,7 @@ def generate_budget_expenditure(df_func: pd.DataFrame | None, df_agency: pd.Data
     return BUDGET_EXPENDITURE_TEMPLATE.render(
         generated_at=generated_at,
         fiscal_year=df_func["fiscal_year"].iloc[-1] if "fiscal_year" in df_func.columns else "—",
-        expenditure_rows=expenditure_rows,
+        expenditure_tree=expenditure_tree,
         agency_top=agency_top,
     )
 

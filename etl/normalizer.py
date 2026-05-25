@@ -41,8 +41,13 @@ SCHEMA_BUDGET_REVENUE = {
 
 SCHEMA_BUDGET_EXPENDITURE_FUNCTION = {
     "fiscal_year": "int64",
+    "level": "int64",           # 1=款(top), 2=項(sub)
+    "parent_code": "string",     # 款 code (e.g. "01")
+    "code": "string",            # 項 code (e.g. "01", "02") or empty for 款
     "function_category": "string",
-    "amount": "float64",
+    "recurring": "float64",      # 經常門
+    "capital": "float64",        # 資本門
+    "amount": "float64",         # 合計
 }
 
 SCHEMA_BUDGET_EXPENDITURE_AGENCY = {
@@ -194,24 +199,69 @@ def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115
 
 
 def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
-    """Normalize expenditure-by-function (政事別) budget data."""
+    """Normalize expenditure-by-function (政事別) budget data.
+    
+    Outputs both L1 (款) and L2 (項) rows with parent_code for drill-down.
+    """
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_expenditure_function: no raw data found")
         return None
 
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
+    
+    rows = []
+    current_parent = None
 
-    # Keep only top-level categories (款 level)
-    df = df[df["款"].notna() & (df["款"].astype(str).str.strip() != "") &
-            (df["項"].isna() | (df["項"].astype(str).str.strip() == ""))].copy()
+    for _, row in df.iterrows():
+        kuan_raw = row.get("款", None)
+        xiang_raw = row.get("項", None)
+        kuan = str(kuan_raw).strip() if pd.notna(kuan_raw) else ""
+        xiang = str(xiang_raw).strip() if pd.notna(xiang_raw) else ""
+        name = str(row.get("名稱", "")).strip()
+        recurring = pd.to_numeric(row.get("經常門", 0), errors="coerce") if pd.notna(row.get("經常門")) else 0
+        capital = pd.to_numeric(row.get("資本門", 0), errors="coerce") if pd.notna(row.get("資本門")) else 0
+        total = pd.to_numeric(row.get("合計金額", 0), errors="coerce") if pd.notna(row.get("合計金額")) else 0
 
-    result = pd.DataFrame({
-        "fiscal_year": [fiscal_year] * len(df),
-        "function_category": df["名稱"].str.strip().values,
-        "amount": pd.to_numeric(df["合計金額"], errors="coerce").fillna(0).values,
-    })
-
+        if kuan and not xiang:
+            # L1: top-level category (款)
+            current_parent = kuan
+            rows.append({
+                "fiscal_year": fiscal_year,
+                "level": 1,
+                "parent_code": kuan,
+                "code": "",
+                "function_category": name,
+                "recurring": recurring,
+                "capital": capital,
+                "amount": total,
+            })
+        elif kuan and xiang:
+            # L2: sub-category (項) under current parent
+            rows.append({
+                "fiscal_year": fiscal_year,
+                "level": 2,
+                "parent_code": current_parent or kuan,
+                "code": xiang,
+                "function_category": name,
+                "recurring": recurring,
+                "capital": capital,
+                "amount": total,
+            })
+        elif not kuan and xiang:
+            # L2: sub-category with missing 款 (fall back to current_parent)
+            rows.append({
+                "fiscal_year": fiscal_year,
+                "level": 2,
+                "parent_code": current_parent or "",
+                "code": xiang,
+                "function_category": name,
+                "recurring": recurring,
+                "capital": capital,
+                "amount": total,
+            })
+    
+    result = pd.DataFrame(rows)
     result = _convert_schema(result, SCHEMA_BUDGET_EXPENDITURE_FUNCTION)
     return result
 

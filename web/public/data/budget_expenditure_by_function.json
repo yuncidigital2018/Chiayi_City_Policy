@@ -1,42 +1,302 @@
 [
   {
     "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 1,
+    "code": null,
     "function_category": "一般政務支出",
+    "recurring": 3729046,
+    "capital": 390878,
     "amount": 4119924
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 1,
+    "code": 1,
+    "function_category": "行政支出",
+    "recurring": 383636,
+    "capital": 114550,
+    "amount": 498186
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 1,
+    "code": 2,
+    "function_category": "立法支出",
+    "recurring": 237341,
+    "capital": 2300,
+    "amount": 239641
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 1,
+    "code": 3,
+    "function_category": "民政支出",
+    "recurring": 1325353,
+    "capital": 200204,
+    "amount": 1525557
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 1,
+    "code": 4,
+    "function_category": "警政支出",
+    "recurring": 1542666,
+    "capital": 56767,
+    "amount": 1599433
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 1,
+    "code": 5,
+    "function_category": "財務支出",
+    "recurring": 240050,
+    "capital": 17057,
+    "amount": 257107
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 2,
+    "code": null,
     "function_category": "教育科學文化支出",
+    "recurring": 6262917,
+    "capital": 1211065,
     "amount": 7473982
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 2,
+    "code": 1,
+    "function_category": "教育支出",
+    "recurring": 5758008,
+    "capital": 938089,
+    "amount": 6696097
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 2,
+    "code": 2,
+    "function_category": "文化支出",
+    "recurring": 504909,
+    "capital": 272976,
+    "amount": 777885
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 3,
+    "code": null,
     "function_category": "經濟發展支出",
+    "recurring": 819535,
+    "capital": 2069463,
     "amount": 2888998
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 3,
+    "code": 1,
+    "function_category": "農業支出",
+    "recurring": 92186,
+    "capital": 505,
+    "amount": 92691
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 3,
+    "code": 2,
+    "function_category": "工業支出",
+    "recurring": 128321,
+    "capital": 10213,
+    "amount": 138534
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 3,
+    "code": 3,
+    "function_category": "交通支出",
+    "recurring": 147399,
+    "capital": 1796407,
+    "amount": 1943806
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 3,
+    "code": 4,
+    "function_category": "其他經濟服務支出",
+    "recurring": 451629,
+    "capital": 262338,
+    "amount": 713967
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 4,
+    "code": null,
     "function_category": "社會福利支出",
+    "recurring": 3546560,
+    "capital": 45015,
     "amount": 3591575
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 4,
+    "code": 1,
+    "function_category": "社會保險支出",
+    "recurring": 71762,
+    "capital": 0,
+    "amount": 71762
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 4,
+    "code": 2,
+    "function_category": "社會救助支出",
+    "recurring": 110545,
+    "capital": 0,
+    "amount": 110545
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 4,
+    "code": 3,
+    "function_category": "福利服務支出",
+    "recurring": 1967065,
+    "capital": 32758,
+    "amount": 1999823
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 4,
+    "code": 4,
+    "function_category": "國民就業支出",
+    "recurring": 127095,
+    "capital": 0,
+    "amount": 127095
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 4,
+    "code": 5,
+    "function_category": "醫療保健支出",
+    "recurring": 1270093,
+    "capital": 12257,
+    "amount": 1282350
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 5,
+    "code": null,
     "function_category": "社區發展及環境保護支出",
+    "recurring": 1039018,
+    "capital": 181236,
     "amount": 1220254
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 5,
+    "code": 1,
+    "function_category": "環境保護支出",
+    "recurring": 1028593,
+    "capital": 181236,
+    "amount": 1209829
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 5,
+    "code": 2,
+    "function_category": "社區發展支出",
+    "recurring": 10425,
+    "capital": 0,
+    "amount": 10425
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 6,
+    "code": null,
     "function_category": "退休撫卹支出",
+    "recurring": 1396167,
+    "capital": 0,
     "amount": 1396167
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 6,
+    "code": 1,
+    "function_category": "退休撫卹給付支出",
+    "recurring": 1396167,
+    "capital": 0,
+    "amount": 1396167
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 7,
+    "code": null,
     "function_category": "債務支出",
+    "recurring": 7100,
+    "capital": 0,
     "amount": 7100
   },
   {
     "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 7,
+    "code": 1,
+    "function_category": "債務付息支出",
+    "recurring": 7100,
+    "capital": 0,
+    "amount": 7100
+  },
+  {
+    "fiscal_year": 115,
+    "level": 1,
+    "parent_code": 8,
+    "code": null,
     "function_category": "補助及其他支出",
+    "recurring": 307000,
+    "capital": 120000,
     "amount": 427000
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 8,
+    "code": 1,
+    "function_category": "其他支出",
+    "recurring": 267000,
+    "capital": 120000,
+    "amount": 387000
+  },
+  {
+    "fiscal_year": 115,
+    "level": 2,
+    "parent_code": 8,
+    "code": 2,
+    "function_category": "第二預備金",
+    "recurring": 40000,
+    "capital": 0,
+    "amount": 40000
   }
 ]
