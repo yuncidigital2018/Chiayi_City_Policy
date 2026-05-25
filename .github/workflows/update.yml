@@ -1,0 +1,44 @@
+name: Update Data & Content
+
+on:
+  schedule:
+    # 每月 1 日 00:00 UTC 執行
+    - cron: '0 0 1 * *'
+  workflow_dispatch:  # 也支援手動觸發
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ETL pipeline
+        run: |
+          python -m etl.main run-pipeline --force
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet data/processed/ content/ || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit & push changes
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/processed/ content/
+          git commit -m "chore: auto-update data & content ($(date '+%Y-%m-%d'))"
+          git push
+
+      - name: Fallback notice
+        if: steps.git-check.outputs.has_changes != 'true'
+        run: echo "No changes detected. Using cached data."
