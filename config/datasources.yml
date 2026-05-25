@@ -26,15 +26,27 @@ sources:
   # 預算相關 — 已確認可下載
   # ========================
 
-  # 歲入來源別預算總表 (sample — 待補 RID)
+  # 歲入來源別預算總表 ✅ 已確認 (OID + 年度 RID)
   - id: budget_revenue
-    name: "嘉義市政府歲入來源別預算總表"
+    name: "115年度嘉義市總預算歲入來源別預算總表"
     source: "data.chiayi.gov.tw"
-    type: "sample"
+    type: "api"
     oid: "f6a1738a-7d73-4238-88e7-cfda69fdf9fd"
+    rid: "6adc9ce1-37d4-4bff-ae27-fea9dfb1f04b"
+    api_url: "https://data.chiayi.gov.tw/opendata/api/getResource"
     schedule: "yearly"
     output: "data/raw/budget_revenue_115.csv"
-    note: "RID 待補齊，目前使用樣本資料"
+
+  # 歲入來源別 — 其他年度 RID（用於歷史比較）
+  # 114年: cd37dcf5-c077-411f-b749-7e7c87a123c5
+  # 113年: 9a733eac-2142-4c4c-b767-851e7f65f560
+  # 112年: f34992dd-d7fe-439f-a3e5-618b786d9590
+  # 111年: 123eea35-b2e2-453e-b987-59e424e72f5e
+  # 110年: 1cd62759-37b4-4a97-99da-d5383bacc2d8
+  # 109年: 866fab02-42ae-4652-9785-6c2dad53239d
+  # 108年: a7c8a7d4-46e9-486b-9b04-844f83cfe9d8
+  # 107年: 7444b658-c2bd-4105-a7fa-3f7a6f00ad9f
+  # 106年: e84f38bd-c1b6-4820-ad1d-1965f813901e
 
   # 歲出政事別預算總表 ✅ 已確認
   - id: budget_expenditure_policy
@@ -97,7 +109,6 @@ sources:
   # ========================
   # 待補 RID 的資料源
   # ========================
-  # 歲入來源別預算總表 OID=f6a1738a-7d73-4238-88e7-cfda69fdf9fd — RID 待補
   # 東區各里人口 — 需確認 data.chiayi.gov.tw 上的對應資料集
   # 西區各里人口 — 同上
   # STATCloud 人口 — API 格式需進一步確認

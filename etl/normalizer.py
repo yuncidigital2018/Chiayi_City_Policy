@@ -149,7 +149,11 @@ def normalize_population_village(raw_path: Path | str | None) -> pd.DataFrame | 
 # ========================
 
 def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
-    """Normalize revenue-by-source budget data."""
+    """Normalize revenue-by-source budget data.
+    
+    Handles both sample format (名稱及編號/本年度預算數) and
+    real Open Chiayi format (科目名稱/合計（千元）).
+    """
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_revenue: no raw data found")
         return None
@@ -157,14 +161,32 @@ def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    # Map: keep only top-level categories (款 level, no sub-items)
-    # Skip rows where 款 is empty (those are sub-items)
-    df = df[df["款"].notna() & (df["款"].astype(str).str.strip() != "")].copy()
+    # Detect column names: real vs sample format
+    name_col = None
+    for candidate in ["科目名稱", "名稱及編號", "名稱"]:
+        if candidate in df.columns:
+            name_col = candidate
+            break
+    if name_col is None:
+        logger.error(f"budget_revenue: cannot find name column. Available: {list(df.columns)}")
+        return None
+
+    amount_col = None
+    for candidate in ["合計（千元）", "合計", "本年度預算數"]:
+        if candidate in df.columns:
+            amount_col = candidate
+            break
+    if amount_col is None:
+        logger.error(f"budget_revenue: cannot find amount column. Available: {list(df.columns)}")
+        return None
+
+    # Keep only top-level categories (款 level, skip sub-items where 款 is empty)
+    df_top = df[df["款"].notna() & (df["款"].astype(str).str.strip() != "")].copy()
 
     result = pd.DataFrame({
-        "fiscal_year": [fiscal_year] * len(df),
-        "source_category": df["名稱及編號"].str.strip().values,
-        "amount": pd.to_numeric(df["本年度預算數"], errors="coerce").fillna(0).values,
+        "fiscal_year": [fiscal_year] * len(df_top),
+        "source_category": df_top[name_col].str.strip().values,
+        "amount": pd.to_numeric(df_top[amount_col], errors="coerce").fillna(0).values,
     })
 
     result = _convert_schema(result, SCHEMA_BUDGET_REVENUE)
