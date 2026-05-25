@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react'
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, Filler } from 'chart.js'
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 import { Bar, Line } from 'react-chartjs-2'
 import { useData, formatNumber } from '../hooks/useData'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, Filler)
+ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 // ========================
 // Pyramid shape classifier
@@ -270,6 +270,76 @@ function AgeStructureTable({ ageData }) {
 }
 
 // ========================
+// Demographic trends (sex ratio, household size)
+// ========================
+
+function DemographicTrends({ population }) {
+  if (!population?.length) return null
+
+  const data = population.filter(p => p.households && Number(p.households) > 0)
+  if (data.length < 2) return null
+
+  const labels = data.map(p => `${p.year}年`)
+  const sexRatio = data.map(p => Number(p.male) / Number(p.female) * 100)
+  const householdSize = data.map(p => (Number(p.households) > 0 ? Number(p.total_population) / Number(p.households) : 0))
+  const growthPct = data.map(p => parseFloat(p.growth_pct) || 0)
+
+  return (
+    <div className="chart-grid">
+      <div className="chart-card">
+        <h3>⚖️ 性別比趨勢（男/女 × 100）</h3>
+        <Line
+          data={{
+            labels,
+            datasets: [{
+              label: '性別比',
+              data: sexRatio,
+              borderColor: '#8b5cf6',
+              backgroundColor: 'rgba(139,92,246,0.1)',
+              fill: true,
+              tension: 0.3,
+            }]
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              annotation: {}
+            },
+            scales: { y: { min: 85, max: 105 } }
+          }}
+        />
+        <p style={{fontSize:'0.8em',color:'var(--text-secondary)',marginTop:8}}>性別比 {sexRatio[sexRatio.length-1]?.toFixed(1)}（最新年度）</p>
+      </div>
+      <div className="chart-card">
+        <h3>🏠 平均戶量趨勢（人口/戶數）</h3>
+        <Line
+          data={{
+            labels,
+            datasets: [{
+              label: '平均每戶人數',
+              data: householdSize,
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245,158,11,0.1)',
+              fill: true,
+              tension: 0.3,
+            }]
+          }}
+          options={{
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { min: 2, max: 5 } }
+          }}
+        />
+        <p style={{fontSize:'0.8em',color:'var(--text-secondary)',marginTop:8}}>
+          從 {householdSize[0]?.toFixed(2)} → {householdSize[householdSize.length-1]?.toFixed(2)}（家庭規模縮小）
+        </p>
+      </div>
+    </div>
+  )
+}
+
+// ========================
 // Main Page
 // ========================
 
@@ -375,6 +445,9 @@ export default function Population() {
           </table>
         </div>
       </div>
+
+      {/* Demographic indicators trend */}
+      <DemographicTrends population={population} />
 
       {/* Population Pyramid with shape marker */}
       <PyramidChart ageData={ageGender} year={`民國${latest.year}年`} highlightShape={shape} />
