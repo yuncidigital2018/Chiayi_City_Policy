@@ -1,5 +1,6 @@
 """Data Normalizer — clean, standardize, and merge raw data into processed tables."""
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +23,16 @@ SCHEMA_POPULATION_ANNUAL = {
     "female": "int64",
     "natural_increase": "int64",
     "social_increase": "int64",
+    "households": "int64",
+    "growth_pct": "string",
+}
+
+SCHEMA_POPULATION_AGE_GENDER = {
+    "age_group": "string",
+    "male": "int64",
+    "female": "int64",
+    "total": "int64",
+    "age_midpoint": "float64",
 }
 
 SCHEMA_POPULATION_VILLAGE = {
@@ -30,6 +41,8 @@ SCHEMA_POPULATION_VILLAGE = {
     "district": "string",
     "village": "string",
     "households": "int64",
+    "male": "int64",
+    "female": "int64",
     "population": "int64",
 }
 
@@ -41,13 +54,13 @@ SCHEMA_BUDGET_REVENUE = {
 
 SCHEMA_BUDGET_EXPENDITURE_FUNCTION = {
     "fiscal_year": "int64",
-    "level": "int64",           # 1=款(top), 2=項(sub)
-    "parent_code": "string",     # 款 code (e.g. "01")
-    "code": "string",            # 項 code (e.g. "01", "02") or empty for 款
+    "level": "int64",
+    "parent_code": "string",
+    "code": "string",
     "function_category": "string",
-    "recurring": "float64",      # 經常門
-    "capital": "float64",        # 資本門
-    "amount": "float64",         # 合計
+    "recurring": "float64",
+    "capital": "float64",
+    "amount": "float64",
 }
 
 SCHEMA_BUDGET_EXPENDITURE_AGENCY = {
@@ -84,7 +97,11 @@ def _convert_schema(df: pd.DataFrame, schema: dict[str, str]) -> pd.DataFrame:
 # ========================
 
 def normalize_population_annual(raw_path: Path | str | None) -> pd.DataFrame | None:
-    """Normalize yearly population data into PopulationAnnual schema."""
+    """Normalize yearly population data (from household scraper).
+    
+    Supports scraper columns: year, households, male, female, total, growth_pct
+    Maps to standard schema: year, total_population, male, female, households, growth_pct
+    """
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("population_annual: no raw data found")
         return None
@@ -92,28 +109,62 @@ def normalize_population_annual(raw_path: Path | str | None) -> pd.DataFrame | N
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    # Map columns to standard schema
     col_map = {}
     for col in df.columns:
         c = col.strip()
         if c == "年度":
             col_map[col] = "year"
-        elif c == "總人口":
+        elif c in ("總人口", "total"):
             col_map[col] = "total_population"
-        elif c == "男性":
+        elif c == "male":
             col_map[col] = "male"
-        elif c == "女性":
+        elif c == "female":
             col_map[col] = "female"
-        elif c == "自然增減":
-            col_map[col] = "natural_increase"
-        elif c == "社會增減":
-            col_map[col] = "social_increase"
+        elif c == "households":
+            col_map[col] = "households"
+        elif c == "growth_pct":
+            col_map[col] = "growth_pct"
 
     df = df.rename(columns=col_map)
-    # Keep only standard columns
-    standard_cols = ["year", "total_population", "male", "female", "natural_increase", "social_increase"]
+
+    # Map 'total' to 'total_population' if not already mapped
+    if "total" in df.columns and "total_population" not in df.columns:
+        df = df.rename(columns={"total": "total_population"})
+
+    standard_cols = ["year", "total_population", "male", "female", "natural_increase",
+                     "social_increase", "households", "growth_pct"]
     df = df[[c for c in standard_cols if c in df.columns]]
     df = _convert_schema(df, SCHEMA_POPULATION_ANNUAL)
+    return df
+
+
+def _parse_age_midpoint(age_group: str) -> float:
+    """Convert age group like '0~4歲' to midpoint (2.0)."""
+    m = re.match(r'(\d+)~(\d+)歲', age_group)
+    if m:
+        return (int(m.group(1)) + int(m.group(2))) / 2.0
+    m2 = re.match(r'(\d+)歲', age_group)
+    if m2:
+        return float(m2.group(1))
+    return 0.0
+
+
+def normalize_population_age_gender(raw_path: Path | str | None) -> pd.DataFrame | None:
+    """Normalize age/gender population data (population pyramid)."""
+    if raw_path is None or not Path(raw_path).exists():
+        logger.warning("population_age_gender: no raw data found")
+        return None
+
+    df = pd.read_csv(raw_path, encoding="utf-8")
+    df = _clean_column_names(df)
+
+    for col in ["age_group", "male", "female", "total"]:
+        if col not in df.columns:
+            logger.warning(f"population_age_gender: missing column {col}")
+            return None
+
+    df = _convert_schema(df, SCHEMA_POPULATION_AGE_GENDER)
+    df["age_midpoint"] = df["age_group"].apply(_parse_age_midpoint)
     return df
 
 
@@ -139,11 +190,15 @@ def normalize_population_village(raw_path: Path | str | None) -> pd.DataFrame | 
             col_map[col] = "village"
         elif c == "戶數":
             col_map[col] = "households"
-        elif c == "人口數":
+        elif c == "人口數" or c == "population":
             col_map[col] = "population"
+        elif c == "male":
+            col_map[col] = "male"
+        elif c == "female":
+            col_map[col] = "female"
 
     df = df.rename(columns=col_map)
-    standard_cols = ["year", "month", "district", "village", "households", "population"]
+    standard_cols = ["year", "month", "district", "village", "households", "male", "female", "population"]
     df = df[[c for c in standard_cols if c in df.columns]]
     df = _convert_schema(df, SCHEMA_POPULATION_VILLAGE)
     return df
@@ -154,11 +209,7 @@ def normalize_population_village(raw_path: Path | str | None) -> pd.DataFrame | 
 # ========================
 
 def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
-    """Normalize revenue-by-source budget data.
-    
-    Handles both sample format (名稱及編號/本年度預算數) and
-    real Open Chiayi format (科目名稱/合計（千元）).
-    """
+    """Normalize revenue-by-source budget data."""
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_revenue: no raw data found")
         return None
@@ -166,7 +217,6 @@ def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
 
-    # Detect column names: real vs sample format
     name_col = None
     for candidate in ["科目名稱", "名稱及編號", "名稱"]:
         if candidate in df.columns:
@@ -185,7 +235,6 @@ def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115
         logger.error(f"budget_revenue: cannot find amount column. Available: {list(df.columns)}")
         return None
 
-    # Keep only top-level categories (款 level, skip sub-items where 款 is empty)
     df_top = df[df["款"].notna() & (df["款"].astype(str).str.strip() != "")].copy()
 
     result = pd.DataFrame({
@@ -199,17 +248,14 @@ def normalize_budget_revenue(raw_path: Path | str | None, fiscal_year: int = 115
 
 
 def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_year: int = 115) -> pd.DataFrame | None:
-    """Normalize expenditure-by-function (政事別) budget data.
-    
-    Outputs both L1 (款) and L2 (項) rows with parent_code for drill-down.
-    """
+    """Normalize expenditure-by-function (政事別) with L1/L2 hierarchy."""
     if raw_path is None or not Path(raw_path).exists():
         logger.warning("budget_expenditure_function: no raw data found")
         return None
 
     df = pd.read_csv(raw_path, encoding="utf-8")
     df = _clean_column_names(df)
-    
+
     rows = []
     current_parent = None
 
@@ -224,7 +270,6 @@ def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_ye
         total = pd.to_numeric(row.get("合計金額", 0), errors="coerce") if pd.notna(row.get("合計金額")) else 0
 
         if kuan and not xiang:
-            # L1: top-level category (款)
             current_parent = kuan
             rows.append({
                 "fiscal_year": fiscal_year,
@@ -237,7 +282,6 @@ def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_ye
                 "amount": total,
             })
         elif kuan and xiang:
-            # L2: sub-category (項) under current parent
             rows.append({
                 "fiscal_year": fiscal_year,
                 "level": 2,
@@ -249,7 +293,6 @@ def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_ye
                 "amount": total,
             })
         elif not kuan and xiang:
-            # L2: sub-category with missing 款 (fall back to current_parent)
             rows.append({
                 "fiscal_year": fiscal_year,
                 "level": 2,
@@ -260,7 +303,7 @@ def normalize_budget_expenditure_function(raw_path: Path | str | None, fiscal_ye
                 "capital": capital,
                 "amount": total,
             })
-    
+
     result = pd.DataFrame(rows)
     result = _convert_schema(result, SCHEMA_BUDGET_EXPENDITURE_FUNCTION)
     return result
@@ -290,7 +333,8 @@ def normalize_budget_expenditure_agency(raw_path: Path | str | None, fiscal_year
 # ========================
 
 NORMALIZER_MAP = {
-    "population_annual": (normalize_population_annual, "population_annual", {}),
+    "population_annual": (normalize_population_annual, "population_historical", {}),
+    "population_age_gender": (normalize_population_age_gender, "population_age_gender", {}),
     "population_village_monthly": (normalize_population_village, "population_village_monthly", {}),
     "budget_revenue_by_source": (normalize_budget_revenue, "budget_revenue_115", {"fiscal_year": 115}),
     "budget_expenditure_by_function": (normalize_budget_expenditure_function, "budget_expenditure_policy_115", {"fiscal_year": 115}),
@@ -304,7 +348,6 @@ def run_normalization(raw_paths: dict[str, Path] | None = None) -> dict[str, Pat
     results = {}
 
     for table_name, (normalizer_fn, raw_filename, kwargs) in NORMALIZER_MAP.items():
-        # Find raw data
         if raw_paths and raw_filename in raw_paths:
             raw_path = raw_paths[raw_filename]
         else:

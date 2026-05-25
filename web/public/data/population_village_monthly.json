@@ -1,962 +1,842 @@
 [
   {
     "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "東門里",
-    "households": 1257,
-    "population": 3772
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "東川里",
-    "households": 1036,
-    "population": 4145
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "文化里",
-    "households": 842,
-    "population": 3371
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "民族里",
-    "households": 611,
-    "population": 2447
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "光明里",
-    "households": 2382,
-    "population": 9530
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "育英里",
-    "households": 2506,
-    "population": 10024
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "大雅里",
-    "households": 3303,
-    "population": 13213
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "新店里",
-    "households": 971,
-    "population": 2913
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "王田里",
-    "households": 2706,
-    "population": 8119
-  },
-  {
-    "year": 115,
-    "month": 1,
+    "month": 4,
     "district": "東區",
     "village": "荖藤里",
-    "households": 2346,
-    "population": 9385
+    "households": 2327,
+    "male": 2809,
+    "female": 3128,
+    "population": 5937
   },
   {
     "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "頂庄里",
-    "households": 630,
-    "population": 2523
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "盧厝里",
-    "households": 3348,
-    "population": 10046
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "林森里",
-    "households": 2084,
-    "population": 8339
-  },
-  {
-    "year": 115,
-    "month": 1,
+    "month": 4,
     "district": "東區",
     "village": "後湖里",
-    "households": 4829,
-    "population": 14488
+    "households": 1581,
+    "male": 1918,
+    "female": 2172,
+    "population": 4090
   },
   {
     "year": 115,
-    "month": 1,
+    "month": 4,
     "district": "東區",
-    "village": "山子頂里",
-    "households": 2720,
-    "population": 10882
+    "village": "仁義里",
+    "households": 1351,
+    "male": 1511,
+    "female": 1812,
+    "population": 3323
   },
   {
     "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "仁愛里",
-    "households": 3735,
-    "population": 11207
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "忠孝里",
-    "households": 3088,
-    "population": 9264
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "東區",
-    "village": "新榮里",
-    "households": 4151,
-    "population": 12455
-  },
-  {
-    "year": 115,
-    "month": 1,
+    "month": 4,
     "district": "東區",
     "village": "中庄里",
-    "households": 679,
-    "population": 2717
+    "households": 1564,
+    "male": 1763,
+    "female": 1995,
+    "population": 3758
   },
   {
     "year": 115,
-    "month": 1,
+    "month": 4,
     "district": "東區",
-    "village": "蘭潭里",
-    "households": 1355,
-    "population": 5422
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "西門里",
-    "households": 1935,
-    "population": 5805
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "新西里",
-    "households": 3940,
-    "population": 11821
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "港坪里",
-    "households": 759,
-    "population": 3038
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "竹村里",
-    "households": 2285,
-    "population": 6856
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "頭港里",
-    "households": 2583,
-    "population": 7751
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "美源里",
-    "households": 3354,
-    "population": 10062
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "北湖里",
-    "households": 398,
-    "population": 1595
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "新南里",
-    "households": 2530,
-    "population": 10123
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "垂楊里",
-    "households": 1227,
-    "population": 3682
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "導明里",
-    "households": 909,
-    "population": 3636
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "仁義里",
-    "households": 2888,
-    "population": 11555
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "自強里",
-    "households": 2627,
-    "population": 10508
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "長榮里",
-    "households": 608,
+    "village": "頂庄里",
+    "households": 900,
+    "male": 1172,
+    "female": 1260,
     "population": 2432
   },
   {
     "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "車店里",
-    "households": 1904,
-    "population": 5714
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "番溝里",
-    "households": 2939,
-    "population": 8817
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "劉厝里",
-    "households": 1474,
-    "population": 5898
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "磚窯里",
-    "households": 1257,
-    "population": 5030
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "溪埧里",
-    "households": 599,
-    "population": 1798
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "湖邊里",
-    "households": 3355,
-    "population": 10066
-  },
-  {
-    "year": 115,
-    "month": 1,
-    "district": "西區",
-    "village": "鹿寮里",
-    "households": 2103,
-    "population": 6309
-  },
-  {
-    "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
-    "village": "東門里",
-    "households": 4533,
-    "population": 13600
+    "village": "圳頭里",
+    "households": 2039,
+    "male": 2263,
+    "female": 2604,
+    "population": 4867
   },
   {
     "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "東川里",
-    "households": 2087,
-    "population": 8349
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "文化里",
-    "households": 3044,
-    "population": 12179
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "民族里",
-    "households": 2917,
-    "population": 8751
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "光明里",
-    "households": 2156,
-    "population": 6470
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "育英里",
-    "households": 4129,
-    "population": 12388
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "大雅里",
-    "households": 2699,
-    "population": 10796
-  },
-  {
-    "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
     "village": "新店里",
-    "households": 1513,
-    "population": 6053
+    "households": 1829,
+    "male": 2142,
+    "female": 2431,
+    "population": 4573
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
+    "district": "東區",
+    "village": "後庄里",
+    "households": 1691,
+    "male": 2103,
+    "female": 2311,
+    "population": 4414
+  },
+  {
+    "year": 115,
+    "month": 4,
     "district": "東區",
     "village": "王田里",
-    "households": 3674,
-    "population": 14697
+    "households": 1165,
+    "male": 1131,
+    "female": 1381,
+    "population": 2512
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
-    "village": "荖藤里",
-    "households": 1833,
-    "population": 7333
+    "village": "東川里",
+    "households": 852,
+    "male": 891,
+    "female": 1030,
+    "population": 1921
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
-    "village": "頂庄里",
-    "households": 1961,
-    "population": 7845
+    "village": "太平里",
+    "households": 2075,
+    "male": 2257,
+    "female": 2671,
+    "population": 4928
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
     "village": "盧厝里",
-    "households": 1694,
-    "population": 5084
+    "households": 979,
+    "male": 1159,
+    "female": 1237,
+    "population": 2396
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
-    "village": "林森里",
-    "households": 2190,
-    "population": 6571
+    "village": "鹿寮里",
+    "households": 439,
+    "male": 616,
+    "female": 577,
+    "population": 1193
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
-    "village": "後湖里",
-    "households": 732,
-    "population": 2928
+    "village": "長竹里",
+    "households": 1427,
+    "male": 1652,
+    "female": 1749,
+    "population": 3401
   },
   {
     "year": 115,
-    "month": 2,
+    "month": 4,
     "district": "東區",
-    "village": "山子頂里",
-    "households": 4191,
-    "population": 12575
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "仁愛里",
-    "households": 3328,
-    "population": 13312
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "忠孝里",
-    "households": 765,
-    "population": 2295
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "新榮里",
-    "households": 1858,
-    "population": 5574
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "中庄里",
-    "households": 3490,
-    "population": 10472
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "東區",
-    "village": "蘭潭里",
-    "households": 1002,
-    "population": 4008
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "西門里",
-    "households": 2111,
-    "population": 6334
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "新西里",
-    "households": 1602,
-    "population": 4808
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "港坪里",
-    "households": 950,
-    "population": 3803
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "竹村里",
-    "households": 1328,
-    "population": 5312
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "頭港里",
-    "households": 2156,
-    "population": 8627
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "美源里",
-    "households": 2782,
-    "population": 11128
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "北湖里",
-    "households": 3421,
-    "population": 10263
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "新南里",
-    "households": 2705,
-    "population": 10821
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "垂楊里",
-    "households": 2464,
-    "population": 9859
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "導明里",
-    "households": 2996,
-    "population": 11985
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "仁義里",
-    "households": 492,
-    "population": 1970
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "自強里",
-    "households": 2885,
-    "population": 8655
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "長榮里",
-    "households": 1776,
-    "population": 7107
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "車店里",
-    "households": 1903,
-    "population": 7615
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "番溝里",
-    "households": 3888,
-    "population": 11664
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "劉厝里",
-    "households": 1305,
-    "population": 3917
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "磚窯里",
-    "households": 1123,
-    "population": 4493
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "溪埧里",
-    "households": 1277,
-    "population": 5108
-  },
-  {
-    "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "湖邊里",
+    "village": "短竹里",
     "households": 1335,
-    "population": 4007
+    "male": 1344,
+    "female": 1530,
+    "population": 2874
   },
   {
     "year": 115,
-    "month": 2,
-    "district": "西區",
-    "village": "鹿寮里",
-    "households": 3419,
-    "population": 10257
-  },
-  {
-    "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "東門里",
-    "households": 4791,
-    "population": 14375
+    "village": "新開里",
+    "households": 988,
+    "male": 1039,
+    "female": 1131,
+    "population": 2170
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "東川里",
-    "households": 2846,
-    "population": 11384
+    "village": "宣信里",
+    "households": 596,
+    "male": 646,
+    "female": 711,
+    "population": 1357
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "文化里",
-    "households": 3486,
-    "population": 13947
+    "village": "興南里",
+    "households": 788,
+    "male": 846,
+    "female": 883,
+    "population": 1729
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
+    "district": "東區",
+    "village": "豐年里",
+    "households": 589,
+    "male": 676,
+    "female": 695,
+    "population": 1371
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "芳草里",
+    "households": 1826,
+    "male": 1930,
+    "female": 2219,
+    "population": 4149
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "芳安里",
+    "households": 974,
+    "male": 1113,
+    "female": 1263,
+    "population": 2376
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "頂寮里",
+    "households": 1097,
+    "male": 1345,
+    "female": 1493,
+    "population": 2838
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "安寮里",
+    "households": 1291,
+    "male": 1443,
+    "female": 1562,
+    "population": 3005
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "興安里",
+    "households": 1768,
+    "male": 2150,
+    "female": 2308,
+    "population": 4458
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "興村里",
+    "households": 1905,
+    "male": 2142,
+    "female": 2540,
+    "population": 4682
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "興仁里",
+    "households": 1592,
+    "male": 1982,
+    "female": 2194,
+    "population": 4176
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "過溝里",
+    "households": 966,
+    "male": 1059,
+    "female": 1186,
+    "population": 2245
+  },
+  {
+    "year": 115,
+    "month": 4,
     "district": "東區",
     "village": "民族里",
-    "households": 1715,
-    "population": 6862
+    "households": 900,
+    "male": 950,
+    "female": 860,
+    "population": 1810
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "光明里",
-    "households": 3138,
-    "population": 12552
+    "village": "朝陽里",
+    "households": 831,
+    "male": 985,
+    "female": 996,
+    "population": 1981
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "育英里",
-    "households": 2021,
-    "population": 8087
+    "village": "華南里",
+    "households": 964,
+    "male": 910,
+    "female": 1051,
+    "population": 1961
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "大雅里",
-    "households": 4829,
-    "population": 14488
+    "village": "東興里",
+    "households": 922,
+    "male": 898,
+    "female": 977,
+    "population": 1875
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "新店里",
-    "households": 2536,
-    "population": 7609
+    "village": "中山里",
+    "households": 986,
+    "male": 941,
+    "female": 1082,
+    "population": 2023
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "王田里",
-    "households": 3204,
-    "population": 12817
+    "village": "中央里",
+    "households": 1030,
+    "male": 1080,
+    "female": 1124,
+    "population": 2204
   },
   {
     "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "荖藤里",
-    "households": 2485,
-    "population": 9943
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "頂庄里",
-    "households": 4663,
-    "population": 13990
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "盧厝里",
-    "households": 1596,
-    "population": 6384
-  },
-  {
-    "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
     "village": "林森里",
-    "households": 3544,
-    "population": 14178
+    "households": 1036,
+    "male": 1312,
+    "female": 1523,
+    "population": 2835
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
-    "village": "後湖里",
-    "households": 647,
-    "population": 2591
+    "village": "北門里",
+    "households": 908,
+    "male": 1077,
+    "female": 1102,
+    "population": 2179
   },
   {
     "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "山子頂里",
-    "households": 3587,
-    "population": 10761
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "仁愛里",
-    "households": 3248,
-    "population": 9744
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "忠孝里",
-    "households": 3303,
-    "population": 9910
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "新榮里",
-    "households": 741,
-    "population": 2224
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "東區",
-    "village": "中庄里",
-    "households": 1181,
-    "population": 3543
-  },
-  {
-    "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "東區",
     "village": "蘭潭里",
-    "households": 845,
-    "population": 2536
+    "households": 1297,
+    "male": 1274,
+    "female": 1412,
+    "population": 2686
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
+    "district": "東區",
+    "village": "文雅里",
+    "households": 1940,
+    "male": 1971,
+    "female": 2411,
+    "population": 4382
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "安業里",
+    "households": 1007,
+    "male": 1081,
+    "female": 1245,
+    "population": 2326
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "東區",
+    "village": "義教里",
+    "households": 1219,
+    "male": 1511,
+    "female": 1601,
+    "population": 3112
+  },
+  {
+    "year": 115,
+    "month": 4,
     "district": "西區",
-    "village": "西門里",
-    "households": 3663,
-    "population": 10989
+    "village": "香湖里",
+    "households": 356,
+    "male": 426,
+    "female": 474,
+    "population": 900
   },
   {
     "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "新西里",
-    "households": 2843,
-    "population": 11372
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "港坪里",
-    "households": 1262,
-    "population": 5051
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "竹村里",
-    "households": 1214,
-    "population": 3642
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "頭港里",
-    "households": 2220,
-    "population": 6660
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "美源里",
-    "households": 2865,
-    "population": 11463
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "北湖里",
-    "households": 1592,
-    "population": 4776
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "新南里",
-    "households": 670,
-    "population": 2011
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "垂楊里",
-    "households": 1445,
-    "population": 5781
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "導明里",
-    "households": 844,
-    "population": 2534
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "仁義里",
-    "households": 2895,
-    "population": 11580
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "自強里",
-    "households": 1613,
-    "population": 6454
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "長榮里",
-    "households": 1468,
-    "population": 4406
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "車店里",
-    "households": 3894,
-    "population": 11684
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "番溝里",
-    "households": 2647,
-    "population": 10590
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "劉厝里",
-    "households": 3825,
-    "population": 11476
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "磚窯里",
-    "households": 3700,
-    "population": 11101
-  },
-  {
-    "year": 115,
-    "month": 3,
-    "district": "西區",
-    "village": "溪埧里",
-    "households": 1446,
-    "population": 4338
-  },
-  {
-    "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "西區",
     "village": "湖邊里",
-    "households": 2466,
-    "population": 7400
+    "households": 941,
+    "male": 1124,
+    "female": 1319,
+    "population": 2443
   },
   {
     "year": 115,
-    "month": 3,
+    "month": 4,
     "district": "西區",
-    "village": "鹿寮里",
-    "households": 1150,
-    "population": 4601
+    "village": "北榮里",
+    "households": 1049,
+    "male": 1241,
+    "female": 1307,
+    "population": 2548
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "重興里",
+    "households": 925,
+    "male": 1126,
+    "female": 1178,
+    "population": 2304
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "竹圍里",
+    "households": 2419,
+    "male": 2596,
+    "female": 2889,
+    "population": 5485
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "新厝里",
+    "households": 1810,
+    "male": 2434,
+    "female": 2595,
+    "population": 5029
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "保安里",
+    "households": 1615,
+    "male": 1838,
+    "female": 1980,
+    "population": 3818
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "北湖里",
+    "households": 1238,
+    "male": 1744,
+    "female": 1740,
+    "population": 3484
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "下埤里",
+    "households": 715,
+    "male": 950,
+    "female": 967,
+    "population": 1917
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "竹村里",
+    "households": 528,
+    "male": 652,
+    "female": 589,
+    "population": 1241
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "大溪里",
+    "households": 952,
+    "male": 1291,
+    "female": 1241,
+    "population": 2532
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "福全里",
+    "households": 2111,
+    "male": 2181,
+    "female": 2470,
+    "population": 4651
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "西平里",
+    "households": 1560,
+    "male": 1867,
+    "female": 1945,
+    "population": 3812
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "磚磘里",
+    "households": 1828,
+    "male": 1954,
+    "female": 2242,
+    "population": 4196
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "港坪里",
+    "households": 1580,
+    "male": 2034,
+    "female": 2142,
+    "population": 4176
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "頭港里",
+    "households": 789,
+    "male": 1074,
+    "female": 998,
+    "population": 2072
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "劉厝里",
+    "households": 3370,
+    "male": 4153,
+    "female": 4347,
+    "population": 8500
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "新西里",
+    "households": 962,
+    "male": 1152,
+    "female": 1191,
+    "population": 2343
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "書院里",
+    "households": 976,
+    "male": 975,
+    "female": 979,
+    "population": 1954
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "培元里",
+    "households": 778,
+    "male": 882,
+    "female": 969,
+    "population": 1851
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "垂楊里",
+    "households": 891,
+    "male": 1005,
+    "female": 1064,
+    "population": 2069
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "車店里",
+    "households": 2736,
+    "male": 3304,
+    "female": 3647,
+    "population": 6951
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "福民里",
+    "households": 2794,
+    "male": 3187,
+    "female": 3526,
+    "population": 6713
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "湖內里",
+    "households": 3176,
+    "male": 3738,
+    "female": 4155,
+    "population": 7893
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "美源里",
+    "households": 1762,
+    "male": 1952,
+    "female": 2248,
+    "population": 4200
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "育英里",
+    "households": 810,
+    "male": 879,
+    "female": 1014,
+    "population": 1893
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "致遠里",
+    "households": 987,
+    "male": 1012,
+    "female": 1174,
+    "population": 2186
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "光路里",
+    "households": 2628,
+    "male": 3131,
+    "female": 3403,
+    "population": 6534
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "翠岱里",
+    "households": 834,
+    "male": 858,
+    "female": 911,
+    "population": 1769
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "自強里",
+    "households": 810,
+    "male": 896,
+    "female": 1028,
+    "population": 1924
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "永和里",
+    "households": 960,
+    "male": 1041,
+    "female": 1035,
+    "population": 2076
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "新富里",
+    "households": 771,
+    "male": 798,
+    "female": 841,
+    "population": 1639
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "文化里",
+    "households": 1158,
+    "male": 1080,
+    "female": 1194,
+    "population": 2274
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "西榮里",
+    "households": 1240,
+    "male": 1240,
+    "female": 1238,
+    "population": 2478
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "國華里",
+    "households": 722,
+    "male": 668,
+    "female": 761,
+    "population": 1429
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "番社里",
+    "households": 694,
+    "male": 695,
+    "female": 721,
+    "population": 1416
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "導明里",
+    "households": 750,
+    "male": 814,
+    "female": 838,
+    "population": 1652
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "慶安里",
+    "households": 670,
+    "male": 825,
+    "female": 820,
+    "population": 1645
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "後驛里",
+    "households": 1004,
+    "male": 1148,
+    "female": 1140,
+    "population": 2288
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "福安里",
+    "households": 1984,
+    "male": 2309,
+    "female": 2592,
+    "population": 4901
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "獅子里",
+    "households": 1301,
+    "male": 1458,
+    "female": 1738,
+    "population": 3196
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "紅瓦里",
+    "households": 646,
+    "male": 932,
+    "female": 935,
+    "population": 1867
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "保福里",
+    "households": 1861,
+    "male": 2062,
+    "female": 2336,
+    "population": 4398
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "保生里",
+    "households": 2058,
+    "male": 2417,
+    "female": 2593,
+    "population": 5010
+  },
+  {
+    "year": 115,
+    "month": 4,
+    "district": "西區",
+    "village": "北新里",
+    "households": 532,
+    "male": 720,
+    "female": 700,
+    "population": 1420
   }
 ]

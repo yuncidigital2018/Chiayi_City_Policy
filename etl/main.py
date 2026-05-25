@@ -97,9 +97,19 @@ def run_pipeline(force: bool, skip_fetch: bool, skip_normalize: bool, skip_gener
 
     if not skip_fetch:
         logger.info("=== Phase 1: Fetch ===")
-        raw_paths = fetch_all(force=force)
-        success = sum(1 for v in raw_paths.values() if v is not None)
-        logger.info(f"Fetch: {success}/{len(raw_paths)} succeeded")
+        raw_results = fetch_all(force=force)
+        # Build mapping from output_filename (no ext) → Path for normalizer lookup
+        sources = load_datasources()
+        raw_paths = {}
+        for src in sources:
+            sid = src["id"]
+            path = raw_results.get(sid)
+            if path:
+                output_rel = src.get("output", f"data/raw/{sid}.csv")
+                raw_name = Path(output_rel).stem  # e.g. "population_historical"
+                raw_paths[raw_name] = path
+        success = sum(1 for v in raw_results.values() if v is not None)
+        logger.info(f"Fetch: {success}/{len(raw_results)} succeeded")
 
     if not skip_normalize:
         logger.info("=== Phase 2: Normalize ===")

@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
-from jinja2 import Template
+from jinja2 import Environment, BaseLoader
 
 from etl.normalizer import PROCESSED_DIR
 
@@ -13,11 +13,56 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = PROJECT_ROOT / "content"
 
+
+# ========================
+# Helpers (defined before env so filters work)
+# ========================
+
+def _format_number(n) -> str:
+    """Format number with commas."""
+    try:
+        return f"{int(n):,}"
+    except (ValueError, TypeError):
+        return str(n)
+
+
+def _format_change(n) -> str:
+    """Format change with +/- sign."""
+    try:
+        n = int(n)
+        return f"+{n:,}" if n > 0 else f"{n:,}"
+    except (ValueError, TypeError):
+        return str(n)
+
+
+def _fmt(n):
+    """Format number with commas, handle None/NaN."""
+    try:
+        if n is None or (isinstance(n, float) and n != n):
+            return '—'
+        return f"{int(n):,}"
+    except (ValueError, TypeError):
+        return str(n)
+
+
+# ========================
+# Shared Jinja2 environment
+# ========================
+
+_env = Environment(loader=BaseLoader())
+_env.filters["format_number"] = _format_number
+_env.filters["format_change"] = _format_change
+
+
+def _tpl(source: str):
+    return _env.from_string(source)
+
+
 # ========================
 # Templates
 # ========================
 
-POPULATION_OVERVIEW_TEMPLATE = Template("""# 嘉義市人口總覽
+POPULATION_OVERVIEW_TEMPLATE = _tpl("""# 嘉義市人口總覽
 
 > 資料更新日期：{{ generated_at }}
 
@@ -29,12 +74,28 @@ POPULATION_OVERVIEW_TEMPLATE = Template("""# 嘉義市人口總覽
 | {{ row.metric }} | {{ row.value | default('—') }} |
 {% endfor %}
 
+## 年齡結構指標
+
+| 指標 | 數值 |
+|------|------|
+{% for row in age_indicators %}
+| {{ row.metric }} | {{ row.value }} |
+{% endfor %}
+
 ## 歷年人口趨勢
 
-| 年度 | 總人口 | 男性 | 女性 | 自然增減 | 社會增減 |
-|------|--------|------|------|----------|----------|
+| 年度 | 總人口 | 男性 | 女性 | 戶數 | 增減率 |
+|------|--------|------|------|------|--------|
 {% for row in annual_rows %}
-| {{ row.year }} | {{ row.total_population }} | {{ row.male }} | {{ row.female }} | {{ row.natural_increase }} | {{ row.social_increase }} |
+| {{ row.year }} | {{ row.total_population }} | {{ row.male }} | {{ row.female }} | {{ row.households | default('—') }} | {{ row.growth_pct | default('—') }} |
+{% endfor %}
+
+## 人口金字塔（性別年齡分布）
+
+| 年齡層 | 男性 | 女性 | 合計 |
+|--------|------|------|------|
+{% for row in pyramid_rows %}
+| {{ row.age_group }} | {{ row.male | format_number }} | {{ row.female | format_number }} | {{ row.total | format_number }} |
 {% endfor %}
 
 ## 重點觀察
@@ -42,12 +103,15 @@ POPULATION_OVERVIEW_TEMPLATE = Template("""# 嘉義市人口總覽
 {% if latest_population %}
 - **最新人口數**：{{ latest_population | format_number }} 人
 {% endif %}
-{% if latest_change %}
-- **年度增減**：{{ latest_change | format_change }} 人
+{% if aging_index %}
+- **老化指數**：{{ aging_index }}（65歲以上/0-14歲 × 100）
+{% endif %}
+{% if dependency_ratio %}
+- **扶養比**：{{ dependency_ratio }}
 {% endif %}
 """)
 
-BUDGET_REVENUE_TEMPLATE = Template("""# 歲入來源別預算結構
+BUDGET_REVENUE_TEMPLATE = _tpl("""# 歲入來源別預算結構
 
 > 資料更新日期：{{ generated_at }}
 
@@ -68,7 +132,7 @@ BUDGET_REVENUE_TEMPLATE = Template("""# 歲入來源別預算結構
 {% endfor %}
 """)
 
-BUDGET_EXPENDITURE_TEMPLATE = Template("""# 歲出預算結構
+BUDGET_EXPENDITURE_TEMPLATE = _tpl("""# 歲出預算結構
 
 > 資料更新日期：{{ generated_at }}
 
@@ -91,7 +155,7 @@ BUDGET_EXPENDITURE_TEMPLATE = Template("""# 歲出預算結構
 | {{ row.agency_name }} | {{ row.amount | default('—') }} | {{ row.percentage | default('—') }}% |{% endfor %}
 """)
 
-POPULATION_VILLAGE_TEMPLATE = Template("""# 區里人口分布
+POPULATION_VILLAGE_TEMPLATE = _tpl("""# 區里人口分布
 
 > 資料更新日期：{{ generated_at }}
 > 期間：{{ year }}年{{ month }}月
@@ -122,38 +186,18 @@ POPULATION_VILLAGE_TEMPLATE = Template("""# 區里人口分布
 """)
 
 
-def _format_number(n) -> str:
-    """Format number with commas."""
-    try:
-        return f"{int(n):,}"
-    except (ValueError, TypeError):
-        return str(n)
+# ========================
+# Generators
+# ========================
 
-
-def _format_change(n) -> str:
-    """Format change with +/- sign."""
-    try:
-        n = int(n)
-        return f"+{n:,}" if n > 0 else f"{n:,}"
-    except (ValueError, TypeError):
-        return str(n)
-
-
-# Register filters
-for tpl in [POPULATION_OVERVIEW_TEMPLATE, BUDGET_REVENUE_TEMPLATE,
-            BUDGET_EXPENDITURE_TEMPLATE, POPULATION_VILLAGE_TEMPLATE]:
-    tpl.environment.filters["format_number"] = _format_number
-    tpl.environment.filters["format_change"] = _format_change
-
-
-def generate_population_overview(df: pd.DataFrame | None) -> str | None:
-    """Generate population overview Markdown."""
+def generate_population_overview(df: pd.DataFrame | None,
+                                  df_age: pd.DataFrame | None = None) -> str | None:
+    """Generate population overview Markdown with age pyramid."""
     if df is None or df.empty:
         return None
 
     generated_at = datetime.now().strftime("%Y-%m-%d")
 
-    # Summary rows
     latest = df.iloc[-1] if len(df) > 0 else None
     summary_rows = []
     if latest is not None:
@@ -162,19 +206,50 @@ def generate_population_overview(df: pd.DataFrame | None) -> str | None:
             {"metric": "總人口", "value": _format_number(latest.get("total_population", 0))},
             {"metric": "男性", "value": _format_number(latest.get("male", 0))},
             {"metric": "女性", "value": _format_number(latest.get("female", 0))},
-            {"metric": "男女性別比", "value": f"{latest.get('male', 0) / max(latest.get('female', 1), 1) * 100:.1f}" if latest.get("female") else "—"},
-            {"metric": "自然增減", "value": _format_change(latest.get("natural_increase", 0))},
-            {"metric": "社會增減", "value": _format_change(latest.get("social_increase", 0))},
+            {"metric": "男女性別比",
+             "value": f"{latest.get('male', 0) / max(latest.get('female', 1), 1) * 100:.1f}"},
+            {"metric": "戶數", "value": _format_number(latest.get("households", 0))},
         ]
 
     annual_rows = df.to_dict("records")
+
+    # Age pyramid rows and indicators
+    pyramid_rows = []
+    aging_index = None
+    dependency_ratio = None
+    age_indicators = []
+    if df_age is not None and not df_age.empty:
+        pyramid_rows = df_age.sort_values("age_midpoint").to_dict("records")
+
+        young_mask = df_age["age_group"].isin(["0~4歲", "5~9歲", "10~14歲"])
+        working_mask = df_age["age_group"].isin(["15~19歲", "20~24歲", "25~29歲", "30~34歲",
+                                                  "35~39歲", "40~44歲", "45~49歲", "50~54歲",
+                                                  "55~59歲", "60~64歲"])
+        old_mask = df_age["age_group"].isin(["65~69歲", "70~74歲", "75~79歲", "80~84歲",
+                                              "85~89歲", "90~94歲", "95~99歲", "100歲以上"])
+        young_pop = int(df_age[young_mask]["total"].sum())
+        working_pop = int(df_age[working_mask]["total"].sum())
+        old_pop = int(df_age[old_mask]["total"].sum())
+
+        if young_pop > 0:
+            aging_index = f"{old_pop / young_pop * 100:.1f}"
+        dependency_ratio = f"{(young_pop + old_pop) / working_pop * 100:.1f}" if working_pop > 0 else "—"
+
+        age_indicators = [
+            {"metric": "0-14歲（幼年人口）", "value": _format_number(young_pop)},
+            {"metric": "15-64歲（工作年齡）", "value": _format_number(working_pop)},
+            {"metric": "65歲以上（老年人口）", "value": _format_number(old_pop)},
+        ]
 
     return POPULATION_OVERVIEW_TEMPLATE.render(
         generated_at=generated_at,
         summary_rows=summary_rows,
         annual_rows=annual_rows,
         latest_population=latest.get("total_population") if latest is not None else None,
-        latest_change=latest.get("natural_increase", 0) + latest.get("social_increase", 0) if latest is not None else None,
+        pyramid_rows=pyramid_rows,
+        aging_index=aging_index,
+        dependency_ratio=dependency_ratio,
+        age_indicators=age_indicators,
     )
 
 
@@ -186,7 +261,6 @@ def generate_budget_revenue(df: pd.DataFrame | None) -> str | None:
     generated_at = datetime.now().strftime("%Y-%m-%d")
     revenue_rows = df.to_dict("records")
 
-    # Calculate percentages
     total = df["amount"].sum()
     for row in revenue_rows:
         row["percentage"] = f"{row['amount'] / total * 100:.1f}" if total > 0 else "—"
@@ -195,18 +269,8 @@ def generate_budget_revenue(df: pd.DataFrame | None) -> str | None:
         generated_at=generated_at,
         fiscal_year=df["fiscal_year"].iloc[-1] if "fiscal_year" in df.columns else "—",
         revenue_rows=revenue_rows,
-        yearly_rows=[],  # Placeholder for multi-year comparison
+        yearly_rows=[],
     )
-
-
-def _fmt(n):
-    """Format number with commas, handle None/NaN."""
-    try:
-        if n is None or (isinstance(n, float) and n != n):  # NaN check
-            return '—'
-        return f"{int(n):,}"
-    except (ValueError, TypeError):
-        return str(n)
 
 
 def generate_budget_expenditure(df_func: pd.DataFrame | None, df_agency: pd.DataFrame | None) -> str | None:
@@ -216,7 +280,6 @@ def generate_budget_expenditure(df_func: pd.DataFrame | None, df_agency: pd.Data
 
     generated_at = datetime.now().strftime("%Y-%m-%d")
 
-    # Build tree: L1 items with L2 children
     tree = []
     children_map = {}
     l1_items = []
@@ -257,7 +320,6 @@ def generate_budget_expenditure(df_func: pd.DataFrame | None, df_agency: pd.Data
             'children': children,
         })
 
-    # Agency top 10
     agency_top = []
     if df_agency is not None and not df_agency.empty:
         agency_sorted = df_agency.nlargest(10, "amount")
@@ -283,11 +345,9 @@ def generate_population_village(df: pd.DataFrame | None) -> str | None:
     year = int(df["year"].max()) if "year" in df.columns else "—"
     month = int(df["month"].max()) if "month" in df.columns else "—"
 
-    # Split by district
     east = df[df.get("district", "") == "東區"].nlargest(20, "population") if "population" in df.columns else pd.DataFrame()
     west = df[df.get("district", "") == "西區"].nlargest(20, "population") if "population" in df.columns else pd.DataFrame()
 
-    # District summary
     district_summary = []
     if "district" in df.columns:
         for d in df["district"].unique():
@@ -310,25 +370,22 @@ def generate_population_village(df: pd.DataFrame | None) -> str | None:
 
 
 def run_markdown_generation(processed_paths: dict[str, Path] | None = None) -> dict[str, Path]:
-    """Generate all Markdown files from processed data.
-
-    Args:
-        processed_paths: Dict mapping table_name → processed CSV path
-
-    Returns:
-        Dict mapping content_key → generated Markdown path
-    """
+    """Generate all Markdown files from processed data."""
     results = {}
 
-    # Ensure output directories exist
     (CONTENT_DIR / "population").mkdir(parents=True, exist_ok=True)
     (CONTENT_DIR / "budget").mkdir(parents=True, exist_ok=True)
 
-    # Population overview
+    # Population overview (with age-gender pyramid)
     pop_path = processed_paths.get("population_annual") if processed_paths else None
     pop_path = pop_path or (PROCESSED_DIR / "population_annual.csv")
     df_pop = pd.read_csv(pop_path, encoding="utf-8") if pop_path and Path(pop_path).exists() else None
-    md = generate_population_overview(df_pop)
+
+    age_path = processed_paths.get("population_age_gender") if processed_paths else None
+    age_path = age_path or (PROCESSED_DIR / "population_age_gender.csv")
+    df_age = pd.read_csv(age_path, encoding="utf-8") if age_path and Path(age_path).exists() else None
+
+    md = generate_population_overview(df_pop, df_age)
     if md:
         out_path = CONTENT_DIR / "population" / "overview.md"
         out_path.write_text(md, encoding="utf-8")

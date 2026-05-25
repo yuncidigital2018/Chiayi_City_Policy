@@ -1,82 +1,282 @@
 [
   {
+    "year": 80,
+    "total_population": 258468,
+    "male": 131558,
+    "female": 126910,
+    "households": 63975,
+    "growth_pct": "0.000%"
+  },
+  {
+    "year": 81,
+    "total_population": 258698,
+    "male": 131786,
+    "female": 126912,
+    "households": 65277,
+    "growth_pct": "0.089%"
+  },
+  {
+    "year": 82,
+    "total_population": 258599,
+    "male": 131390,
+    "female": 127209,
+    "households": 67036,
+    "growth_pct": "-0.038%"
+  },
+  {
+    "year": 83,
+    "total_population": 260368,
+    "male": 132024,
+    "female": 128344,
+    "households": 69559,
+    "growth_pct": "0.684%"
+  },
+  {
+    "year": 84,
+    "total_population": 261391,
+    "male": 132279,
+    "female": 129112,
+    "households": 72297,
+    "growth_pct": "0.393%"
+  },
+  {
+    "year": 85,
+    "total_population": 262860,
+    "male": 132540,
+    "female": 130320,
+    "households": 74154,
+    "growth_pct": "0.562%"
+  },
+  {
+    "year": 86,
+    "total_population": 262822,
+    "male": 132520,
+    "female": 130302,
+    "households": 76143,
+    "growth_pct": "-0.014%"
+  },
+  {
+    "year": 87,
+    "total_population": 263050,
+    "male": 132538,
+    "female": 130512,
+    "households": 77373,
+    "growth_pct": "0.087%"
+  },
+  {
+    "year": 88,
+    "total_population": 265109,
+    "male": 133442,
+    "female": 131667,
+    "households": 78423,
+    "growth_pct": "0.783%"
+  },
+  {
+    "year": 89,
+    "total_population": 266183,
+    "male": 133793,
+    "female": 132390,
+    "households": 79716,
+    "growth_pct": "0.405%"
+  },
+  {
+    "year": 90,
+    "total_population": 267993,
+    "male": 134621,
+    "female": 133372,
+    "households": 81262,
+    "growth_pct": "0.680%"
+  },
+  {
+    "year": 91,
+    "total_population": 267907,
+    "male": 134289,
+    "female": 133618,
+    "households": 82444,
+    "growth_pct": "-0.032%"
+  },
+  {
+    "year": 92,
+    "total_population": 269594,
+    "male": 134909,
+    "female": 134685,
+    "households": 84429,
+    "growth_pct": "0.630%"
+  },
+  {
+    "year": 93,
+    "total_population": 270341,
+    "male": 135027,
+    "female": 135314,
+    "households": 86261,
+    "growth_pct": "0.277%"
+  },
+  {
+    "year": 94,
+    "total_population": 271701,
+    "male": 135252,
+    "female": 136449,
+    "households": 88011,
+    "growth_pct": "0.503%"
+  },
+  {
+    "year": 95,
+    "total_population": 272364,
+    "male": 135083,
+    "female": 137281,
+    "households": 89385,
+    "growth_pct": "0.244%"
+  },
+  {
+    "year": 96,
+    "total_population": 273075,
+    "male": 135112,
+    "female": 137963,
+    "households": 91065,
+    "growth_pct": "0.261%"
+  },
+  {
+    "year": 97,
+    "total_population": 273793,
+    "male": 135283,
+    "female": 138510,
+    "households": 93138,
+    "growth_pct": "0.263%"
+  },
+  {
+    "year": 98,
+    "total_population": 273861,
+    "male": 134980,
+    "female": 138881,
+    "households": 94513,
+    "growth_pct": "0.025%"
+  },
+  {
+    "year": 99,
+    "total_population": 272390,
+    "male": 134036,
+    "female": 138354,
+    "households": 95152,
+    "growth_pct": "-0.537%"
+  },
+  {
+    "year": 100,
+    "total_population": 271526,
+    "male": 133453,
+    "female": 138073,
+    "households": 96043,
+    "growth_pct": "-0.317%"
+  },
+  {
+    "year": 101,
+    "total_population": 271220,
+    "male": 133090,
+    "female": 138130,
+    "households": 97018,
+    "growth_pct": "-0.113%"
+  },
+  {
+    "year": 102,
+    "total_population": 270872,
+    "male": 132646,
+    "female": 138226,
+    "households": 97643,
+    "growth_pct": "-0.128%"
+  },
+  {
+    "year": 103,
+    "total_population": 270883,
+    "male": 132413,
+    "female": 138470,
+    "households": 98276,
+    "growth_pct": "0.004%"
+  },
+  {
+    "year": 104,
+    "total_population": 270366,
+    "male": 131907,
+    "female": 138459,
+    "households": 98702,
+    "growth_pct": "-0.191%"
+  },
+  {
+    "year": 105,
+    "total_population": 269874,
+    "male": 131410,
+    "female": 138464,
+    "households": 98947,
+    "growth_pct": "-0.182%"
+  },
+  {
     "year": 106,
-    "total_population": 266341,
-    "male": 131456,
-    "female": 134885,
-    "natural_increase": -1234,
-    "social_increase": -456
+    "total_population": 269398,
+    "male": 130974,
+    "female": 138424,
+    "households": 99476,
+    "growth_pct": "-0.176%"
   },
   {
     "year": 107,
-    "total_population": 265678,
-    "male": 131123,
-    "female": 134555,
-    "natural_increase": -1100,
-    "social_increase": -563
+    "total_population": 268622,
+    "male": 130416,
+    "female": 138206,
+    "households": 99925,
+    "growth_pct": "-0.288%"
   },
   {
     "year": 108,
-    "total_population": 265012,
-    "male": 130890,
-    "female": 134122,
-    "natural_increase": -987,
-    "social_increase": -679
+    "total_population": 267690,
+    "male": 129794,
+    "female": 137896,
+    "households": 100625,
+    "growth_pct": "-0.347%"
   },
   {
     "year": 109,
-    "total_population": 264345,
-    "male": 130567,
-    "female": 133778,
-    "natural_increase": -876,
-    "social_increase": -791
+    "total_population": 266005,
+    "male": 128670,
+    "female": 137335,
+    "households": 101155,
+    "growth_pct": "-0.629%"
   },
   {
     "year": 110,
-    "total_population": 263678,
-    "male": 130234,
-    "female": 133444,
-    "natural_increase": -765,
-    "social_increase": -902
+    "total_population": 264727,
+    "male": 127842,
+    "female": 136885,
+    "households": 101804,
+    "growth_pct": "-0.480%"
   },
   {
     "year": 111,
-    "total_population": 263012,
-    "male": 129901,
-    "female": 133111,
-    "natural_increase": -654,
-    "social_increase": -1012
+    "total_population": 262924,
+    "male": 126594,
+    "female": 136330,
+    "households": 102340,
+    "growth_pct": "-0.681%"
   },
   {
     "year": 112,
-    "total_population": 262456,
-    "male": 129678,
-    "female": 132778,
-    "natural_increase": -543,
-    "social_increase": -1113
+    "total_population": 263584,
+    "male": 126610,
+    "female": 136974,
+    "households": 103384,
+    "growth_pct": "0.251%"
   },
   {
     "year": 113,
-    "total_population": 261987,
-    "male": 129456,
-    "female": 132531,
-    "natural_increase": -432,
-    "social_increase": -1237
+    "total_population": 262177,
+    "male": 125664,
+    "female": 136513,
+    "households": 105407,
+    "growth_pct": "-0.534%"
   },
   {
     "year": 114,
-    "total_population": 261682,
-    "male": 129234,
-    "female": 132448,
-    "natural_increase": -321,
-    "social_increase": -984
-  },
-  {
-    "year": 115,
-    "total_population": 261523,
-    "male": 129123,
-    "female": 132400,
-    "natural_increase": -210,
-    "social_increase": -949
+    "total_population": 261592,
+    "male": 125065,
+    "female": 136527,
+    "households": 108946,
+    "growth_pct": "-0.223%"
   }
 ]

@@ -19,6 +19,7 @@ console.log(`Output dir: ${OUTPUT_DIR}`);
 
 const tables = [
   { input: 'population_annual.csv', output: 'population_annual.json' },
+  { input: 'population_age_gender.csv', output: 'population_age_gender.json' },
   { input: 'population_village_monthly.csv', output: 'population_village_monthly.json' },
   { input: 'budget_revenue_by_source.csv', output: 'budget_revenue_by_source.json' },
   { input: 'budget_expenditure_by_function.csv', output: 'budget_expenditure_by_function.json' },

@@ -1,0 +1,142 @@
+[
+  {
+    "age_group": "0~4歲",
+    "male": 3813,
+    "female": 3546,
+    "total": 7359,
+    "age_midpoint": 2
+  },
+  {
+    "age_group": "5~9歲",
+    "male": 5566,
+    "female": 5208,
+    "total": 10774,
+    "age_midpoint": 7
+  },
+  {
+    "age_group": "10~14歲",
+    "male": 6894,
+    "female": 6493,
+    "total": 13387,
+    "age_midpoint": 12
+  },
+  {
+    "age_group": "15~19歲",
+    "male": 6216,
+    "female": 5773,
+    "total": 11989,
+    "age_midpoint": 17
+  },
+  {
+    "age_group": "20~24歲",
+    "male": 7226,
+    "female": 6632,
+    "total": 13858,
+    "age_midpoint": 22
+  },
+  {
+    "age_group": "25~29歲",
+    "male": 9198,
+    "female": 8811,
+    "total": 18009,
+    "age_midpoint": 27
+  },
+  {
+    "age_group": "30~34歲",
+    "male": 8897,
+    "female": 8661,
+    "total": 17558,
+    "age_midpoint": 32
+  },
+  {
+    "age_group": "35~39歲",
+    "male": 7995,
+    "female": 8331,
+    "total": 16326,
+    "age_midpoint": 37
+  },
+  {
+    "age_group": "40~44歲",
+    "male": 9179,
+    "female": 10253,
+    "total": 19432,
+    "age_midpoint": 42
+  },
+  {
+    "age_group": "45~49歲",
+    "male": 9940,
+    "female": 11499,
+    "total": 21439,
+    "age_midpoint": 47
+  },
+  {
+    "age_group": "50~54歲",
+    "male": 8612,
+    "female": 10446,
+    "total": 19058,
+    "age_midpoint": 52
+  },
+  {
+    "age_group": "55~59歲",
+    "male": 9245,
+    "female": 10813,
+    "total": 20058,
+    "age_midpoint": 57
+  },
+  {
+    "age_group": "60~64歲",
+    "male": 9222,
+    "female": 10388,
+    "total": 19610,
+    "age_midpoint": 62
+  },
+  {
+    "age_group": "65~69歲",
+    "male": 7972,
+    "female": 9180,
+    "total": 17152,
+    "age_midpoint": 67
+  },
+  {
+    "age_group": "70~74歲",
+    "male": 6682,
+    "female": 8059,
+    "total": 14741,
+    "age_midpoint": 72
+  },
+  {
+    "age_group": "75~79歲",
+    "male": 4029,
+    "female": 5483,
+    "total": 9512,
+    "age_midpoint": 77
+  },
+  {
+    "age_group": "80~84歲",
+    "male": 2186,
+    "female": 3338,
+    "total": 5524,
+    "age_midpoint": 82
+  },
+  {
+    "age_group": "85~89歲",
+    "male": 1371,
+    "female": 2391,
+    "total": 3762,
+    "age_midpoint": 87
+  },
+  {
+    "age_group": "90~94歲",
+    "male": 559,
+    "female": 1048,
+    "total": 1607,
+    "age_midpoint": 92
+  },
+  {
+    "age_group": "95~99歲",
+    "male": 137,
+    "female": 284,
+    "total": 421,
+    "age_midpoint": 97
+  }
+]

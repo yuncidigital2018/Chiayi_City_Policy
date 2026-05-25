@@ -11,6 +11,8 @@ import requests
 import urllib3
 from lxml import html
 
+import importlib
+
 from etl.config_loader import load_datasources, get_source_by_id
 
 # Suppress SSL warnings for government sites with bad certs
@@ -66,6 +68,8 @@ def fetch_source(source: dict[str, Any], force: bool = False) -> Path | None:
             data = _fetch_and_parse_html(source)
         elif fetch_type == "download":
             data = _fetch_download(source)
+        elif fetch_type == "scraper":
+            data = _run_scraper_module(source)
         else:
             data = None
 
@@ -168,6 +172,36 @@ def _fetch_and_parse_html(source: dict) -> str | None:
     writer.writerow(headers)
     writer.writerows(data_rows)
     return output.getvalue()
+
+
+def _run_scraper_module(source: dict) -> str | None:
+    """Invoke a Python scraper module function and return CSV text."""
+    import csv
+    import io
+
+    mod_name = source.get("scraper_module", "")
+    func_name = source.get("scraper_func", "")
+    if not mod_name or not func_name:
+        logger.warning(f"Scraper source {source['id']} missing module/func")
+        return None
+
+    try:
+        mod = importlib.import_module(mod_name)
+        fn = getattr(mod, func_name)
+    except (ImportError, AttributeError) as e:
+        logger.error(f"Failed to import {mod_name}.{func_name}: {e}")
+        return None
+
+    result = fn()
+    if result is None:
+        return None
+
+    # Convert list[dict] to CSV
+    buf = io.StringIO()
+    writer = csv.DictWriter(buf, fieldnames=result[0].keys())
+    writer.writeheader()
+    writer.writerows(result)
+    return buf.getvalue()
 
 
 def _save_raw(source_id: str, data: str, output_path: Path) -> None:
