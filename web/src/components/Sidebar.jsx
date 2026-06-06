@@ -31,6 +31,11 @@ const NAV_SECTIONS = [
     path: '/narratives',
   },
   {
+    label: '競爭力',
+    icon: '🏆',
+    path: '/competitiveness',
+  },
+  {
     label: '關於',
     icon: 'ℹ️',
     path: '/about',

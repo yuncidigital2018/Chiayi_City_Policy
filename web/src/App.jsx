@@ -9,6 +9,7 @@ import Funds from './pages/Funds'
 import Comparison from './pages/Comparison'
 import Narratives from './pages/Narratives'
 import About from './pages/About'
+import Competitiveness from './pages/Competitiveness'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/budget/policy" element={<Policy />} />
             <Route path="/budget/funds" element={<Funds />} />
             <Route path="/narratives" element={<Narratives />} />
+            <Route path="/competitiveness" element={<Competitiveness />} />
             <Route path="/about" element={<About />} />
           </Routes>
         </main>

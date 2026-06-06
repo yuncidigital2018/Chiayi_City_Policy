@@ -8,6 +8,7 @@ const ROUTE_MAP = {
   '/budget/policy': { label: '政策領域', section: '財政' },
   '/budget/funds': { label: '基金儀表板', section: '財政' },
   '/narratives': { label: '敘事', section: '敘事' },
+  '/competitiveness': { label: '城市競爭力', section: '競爭力' },
   '/about': { label: '關於', section: '關於' },
 }
 

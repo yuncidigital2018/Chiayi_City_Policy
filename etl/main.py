@@ -23,6 +23,7 @@ from etl.validator import validate_all
 from etl.cross_county import run_cross_county_pipeline
 from etl.change_detector import detect_changes, format_report
 from etl.domain_classifier import run_classify_pipeline
+from etl.survey_normalizer import run_survey_normalization
 
 # Setup logging
 logging.basicConfig(
@@ -120,7 +121,8 @@ def run_pipeline(force: bool, skip_fetch: bool, skip_normalize: bool, skip_gener
         logger.info("=== Phase 2: Normalize ===")
         processed_paths = run_normalization(raw_paths)
         fund_paths = run_fund_normalization(raw_paths)
-        all_processed = {**processed_paths, **fund_paths}
+        survey_paths = run_survey_normalization()
+        all_processed = {**processed_paths, **fund_paths, **survey_paths}
         success = sum(1 for v in all_processed.values() if v is not None)
         logger.info(f"Normalize: {success} tables produced")
 

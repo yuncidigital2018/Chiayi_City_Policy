@@ -32,6 +32,9 @@ const tables = [
   { input: 'budget_expenditure_classified.csv', output: 'budget_expenditure_classified.json' },
   { input: 'budget_agency_classified.csv', output: 'budget_agency_classified.json' },
   { input: 'budget_agency_by_domain.csv', output: 'budget_agency_by_domain.json' },
+  { input: 'cw_happy_city_rankings.csv', output: 'cw_happy_city_rankings.json' },
+  { input: 'cw_happy_city_dimensions.csv', output: 'cw_happy_city_dimensions.json' },
+  { input: 'gvm_mayor_satisfaction.csv', output: 'gvm_mayor_satisfaction.json' },
 ];
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
