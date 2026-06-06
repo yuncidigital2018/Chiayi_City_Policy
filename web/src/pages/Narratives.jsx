@@ -1,9 +1,16 @@
 import { useData, formatNumber, formatChange, formatBudget } from '../hooks/useData'
+import StatusMessage from '../components/StatusMessage'
 
 export default function Narratives() {
-  const { data: population } = useData('population_annual.json')
-  const { data: expFunc } = useData('budget_expenditure_by_function.json')
-  const { data: revenue } = useData('budget_revenue_by_source.json')
+  const { data: population, loading: popLoading, error: popError } = useData('population_annual.json')
+  const { data: expFunc, loading: expLoading, error: expError } = useData('budget_expenditure_by_function.json')
+  const { data: revenue, loading: revLoading, error: revError } = useData('budget_revenue_by_source.json')
+
+  const loading = popLoading || expLoading || revLoading
+  const error = popError || expError || revError
+
+  if (loading) return <StatusMessage type="loading" />
+  if (error) return <StatusMessage type="error" message={error} />
 
   const latest = population?.[population.length - 1] || {}
   const first = population?.[0] || {}
@@ -12,6 +19,9 @@ export default function Narratives() {
 
   const topExpense = [...(expFunc || [])].sort((a, b) => Number(b.amount) - Number(a.amount))[0]
   const topRevenue = [...(revenue || [])].sort((a, b) => Number(b.amount) - Number(a.amount))[0]
+
+  const popChange = Number(latest.total_population) - Number(first.total_population)
+  const popYears = first.year && latest.year ? `${first.year} ~ ${latest.year}` : '歷年'
 
   return (
     <div className="narrative-content">
@@ -23,53 +33,46 @@ export default function Narratives() {
       <div className="card">
         <h2>人口挑戰：持續減少中的城市</h2>
         <p>
-          嘉義市總人口從 106 年的 {formatNumber(first.total_population)} 人，
-          下降至 115 年的 {formatNumber(latest.total_population)} 人，
-          十年間減少 {formatChange(Number(latest.total_population) - Number(first.total_population))} 人。
+          嘉義市總人口從 {popYears} 年間，
+          從 {formatNumber(first.total_population)} 人
+          下降至 {formatNumber(latest.total_population)} 人，
+          共減少 {formatChange(popChange)} 人。
         </p>
         <p>
-          人口減少由兩大因素驅動：一是 <strong>自然減少</strong>（死亡大於出生），115 年為 {formatChange(latest.natural_increase)} 人；
-          二是 <strong>社會減少</strong>（遷出大於遷入），115 年為 {formatChange(latest.social_increase)} 人。
-          兩者的疊加效應使得年度總減少達 {formatChange(Number(latest.natural_increase) + Number(latest.social_increase))} 人。
-        </p>
-        <p>
-          值得關注的是，性別比為 {latest.male && latest.female ? (Number(latest.male) / Number(latest.female) * 100).toFixed(1) : '—'}
-          （男/百女），女性多於男性，反映全國性的女性壽命較長趨勢。
+          自然增減為 {formatChange(latest.natural_increase)}（出生 − 死亡），
+          社會增減為 {formatChange(latest.social_increase)}（遷入 − 遷出），
+          兩者皆為負值，顯示嘉義市面臨人口外流與少子化的雙重挑戰。
         </p>
       </div>
 
-      <div className="card" style={{ marginTop: 20 }}>
-        <h2>財政結構：教育與社福為大宗</h2>
+      <div className="card">
+        <h2>財政結構：教育與社會福利為主</h2>
         <p>
-          115 年度歲入總額約 {formatBudget(totalRev)}，歲出總額約 {formatBudget(totalExp)}。
-          歲入主要來源為 <strong>{topRevenue?.source_category}</strong>，
-          占總歲入 {(totalRev > 0 ? Number(topRevenue?.amount) / totalRev * 100 : 0).toFixed(1)}%。
+          115 年度歲出總額為 {formatBudget(totalExp)} 千元，
+          其中最大支出項目為「{topExpense?.function_category}」，
+          金額 {formatBudget(topExpense?.amount)} 千元，
+          佔總歲出 {(Number(topExpense?.amount) / totalExp * 100).toFixed(1)}%。
         </p>
         <p>
-          歲出方面，最大支出項目為 <strong>{topExpense?.function_category}</strong>，
-          金額 {formatNumber(topExpense?.amount)} 千元，
-          占總歲出 {(totalExp > 0 ? Number(topExpense?.amount) / totalExp * 100 : 0).toFixed(1)}%。
-          這反映出嘉義市在教育與社會福利上的持續投入。
+          歲入總額為 {formatBudget(totalRev)} 千元，
+          主要來源為「{topRevenue?.source_category}」。
+          {totalRev >= totalExp
+            ? `歲入大於歲出，財政尚有賸餘。`
+            : `歲出大於歲入，需關注財政紀律。`
+          }
         </p>
       </div>
 
-      <div className="card" style={{ marginTop: 20 }}>
-        <h2>城市定位與展望</h2>
+      <div className="card">
+        <h2>政策建議</h2>
         <p>
-          面對人口持續減少的挑戰，嘉義市需要在以下幾個方向著力：
+          基於上述數據分析，嘉義市可關注以下方向：
         </p>
-        <p>
-          <strong>1. 吸引年輕人口：</strong>透過產業發展、就業機會創造、居住補助等政策，降低社會遷出，吸引外來人口。
-        </p>
-        <p>
-          <strong>2. 高齡社會準備：</strong>性別比失衡與自然減少反映高齡化趨勢，需要加強長照服務與高齡友善環境建設。
-        </p>
-        <p>
-          <strong>3. 財政永續：</strong>在歲入依賴中央補助的情況下，提升地方稅收自主性是長期財政健康的重要課題。
-        </p>
-        <p>
-          <strong>4. 區域治理：</strong>嘉義縣市合計僅約 70 萬人，升格直轄市人口門檻不足，但區域合作治理的模式值得持續探索。
-        </p>
+        <ul>
+          <li><strong>人口振興：</strong>提升生育率、吸引青年回流、改善居住環境</li>
+          <li><strong>財政紀律：</strong>控制歲出成長、提升自有財源比例</li>
+          <li><strong>政策聚焦：</strong>將有限資源投入高效益領域（教育、社福、基礎建設）</li>
+        </ul>
       </div>
     </div>
   )

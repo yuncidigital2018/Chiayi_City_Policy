@@ -1,21 +1,31 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 import { Line, Bar, Doughnut } from 'react-chartjs-2'
 import { useData, formatNumber, formatChange, formatBudget } from '../hooks/useData'
+import { KPICard } from '../components/Card'
+import ChartWrapper from '../components/ChartWrapper'
+import StatusMessage from '../components/StatusMessage'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler)
 
 export default function Dashboard() {
-  const { data: population, loading: popLoading } = useData('population_annual.json')
-  const { data: revenue, loading: revLoading } = useData('budget_revenue_by_source.json')
-  const { data: expenditure, loading: expLoading } = useData('budget_expenditure_by_function.json')
+  const { data: population, loading: popLoading, error: popError } = useData('population_annual.json')
+  const { data: revenue, loading: revLoading, error: revError } = useData('budget_revenue_by_source.json')
+  const { data: expenditure, loading: expLoading, error: expError } = useData('budget_expenditure_by_function.json')
 
-  if (popLoading || revLoading || expLoading) return <div className="container"><p>載入中...</p></div>
+  const loading = popLoading || revLoading || expLoading
+  const error = popError || revError || expError
+
+  if (loading) return <StatusMessage type="loading" />
+  if (error) return <StatusMessage type="error" message={error} />
 
   const latestPop = population?.[population.length - 1] || {}
   const prevPop = population?.[population.length - 2] || {}
   const popChange = Number(latestPop.total_population) - Number(prevPop.total_population)
   const totalRevenue = revenue?.reduce((s, r) => s + Number(r.amount), 0) || 0
   const totalExpenditure = expenditure?.reduce((s, e) => s + Number(e.amount), 0) || 0
+  const genderRatio = latestPop.male && latestPop.female
+    ? (Number(latestPop.male) / Number(latestPop.female) * 100).toFixed(1)
+    : '—'
 
   return (
     <>
@@ -26,46 +36,50 @@ export default function Dashboard() {
 
       {/* KPI Cards */}
       <div className="kpi-grid">
-        <div className="kpi-card">
-          <div className="kpi-label">總人口</div>
-          <div className="kpi-value">{formatNumber(latestPop.total_population)}</div>
-          <div className={`kpi-change ${popChange >= 0 ? 'positive' : 'negative'}`}>
-            {formatChange(popChange)} 較上年
-          </div>
-        </div>
-        <div className="kpi-card red">
-          <div className="kpi-label">自然增減</div>
-          <div className="kpi-value">{formatChange(latestPop.natural_increase)}</div>
-          <div className="kpi-change negative">出生 − 死亡</div>
-        </div>
-        <div className="kpi-card amber">
-          <div className="kpi-label">社會增減</div>
-          <div className="kpi-value">{formatChange(latestPop.social_increase)}</div>
-          <div className="kpi-change negative">遷入 − 遷出</div>
-        </div>
-        <div className="kpi-card green">
-          <div className="kpi-label">歲入總額</div>
-          <div className="kpi-value">{formatBudget(totalRevenue)}</div>
-          <div className="kpi-change">新台幣千元</div>
-        </div>
-        <div className="kpi-card purple">
-          <div className="kpi-label">歲出總額</div>
-          <div className="kpi-value">{formatBudget(totalExpenditure)}</div>
-          <div className="kpi-change">新台幣千元</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-label">男女性別比</div>
-          <div className="kpi-value">
-            {latestPop.male && latestPop.female ? (Number(latestPop.male) / Number(latestPop.female) * 100).toFixed(1) : '—'}
-          </div>
-          <div className="kpi-change">男/百女</div>
-        </div>
+        <KPICard
+          label="總人口"
+          value={formatNumber(latestPop.total_population)}
+          change={`${formatChange(popChange)} 較上年`}
+          changeType={popChange >= 0 ? 'positive' : 'negative'}
+          color="primary"
+        />
+        <KPICard
+          label="自然增減"
+          value={formatChange(latestPop.natural_increase)}
+          change="出生 − 死亡"
+          changeType="negative"
+          color="red"
+        />
+        <KPICard
+          label="社會增減"
+          value={formatChange(latestPop.social_increase)}
+          change="遷入 − 遷出"
+          changeType="negative"
+          color="amber"
+        />
+        <KPICard
+          label="歲入總額"
+          value={formatBudget(totalRevenue)}
+          change="新台幣千元"
+          color="green"
+        />
+        <KPICard
+          label="歲出總額"
+          value={formatBudget(totalExpenditure)}
+          change="新台幣千元"
+          color="purple"
+        />
+        <KPICard
+          label="男女性別比"
+          value={genderRatio}
+          change="男/百女"
+          color="primary"
+        />
       </div>
 
       {/* Charts */}
       <div className="chart-grid">
-        <div className="chart-card">
-          <h3>人口長期趨勢</h3>
+        <ChartWrapper title="人口長期趨勢" empty={!population?.length}>
           <Line
             data={{
               labels: population?.map(p => `${p.year}年`) || [],
@@ -80,10 +94,9 @@ export default function Dashboard() {
             }}
             options={{ responsive: true, plugins: { legend: { display: false } } }}
           />
-        </div>
+        </ChartWrapper>
 
-        <div className="chart-card">
-          <h3>歲入來源結構</h3>
+        <ChartWrapper title="歲入來源結構" empty={!revenue?.length}>
           <Doughnut
             data={{
               labels: revenue?.map(r => r.source_category) || [],
@@ -94,10 +107,9 @@ export default function Dashboard() {
             }}
             options={{ responsive: true, plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }}
           />
-        </div>
+        </ChartWrapper>
 
-        <div className="chart-card">
-          <h3>歲出政事別</h3>
+        <ChartWrapper title="歲出政事別" empty={!expenditure?.length}>
           <Bar
             data={{
               labels: expenditure?.map(e => e.function_category) || [],
@@ -115,10 +127,9 @@ export default function Dashboard() {
               scales: { x: { ticks: { callback: v => formatBudget(v) } } }
             }}
           />
-        </div>
+        </ChartWrapper>
 
-        <div className="chart-card">
-          <h3>人口增減結構</h3>
+        <ChartWrapper title="人口增減結構" empty={!population?.length}>
           <Bar
             data={{
               labels: population?.map(p => `${p.year}年`) || [],
@@ -129,7 +140,7 @@ export default function Dashboard() {
             }}
             options={{ responsive: true, plugins: { legend: { position: 'top' } } }}
           />
-        </div>
+        </ChartWrapper>
       </div>
     </>
   )

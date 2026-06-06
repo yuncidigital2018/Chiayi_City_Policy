@@ -2,10 +2,13 @@ import { useState } from 'react'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { useData, formatNumber, formatBudget } from '../hooks/useData'
+import { KPICard } from '../components/Card'
+import ChartWrapper from '../components/ChartWrapper'
+import DataTable from '../components/DataTable'
+import StatusMessage from '../components/StatusMessage'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
-// Color palette for top-level categories
 const CAT_COLORS = [
   '#2563eb', '#10b981', '#f59e0b', '#ef4444',
   '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16',
@@ -14,7 +17,6 @@ const CAT_COLORS = [
 function ExpenditureTree({ data, totalExp }) {
   const [expanded, setExpanded] = useState({})
 
-  // Build tree: L1 items with L2 children
   const tree = []
   const childrenMap = {}
 
@@ -36,67 +38,42 @@ function ExpenditureTree({ data, totalExp }) {
     <table className="data-table">
       <thead>
         <tr>
-          <th style={{ width: '60%' }}>政事別</th>
-          <th>經常門</th>
-          <th>資本門</th>
-          <th>合計（千元）</th>
-          <th>占比</th>
+          <th>政事別</th>
+          <th style={{ textAlign: 'right' }}>經常門</th>
+          <th style={{ textAlign: 'right' }}>資本門</th>
+          <th style={{ textAlign: 'right' }}>合計</th>
+          <th style={{ textAlign: 'right' }}>%</th>
         </tr>
       </thead>
       <tbody>
         {tree.map((item, idx) => {
-          const children = childrenMap[item.key] || []
-          const isExp = expanded[item.key]
-          const pct = totalExp > 0 ? (Number(item.amount) / totalExp * 100).toFixed(1) : '0.0'
-          const color = CAT_COLORS[idx % CAT_COLORS.length]
+          const key = item.key
+          const children = childrenMap[key] || []
+          const isExpanded = expanded[key]
+          const pct = totalExp > 0 ? (Number(item.amount) / totalExp * 100).toFixed(1) : 0
 
           return (
-            <span key={item.key}>
-              <tr
-                className="budget-l1"
-                style={{ cursor: children.length ? 'pointer' : 'default', fontWeight: 600 }}
-                onClick={() => children.length && toggle(item.key)}
-              >
-                <td>
-                  <span style={{
-                    display: 'inline-block',
-                    width: 10,
-                    height: 10,
-                    borderRadius: '50%',
-                    background: color,
-                    marginRight: 8,
-                  }} />
-                  {children.length ? (isExp ? '▼' : '▶') : '  '} {item.function_category}
-                </td>
-                <td>{formatNumber(item.recurring)}</td>
-                <td>{formatNumber(item.capital)}</td>
-                <td>{formatNumber(item.amount)}</td>
-                <td>{pct}%</td>
+            <>
+              <tr key={key} className="budget-l1" onClick={() => toggle(key)}>
+                <td>{isExpanded ? '▾' : '▸'} {item.function_category}</td>
+                <td style={{ textAlign: 'right' }}>{formatBudget(item.recurring)}</td>
+                <td style={{ textAlign: 'right' }}>{formatBudget(item.capital)}</td>
+                <td style={{ textAlign: 'right' }}>{formatBudget(item.amount)}</td>
+                <td style={{ textAlign: 'right' }}>{pct}%</td>
               </tr>
-              {isExp && children.map((child, ci) => {
-                const childPct = totalExp > 0 ? (Number(child.amount) / totalExp * 100).toFixed(1) : '0.0'
+              {isExpanded && children.map((child, ci) => {
+                const cPct = totalExp > 0 ? (Number(child.amount) / totalExp * 100).toFixed(1) : 0
                 return (
-                  <tr key={ci} className="budget-l2">
-                    <td style={{ paddingLeft: 36 }}>
-                      <span style={{
-                        display: 'inline-block',
-                        width: 6,
-                        height: 6,
-                        borderRadius: '50%',
-                        background: color,
-                        marginRight: 8,
-                        opacity: 0.6,
-                      }} />
-                      {child.function_category}
-                    </td>
-                    <td>{formatNumber(child.recurring)}</td>
-                    <td>{formatNumber(child.capital)}</td>
-                    <td>{formatNumber(child.amount)}</td>
-                    <td>{childPct}%</td>
+                  <tr key={`${key}-${ci}`} className="budget-l2">
+                    <td style={{ paddingLeft: 24 }}>　{child.function_category}</td>
+                    <td style={{ textAlign: 'right' }}>{formatBudget(child.recurring)}</td>
+                    <td style={{ textAlign: 'right' }}>{formatBudget(child.capital)}</td>
+                    <td style={{ textAlign: 'right' }}>{formatBudget(child.amount)}</td>
+                    <td style={{ textAlign: 'right' }}>{cPct}%</td>
                   </tr>
                 )
               })}
-            </span>
+            </>
           )
         })}
       </tbody>
@@ -105,154 +82,72 @@ function ExpenditureTree({ data, totalExp }) {
 }
 
 export default function Budget() {
-  const { data: revenue, loading: revLoading } = useData('budget_revenue_by_source.json')
-  const { data: expFunc, loading: expFuncLoading } = useData('budget_expenditure_by_function.json')
-  const { data: expAgency, loading: expAgencyLoading } = useData('budget_expenditure_by_agency.json')
+  const { data: revenue, loading: revLoading, error: revError } = useData('budget_revenue_by_source.json')
+  const { data: expenditure, loading: expLoading, error: expError } = useData('budget_expenditure_by_function.json')
 
-  // Historical revenue files (will be populated as more years are fetched)
-  const { data: rev114 } = useData('budget_revenue_114.json')
-  const { data: rev113 } = useData('budget_revenue_113.json')
-  const { data: rev112 } = useData('budget_revenue_112.json')
-  const { data: rev111 } = useData('budget_revenue_111.json')
+  const loading = revLoading || expLoading
+  const error = revError || expError
 
-  if (revLoading || expFuncLoading || expAgencyLoading) return <div className="container"><p>載入中...</p></div>
+  if (loading) return <StatusMessage type="loading" />
+  if (error) return <StatusMessage type="error" message={error} />
 
-  // Only L1 items for charts and totals
-  const expL1 = (expFunc || []).filter(e => Number(e.level) === 1)
-  const totalRevenue = revenue?.reduce((s, r) => s + Number(r.amount), 0) || 0
-  const totalExp = expL1.reduce((s, e) => s + Number(e.amount), 0)
-
-  const revWithPct = (revenue || []).map(r => ({
-    ...r,
-    pct: totalRevenue > 0 ? ((Number(r.amount) / totalRevenue) * 100).toFixed(1) : 0
-  }))
-
-  const expFuncWithPct = expL1.map(e => ({
-    ...e,
-    pct: totalExp > 0 ? ((Number(e.amount) / totalExp) * 100).toFixed(1) : 0
-  }))
-
-  const agencyTop = [...(expAgency || [])].sort((a, b) => Number(b.amount) - Number(a.amount)).slice(0, 10)
-
-  // Revenue trend: compute total per available year
-  const revenueTrend = []
-  const revYears = { 111: rev111, 112: rev112, 113: rev113, 114: rev114, 115: revenue }
-  for (const [yr, data] of Object.entries(revYears)) {
-    if (data?.length) {
-      const total = data.reduce((s, r) => s + Number(r.amount), 0)
-      revenueTrend.push({ year: parseInt(yr), total })
-    }
-  }
-  revenueTrend.sort((a, b) => a.year - b.year)
-
-  // YoY changes
-  const yoyChanges = []
-  for (let i = 1; i < revenueTrend.length; i++) {
-    const prev = revenueTrend[i - 1]
-    const curr = revenueTrend[i]
-    yoyChanges.push({
-      year: curr.year,
-      change: curr.total - prev.total,
-      pct: prev.total > 0 ? ((curr.total - prev.total) / prev.total * 100).toFixed(1) : 0
-    })
-  }
+  const totalRev = revenue?.reduce((s, r) => s + Number(r.amount), 0) || 0
+  const totalExp = expenditure?.filter(e => Number(e.level) === 1).reduce((s, e) => s + Number(e.amount), 0) || 0
+  const surplus = totalRev - totalExp
 
   return (
     <>
       <div className="page-header">
-        <h1>💰 預算詳情</h1>
-        <p>115 年度歲入歲出結構分析 — 歲出可點擊展開子項目</p>
+        <h1>💰 預算總覽</h1>
+        <p>嘉義市 115 年度歲入歲出分析</p>
       </div>
 
-      {/* Summary */}
+      {/* KPI */}
       <div className="kpi-grid">
-        <div className="kpi-card green">
-          <div className="kpi-label">歲入總額</div>
-          <div className="kpi-value">{formatBudget(totalRevenue)}</div>
-          <div className="kpi-change">新台幣千元</div>
-        </div>
-        <div className="kpi-card red">
-          <div className="kpi-label">歲出總額</div>
-          <div className="kpi-value">{formatBudget(totalExp)}</div>
-          <div className="kpi-change">新台幣千元</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-label">收支差額</div>
-          <div className="kpi-value">{formatBudget(totalRevenue - totalExp)}</div>
-          <div className="kpi-change">{(totalRevenue - totalExp) >= 0 ? '歲入大於歲出' : '歲出大於歲入'}</div>
-        </div>
-        <div className="kpi-card amber">
-          <div className="kpi-label">最大歲入來源</div>
-          <div className="kpi-value" style={{ fontSize: 18 }}>{revWithPct[0]?.source_category || '—'}</div>
-          <div className="kpi-change">{revWithPct[0]?.pct}%</div>
-        </div>
+        <KPICard
+          label="歲入總額"
+          value={formatBudget(totalRev)}
+          change="新台幣千元"
+          color="green"
+        />
+        <KPICard
+          label="歲出總額"
+          value={formatBudget(totalExp)}
+          change="新台幣千元"
+          color="primary"
+        />
+        <KPICard
+          label="賸餘/短絀"
+          value={formatBudget(surplus)}
+          change={surplus >= 0 ? '賸餘' : '短絀'}
+          changeType={surplus >= 0 ? 'positive' : 'negative'}
+          color={surplus >= 0 ? 'green' : 'red'}
+        />
       </div>
 
       {/* Charts */}
       <div className="chart-grid">
-        {revenueTrend.length > 1 && (
-          <div className="chart-card">
-            <h3>📈 歲入歷年趨勢</h3>
-            <Line
-              data={{
-                labels: revenueTrend.map(r => `${r.year}年`),
-                datasets: [{
-                  label: '歲入總額（千元）',
-                  data: revenueTrend.map(r => r.total),
-                  borderColor: '#10b981',
-                  backgroundColor: 'rgba(16,185,129,0.1)',
-                  fill: true,
-                  tension: 0.3,
-                }]
-              }}
-              options={{
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: { y: { ticks: { callback: v => formatNumber(v) } } }
-              }}
-            />
-            <table className="data-table" style={{marginTop: 16}}>
-              <thead>
-                <tr><th>年度</th><th style={{textAlign:'right'}}>歲入（千元）</th><th style={{textAlign:'right'}}>YoY</th></tr>
-              </thead>
-              <tbody>
-                {yoyChanges.map(c => (
-                  <tr key={c.year}>
-                    <td>{c.year}年</td>
-                    <td style={{textAlign:'right'}}>{formatNumber(revenueTrend.find(r => r.year === c.year)?.total || 0)}</td>
-                    <td style={{textAlign:'right', color: Number(c.change) >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}}>
-                      {Number(c.change) >= 0 ? '+' : ''}{formatNumber(c.change)} ({c.pct}%)
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        <div className="chart-card">
-          <h3>歲入來源結構</h3>
+        <ChartWrapper title="歲入來源結構" empty={!revenue?.length}>
           <Doughnut
             data={{
-              labels: revWithPct.map(r => `${r.source_category} (${r.pct}%)`),
+              labels: revenue?.map(r => r.source_category) || [],
               datasets: [{
-                data: revWithPct.map(r => Number(r.amount)),
+                data: revenue?.map(r => Number(r.amount)) || [],
                 backgroundColor: CAT_COLORS,
               }]
             }}
             options={{ responsive: true, plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }}
           />
-        </div>
+        </ChartWrapper>
 
-        <div className="chart-card">
-          <h3>歲出政事別（大類）</h3>
+        <ChartWrapper title="歲出政事別" empty={!expenditure?.length}>
           <Bar
             data={{
-              labels: expFuncWithPct.map(e => e.function_category),
+              labels: expenditure?.filter(e => Number(e.level) === 1).map(e => e.function_category) || [],
               datasets: [{
-                label: '金額',
-                data: expFuncWithPct.map(e => Number(e.amount)),
-                backgroundColor: expFuncWithPct.map((_, i) => CAT_COLORS[i % CAT_COLORS.length]),
+                label: '金額（千元）',
+                data: expenditure?.filter(e => Number(e.level) === 1).map(e => Number(e.amount)) || [],
+                backgroundColor: CAT_COLORS,
                 borderRadius: 6,
               }]
             }}
@@ -263,51 +158,28 @@ export default function Budget() {
               scales: { x: { ticks: { callback: v => formatBudget(v) } } }
             }}
           />
-        </div>
+        </ChartWrapper>
       </div>
 
-      {/* Detailed Tables */}
-      <div className="chart-grid">
-        <div className="chart-card">
-          <h3>歲入來源別明細</h3>
-          <table className="data-table">
-            <thead><tr><th>來源</th><th>金額（千元）</th><th>占比</th></tr></thead>
-            <tbody>
-              {revWithPct.map((r, i) => (
-                <tr key={i}>
-                  <td>{r.source_category}</td>
-                  <td>{formatNumber(r.amount)}</td>
-                  <td>{r.pct}%</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="chart-card">
-          <h3>機關別預算 Top 10</h3>
-          <table className="data-table">
-            <thead><tr><th>機關</th><th>金額（千元）</th><th>占比</th></tr></thead>
-            <tbody>
-              {agencyTop.map((a, i) => {
-                const pct = totalExp > 0 ? (Number(a.amount) / totalExp * 100).toFixed(1) : 0
-                return (
-                  <tr key={i}>
-                    <td>{a.agency_name}</td>
-                    <td>{formatNumber(a.amount)}</td>
-                    <td>{pct}%</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+      {/* Expenditure tree table */}
+      <div className="chart-card full-width-card">
+        <h3>歲出政事別明細</h3>
+        <ExpenditureTree data={expenditure} totalExp={totalExp} />
       </div>
 
-      {/* 歲出政事別分層表 */}
-      <div className="chart-card full-width" style={{ marginTop: 24 }}>
-        <h3>歲出政事別分層明細（點擊 ▶ 展開子項目）</h3>
-        <ExpenditureTree data={expFunc} totalExp={totalExp} />
+      {/* Revenue table */}
+      <div className="chart-card full-width-card">
+        <h3>歲入來源明細</h3>
+        <DataTable
+          columns={[
+            { key: 'source_category', label: '來源別' },
+            { key: 'amount', label: '金額（千元）', align: 'right', render: row => formatNumber(row.amount) },
+          ]}
+          data={revenue || []}
+          pageSize={0}
+          searchable={false}
+          emptyMessage="暫無歲入資料"
+        />
       </div>
     </>
   )
