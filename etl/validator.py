@@ -76,17 +76,17 @@ SCHEMAS: dict[str, dict[str, Any]] = {
         "row_count_min": 3,
     },
     "fund_operating": {
-        "required_cols": ["item_name", "amount"],
+        "required_cols": ["item", "amount"],
         "optional_cols": [],
         "row_count_min": 1,
     },
     "fund_business": {
-        "required_cols": ["item_name", "amount"],
+        "required_cols": ["item", "amount"],
         "optional_cols": [],
         "row_count_min": 1,
     },
     "fund_affairs": {
-        "required_cols": ["item_name", "amount"],
+        "required_cols": ["item", "amount"],
         "optional_cols": [],
         "row_count_min": 1,
     },

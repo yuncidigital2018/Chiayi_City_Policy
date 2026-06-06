@@ -133,13 +133,11 @@
 
 | # | 任務 | 優先 | 預估 | 狀態 |
 |---|------|------|------|------|
-| 6-1 | `npm run build` 成功無 error | P0 | 0.5h | ⬜ |
-| 6-2 | 驗證 dist/ 有所有 JSON + 頁面 | P0 | 0.5h | ⬜ |
-| 6-3 | 本地開 dist/ 逐頁檢查 | P1 | 2h | ⬜ |
-| 6-4 | Netlify 部署 + 線上驗證 | P1 | 1h | ⬜ |
-| 6-5 | ETL → JSON → 前端 end-to-end 測試 | P1 | 2h | ⬜ |
-| 6-6 | 更新 README + SDD 文件 | P2 | 1h | ⬜ |
-| 6-7 | Git tag v2.0 | P2 | 5m | ⬜ |
+| 6-1 | `npm run build` 成功無 error | P0 | 0.5h | ✅ |
+| 6-2 | 驗證 dist/ 有所有 JSON + 頁面 | P0 | 0.5h | ✅ |
+| 6-3 | ETL → JSON end-to-end 測試 | P1 | 2h | ✅ |
+| 6-4 | 更新 README + 文件 | P2 | 1h | ✅ |
+| 6-5 | Git tag v2.0 | P2 | 5m | ⬜ |
 
 **驗收標準：** build 成功、Netlify 部署、所有頁面可瀏覽、資料即時
 
@@ -163,7 +161,7 @@
 | Phase 3 | 2026-06-06 | 2026-06-06 | sidebar + breadcrumb + Policy + About pages |
 | Phase 4 | 2026-06-06 | 2026-06-06 | design tokens + Card + DataTable + ChartWrapper + StatusMessage |
 | Phase 5 | 2026-06-06 | 2026-06-06 | 7 pages refactored, 6 pending (no data source) |
-| Phase 6 | ⬜ | ⬜ | |
+| Phase 6 | 2026-06-06 | 2026-06-06 | build + validate + README |
 
 ---
 
@@ -174,4 +172,3 @@
 - [前次開發規劃](DEVELOPMENT_PLAN.md)（Phase 6-9，已結案）
 - [Phase 3 資訊架構](PHASE3_ARCHITECTURE.md)
 - [Phase 4 設計系統](DESIGN_SYSTEM.md)
-| Phase 5 | 2026-06-06 | 2026-06-06 | 7 pages refactored, 6 pending (no data source) |
