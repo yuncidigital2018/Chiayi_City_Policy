@@ -1,0 +1,14 @@
+agency_name,policy_domain,policy_domain_en,confidence,reason
+嘉義市議會主管,治理與行政,Governance & Administration,high,立法機關
+嘉義市政府主管,治理與行政,Governance & Administration,high,行政主管機關
+嘉義市政府警察局主管,公共安全,Public Safety,high,警察業務明確
+嘉義市政府衛生局主管,衛生與健康,Health & Wellness,high,衛生業務明確
+嘉義市政府環境保護局主管,環境與永續,Environment & Sustainability,high,環保業務明確
+嘉義市政府教育處主管,教育與文化,Education & Culture,high,教育業務明確
+嘉義市政府民政處主管,治理與行政,Governance & Administration,medium,民政含多項業務
+嘉義市政府地政處主管,治理與行政,Governance & Administration,medium,地政屬行政支援
+嘉義市政府消防局主管,公共安全,Public Safety,high,消防業務明確
+嘉義市政府文化局主管,教育與文化,Education & Culture,high,文化業務明確
+嘉義市政府財政稅務局主管,財政管理,Fiscal Management,high,財稅業務明確
+統籌支撥科目,其他,Other,low,統籌分配需細分才能歸類
+第二預備金,其他,Other,low,預備金無特定政策領域

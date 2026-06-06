@@ -1,31 +1,31 @@
-function_category,policy_domain,policy_domain_en,domain_order
-一般政務支出,治理與行政,Governance & Administration,1
-行政支出,治理與行政,Governance & Administration,1
-立法支出,治理與行政,Governance & Administration,1
-民政支出,治理與行政,Governance & Administration,1
-警政支出,公共安全,Public Safety,2
-財務支出,財政管理,Fiscal Management,3
-教育科學文化支出,教育與文化,Education & Culture,4
-教育支出,教育與文化,Education & Culture,4
-文化支出,教育與文化,Education & Culture,4
-經濟發展支出,經濟與產業,Economy & Industry,5
-農業支出,經濟與產業,Economy & Industry,5
-工業支出,經濟與產業,Economy & Industry,5
-交通支出,交通與基礎建設,Transport & Infrastructure,6
-其他經濟服務支出,經濟與產業,Economy & Industry,5
-社會福利支出,社會福利,Social Welfare,7
-社會保險支出,社會安全,Social Security,8
-社會救助支出,社會福利,Social Welfare,7
-福利服務支出,社會福利,Social Welfare,7
-國民就業支出,勞動與就業,Labor & Employment,9
-醫療保健支出,衛生與健康,Health & Wellness,10
-社區發展及環境保護支出,環境與永續,Environment & Sustainability,11
-環境保護支出,環境與永續,Environment & Sustainability,11
-社區發展支出,社區發展,Community Development,12
-退休撫卹支出,退休撫卹,Retirement & Pensions,13
-退休撫卹給付支出,退休撫卹,Retirement & Pensions,13
-債務支出,財政管理,Fiscal Management,3
-債務付息支出,財政管理,Fiscal Management,3
-補助及其他支出,其他,Other,14
-其他支出,其他,Other,14
-第二預備金,其他,Other,14
+function_category,policy_domain,policy_domain_en,domain_order,confidence
+一般政務支出,治理與行政,Governance & Administration,1,high
+行政支出,治理與行政,Governance & Administration,1,high
+立法支出,治理與行政,Governance & Administration,1,high
+民政支出,治理與行政,Governance & Administration,1,medium
+警政支出,公共安全,Public Safety,2,high
+財務支出,財政管理,Fiscal Management,3,high
+教育科學文化支出,教育與文化,Education & Culture,4,high
+教育支出,教育與文化,Education & Culture,4,high
+文化支出,教育與文化,Education & Culture,4,high
+經濟發展支出,經濟與產業,Economy & Industry,5,medium
+農業支出,經濟與產業,Economy & Industry,5,high
+工業支出,經濟與產業,Economy & Industry,5,high
+交通支出,交通與基礎建設,Transport & Infrastructure,6,high
+其他經濟服務支出,經濟與產業,Economy & Industry,5,low
+社會福利支出,社會福利,Social Welfare,7,high
+社會保險支出,社會安全,Social Security,8,high
+社會救助支出,社會福利,Social Welfare,7,high
+福利服務支出,社會福利,Social Welfare,7,high
+國民就業支出,勞動與就業,Labor & Employment,9,high
+醫療保健支出,衛生與健康,Health & Wellness,10,high
+社區發展及環境保護支出,環境與永續,Environment & Sustainability,11,medium
+環境保護支出,環境與永續,Environment & Sustainability,11,high
+社區發展支出,社區發展,Community Development,12,medium
+退休撫卹支出,退休撫卹,Retirement & Pensions,13,high
+退休撫卹給付支出,退休撫卹,Retirement & Pensions,13,high
+債務支出,財政管理,Fiscal Management,3,high
+債務付息支出,財政管理,Fiscal Management,3,high
+補助及其他支出,其他,Other,14,low
+其他支出,其他,Other,14,low
+第二預備金,其他,Other,14,low

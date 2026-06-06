@@ -208,20 +208,34 @@ def status():
 
 @cli.command()
 def classify():
-    """Classify budget by policy domain."""
+    """Classify budget by policy domain (function + agency)."""
     logger.info("Running policy domain classification...")
     result = run_classify_pipeline()
 
+    logger.info("=== Function Classification ===")
     if result["classified_path"]:
         logger.info(f"Classified: {result['classified_path']}")
         logger.info(f"Summary:    {result['summary_path']}")
         logger.info(f"Domains:    {result['domain_count']}")
-        if result["unmapped_count"] > 0:
-            logger.warning(f"Unmapped categories: {result['unmapped_count']}")
+        if result["unmapped_functions"] > 0:
+            logger.warning(f"Unmapped function categories: {result['unmapped_functions']}")
         else:
-            logger.info("All categories mapped ✅")
+            logger.info("All function categories mapped ✅")
     else:
-        logger.error("Classification failed — check input data")
+        logger.error("Function classification failed")
+
+    logger.info("=== Agency Classification ===")
+    if result["agency_classified_path"]:
+        logger.info(f"Classified: {result['agency_classified_path']}")
+        logger.info(f"Summary:    {result['agency_summary_path']}")
+        if result["unmapped_agencies"] > 0:
+            logger.warning(f"Unmapped agencies: {result['unmapped_agencies']}")
+        else:
+            logger.info("All agencies mapped ✅")
+    else:
+        logger.warning("Agency classification skipped (no data)")
+
+    if not result["classified_path"]:
         sys.exit(1)
 
 
