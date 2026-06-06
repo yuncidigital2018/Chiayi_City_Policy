@@ -90,14 +90,14 @@
 
 | # | 任務 | 優先 | 預估 | 狀態 |
 |---|------|------|------|------|
-| 4-1 | 定義色系（primary/secondary/semantic） | P0 | 1h | ⬜ |
-| 4-2 | 定義字階（h1-h6/body/caption） | P0 | 0.5h | ⬜ |
-| 4-3 | 定義間距系統（4px base grid） | P0 | 0.5h | ⬜ |
-| 4-4 | 建立 Card 元件（KPI、圖表、表格容器） | P1 | 2h | ⬜ |
-| 4-5 | 建立 DataTable 元件（排序/搜尋/分頁） | P1 | 3h | ⬜ |
-| 4-6 | 建立 ChartWrapper 元件（tooltip/legend/responsive） | P1 | 2h | ⬜ |
-| 4-7 | 建立 Loading/Error/Empty 狀態元件 | P1 | 2h | ⬜ |
-| 4-8 | 建立 Navigation 元件（sidebar + breadcrumb） | P2 | 1h | ⬜ |
+| 4-1 | 定義色系（primary/secondary/semantic） | P0 | 1h | ✅ |
+| 4-2 | 定義字階（h1-h6/body/caption） | P0 | 0.5h | ✅ |
+| 4-3 | 定義間距系統（4px base grid） | P0 | 0.5h | ✅ |
+| 4-4 | 建立 Card 元件（KPI、圖表、表格容器） | P1 | 2h | ✅ |
+| 4-5 | 建立 DataTable 元件（排序/搜尋/分頁） | P1 | 3h | ✅ |
+| 4-6 | 建立 ChartWrapper 元件（tooltip/legend/responsive） | P1 | 2h | ✅ |
+| 4-7 | 建立 Loading/Error/Empty 狀態元件 | P1 | 2h | ✅ |
+| 4-8 | 建立 Navigation 元件（sidebar + breadcrumb） | P2 | 1h | ✅ |
 
 **驗收標準：** 所有元件有 props 文件、chromatic 視覺一致、無硬編碼樣式
 
@@ -161,7 +161,7 @@
 | Phase 1 | 2026-05-26 | 2026-05-26 | ETL + normalizer + validation |
 | Phase 2 | 2026-06-06 | 2026-06-06 | domain_map + classify + agency_map + confidence |
 | Phase 3 | 2026-06-06 | 2026-06-06 | sidebar + breadcrumb + Policy + About pages |
-| Phase 4 | ⬜ | ⬜ | |
+| Phase 4 | 2026-06-06 | 2026-06-06 | design tokens + Card + DataTable + ChartWrapper + StatusMessage |
 | Phase 5 | ⬜ | ⬜ | |
 | Phase 6 | ⬜ | ⬜ | |
 
@@ -173,3 +173,4 @@
 - [部署說明](deployment.md)
 - [前次開發規劃](DEVELOPMENT_PLAN.md)（Phase 6-9，已結案）
 - [Phase 3 資訊架構](PHASE3_ARCHITECTURE.md)
+- [Phase 4 設計系統](DESIGN_SYSTEM.md)
