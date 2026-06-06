@@ -46,9 +46,9 @@
 |---|------|------|------|------|
 | 2-1 | 統一 policy_domain — 修正「經濟發展/交通支出」不一致 | P0 | 1h | ✅ |
 | 2-2 | 建立 domain_classifier.py + CLI classify 命令 | P0 | 1h | ✅ |
-| 2-3 | 擴充 agency_policy_map.csv 覆蓋所有 30+ 機關 | P1 | 2h | ⬜ |
-| 2-4 | 增加信心度標記（confidence: high/medium/low） | P1 | 2h | ⬜ |
-| 2-5 | 產出分類彙總表並驗證 | P1 | 1h | ⬜ |
+| 2-3 | 擴充 agency_policy_map.csv 覆蓋所有 30+ 機關 | P1 | 2h | ✅ |
+| 2-4 | 增加信心度標記（confidence: high/medium/low） | P1 | 2h | ✅ |
+| 2-5 | 產出分類彙總表並驗證 | P1 | 1h | ✅ |
 
 **驗收標準：** 所有 function_category 有 policy_domain、agency 覆蓋率 >90%、信心度標記完備
 
@@ -159,7 +159,7 @@
 | Phase | 開始 | 完成 | 備註 |
 |-------|------|------|------|
 | Phase 1 | 2026-05-26 | 2026-05-26 | ETL + normalizer + validation |
-| Phase 2 | 2026-06-06 | ⬜ 進行中 | domain_map + classify 完成，agency_map 待擴充 |
+| Phase 2 | 2026-06-06 | 2026-06-06 | domain_map + classify + agency_map + confidence |
 | Phase 3 | ⬜ | ⬜ | |
 | Phase 4 | ⬜ | ⬜ | |
 | Phase 5 | ⬜ | ⬜ | |
