@@ -22,6 +22,7 @@ from etl.md_generator import run_markdown_generation
 from etl.validator import validate_all
 from etl.cross_county import run_cross_county_pipeline
 from etl.change_detector import detect_changes, format_report
+from etl.domain_classifier import run_classify_pipeline
 
 # Setup logging
 logging.basicConfig(
@@ -205,5 +206,25 @@ def status():
             logger.info(f"  {f.relative_to(content_dir)}")
 
 
+@cli.command()
+def classify():
+    """Classify budget by policy domain."""
+    logger.info("Running policy domain classification...")
+    result = run_classify_pipeline()
+
+    if result["classified_path"]:
+        logger.info(f"Classified: {result['classified_path']}")
+        logger.info(f"Summary:    {result['summary_path']}")
+        logger.info(f"Domains:    {result['domain_count']}")
+        if result["unmapped_count"] > 0:
+            logger.warning(f"Unmapped categories: {result['unmapped_count']}")
+        else:
+            logger.info("All categories mapped ✅")
+    else:
+        logger.error("Classification failed — check input data")
+        sys.exit(1)
+
+
 if __name__ == "__main__":
     cli()
+
