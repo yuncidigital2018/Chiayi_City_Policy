@@ -63,11 +63,11 @@
 
 | # | 任務 | 優先 | 預估 | 狀態 |
 |---|------|------|------|------|
-| 3-1 | 定義 6 大區塊與對應頁面 | P0 | 1h | ⬜ |
-| 3-2 | 重寫導覽列（sidebar/breadcrumb） | P0 | 1h | ⬜ |
-| 3-3 | 定義每個頁面的職責（what it answers） | P1 | 1h | ⬜ |
-| 3-4 | 路由重整（合併/拆分頁面） | P1 | 1h | ⬜ |
-| 3-5 | Wireframe 每個區塊的佈局 | P2 | 1h | ⬜ |
+| 3-1 | 定義 6 大區塊與對應頁面 | P0 | 1h | ✅ |
+| 3-2 | 重寫導覽列（sidebar/breadcrumb） | P0 | 1h | ✅ |
+| 3-3 | 定義每個頁面的職責（what it answers） | P1 | 1h | ✅ |
+| 3-4 | 路由重整（合併/拆分頁面） | P1 | 1h | ✅ |
+| 3-5 | Wireframe 每個區塊的佈局 | P2 | 1h | ✅ |
 
 **6 大區塊（初步規劃）：**
 
@@ -160,7 +160,7 @@
 |-------|------|------|------|
 | Phase 1 | 2026-05-26 | 2026-05-26 | ETL + normalizer + validation |
 | Phase 2 | 2026-06-06 | 2026-06-06 | domain_map + classify + agency_map + confidence |
-| Phase 3 | ⬜ | ⬜ | |
+| Phase 3 | 2026-06-06 | 2026-06-06 | sidebar + breadcrumb + Policy + About pages |
 | Phase 4 | ⬜ | ⬜ | |
 | Phase 5 | ⬜ | ⬜ | |
 | Phase 6 | ⬜ | ⬜ | |
@@ -172,3 +172,4 @@
 - [系統設計文件](SDD.md)
 - [部署說明](deployment.md)
 - [前次開發規劃](DEVELOPMENT_PLAN.md)（Phase 6-9，已結案）
+- [Phase 3 資訊架構](PHASE3_ARCHITECTURE.md)
