@@ -28,6 +28,10 @@ const tables = [
   { input: 'fund_business.csv', output: 'fund_business.json' },
   { input: 'fund_affairs.csv', output: 'fund_affairs.json' },
   { input: 'county_population_comparison.csv', output: 'county_population_comparison.json' },
+  { input: 'budget_by_policy_domain.csv', output: 'budget_by_policy_domain.json' },
+  { input: 'budget_expenditure_classified.csv', output: 'budget_expenditure_classified.json' },
+  { input: 'budget_agency_classified.csv', output: 'budget_agency_classified.json' },
+  { input: 'budget_agency_by_domain.csv', output: 'budget_agency_by_domain.json' },
 ];
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
