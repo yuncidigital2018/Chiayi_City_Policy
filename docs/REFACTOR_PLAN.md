@@ -109,19 +109,19 @@
 
 | # | 頁面 | 預估 | 狀態 |
 |---|------|------|------|
-| 5-1 | Dashboard — KPI 卡片 + 趨勢迷你圖 + 快速導航 | 2h | ⬜ |
-| 5-2 | Population — 年齡金字塔 + 趨勢 + 結構分析 | 2h | ⬜ |
-| 5-3 | Budget — 歲入/歲出表格 + 政策領域分析 | 2h | ⬜ |
-| 5-4 | Policy — 政策領域視覺化 + 信心度篩選 | 2h | ⬜ |
-| 5-5 | Infrastructure — 建設總覽 + 地圖/列表 | 2h | ⬜ |
-| 5-6 | Traffic — 交通數據 + 趨勢 | 1.5h | ⬜ |
-| 5-7 | WaterSafety — 水安全指標 | 1.5h | ⬜ |
-| 5-8 | Council — 議會議題 + 追蹤 | 2h | ⬜ |
-| 5-9 | Funds — 基金儀表板 | 2h | ⬜ |
-| 5-10 | Comparison — 跨縣市比較 | 2h | ⬜ |
-| 5-11 | Narratives — 敘事頁模板 | 2h | ⬜ |
-| 5-12 | Briefing — 簡報模式 | 1.5h | ⬜ |
-| 5-13 | Strategy — 策略建議 | 1.5h | ⬜ |
+| 5-1 | Dashboard — KPI 卡片 + 趨勢迷你圖 + 快速導航 | 2h | ✅ |
+| 5-2 | Population — 年齡金字塔 + 趨勢 + 結構分析 | 2h | ✅ |
+| 5-3 | Budget — 歲入/歲出表格 + 政策領域分析 | 2h | ✅ |
+| 5-4 | Policy — 政策領域視覺化 + 信心度篩選 | 2h | ✅ |
+| 5-5 | Funds — 基金儀表板 | 2h | ✅ |
+| 5-6 | Comparison — 跨縣市比較 | 2h | ✅ |
+| 5-7 | Narratives — 敘事頁模板 | 2h | ✅ |
+| 5-8 | Infrastructure — 建設總覽 | 2h | ⬜ (無資料來源) |
+| 5-9 | Traffic — 交通數據 | 1.5h | ⬜ (無資料來源) |
+| 5-10 | WaterSafety — 水安全指標 | 1.5h | ⬜ (無資料來源) |
+| 5-11 | Council — 議會議題 | 2h | ⬜ (無資料來源) |
+| 5-12 | Briefing — 簡報模式 | 1.5h | ⬜ (無資料來源) |
+| 5-13 | Strategy — 策略建議 | 1.5h | ⬜ (無資料來源) |
 
 **驗收標準：** 每頁用設計系統元件、無硬編碼 KPI、有 Loading/Error/Empty 狀態
 
@@ -162,7 +162,7 @@
 | Phase 2 | 2026-06-06 | 2026-06-06 | domain_map + classify + agency_map + confidence |
 | Phase 3 | 2026-06-06 | 2026-06-06 | sidebar + breadcrumb + Policy + About pages |
 | Phase 4 | 2026-06-06 | 2026-06-06 | design tokens + Card + DataTable + ChartWrapper + StatusMessage |
-| Phase 5 | ⬜ | ⬜ | |
+| Phase 5 | 2026-06-06 | 2026-06-06 | 7 pages refactored, 6 pending (no data source) |
 | Phase 6 | ⬜ | ⬜ | |
 
 ---
@@ -174,3 +174,4 @@
 - [前次開發規劃](DEVELOPMENT_PLAN.md)（Phase 6-9，已結案）
 - [Phase 3 資訊架構](PHASE3_ARCHITECTURE.md)
 - [Phase 4 設計系統](DESIGN_SYSTEM.md)
+| Phase 5 | 2026-06-06 | 2026-06-06 | 7 pages refactored, 6 pending (no data source) |
