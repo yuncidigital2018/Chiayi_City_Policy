@@ -1,23 +1,12 @@
-import { useState } from 'react'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, RadialLinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 import { Bar, Radar } from 'react-chartjs-2'
-import { useData, formatNumber } from '../hooks/useData'
+import { useData } from '../hooks/useData'
 import { KPICard } from '../components/Card'
 import ChartWrapper from '../components/ChartWrapper'
 import DataTable from '../components/DataTable'
 import StatusMessage from '../components/StatusMessage'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, RadialLinearScale, PointElement, LineElement, Title, Tooltip, Legend)
-
-const DIMENSION_COLORS = {
-  '經濟': '#2563eb',
-  '環境': '#10b981',
-  '施政': '#f59e0b',
-  '文教': '#8b5cf6',
-  '社福': '#ec4899',
-  '醫衛健康': '#06b6d4',
-  '多元共融': '#f97316',
-}
 
 export default function Competitiveness() {
   const { data: rankings, loading: rankLoading, error: rankError } = useData('cw_happy_city_rankings.json')
@@ -29,6 +18,8 @@ export default function Competitiveness() {
 
   if (loading) return <StatusMessage type="loading" />
   if (error) return <StatusMessage type="error" message={error} />
+
+  const hasAnyData = Boolean(rankings?.length || dimensions?.length || satisfaction?.length)
 
   // 天下 data
   const nonSix = rankings?.filter(r => r.group === '非六都') || []
@@ -70,8 +61,15 @@ export default function Competitiveness() {
         <p>天下雜誌永續幸福城市 + 遠見雜誌施政滿意度</p>
       </div>
 
+      {!hasAnyData && (
+        <StatusMessage
+          type="empty"
+          message="尚未產生城市競爭力資料，請先執行 scripts/scrape_city_surveys.py 與 survey normalizer。"
+        />
+      )}
+
       {/* KPI */}
-      <div className="kpi-grid">
+      {hasAnyData && <div className="kpi-grid">
         <KPICard
           label="幸福城市排名"
           value={chiayiRank ? `非六都 #${chiayiRank.rank}` : '—'}
@@ -87,7 +85,7 @@ export default function Competitiveness() {
         <KPICard
           label="八大面向平均"
           value={chiayiSatisfaction ? `${chiayiSatisfaction.avg_dimension_score}%` : '—'}
-          change="突破 8 成"
+          change={chiayiSatisfaction ? '突破 8 成' : ''}
           color="amber"
         />
         <KPICard
@@ -96,11 +94,11 @@ export default function Competitiveness() {
           change={chiayiDims.length > 0 ? `#${chiayiDims[0].rank_in_non_six} 非六都` : ''}
           color="purple"
         />
-      </div>
+      </div>}
 
       {/* Charts */}
-      <div className="chart-grid">
-        <ChartWrapper title="非六都幸福城市排名 2025（天下雜誌）">
+      {hasAnyData && <div className="chart-grid">
+        <ChartWrapper title="非六都幸福城市排名 2025（天下雜誌）" empty={!nonSix.length}>
           <Bar
             data={barData}
             options={{
@@ -129,10 +127,10 @@ export default function Competitiveness() {
             }}
           />
         </ChartWrapper>
-      </div>
+      </div>}
 
       {/* 遠見 detail */}
-      {chiayiSatisfaction && (
+      {hasAnyData && chiayiSatisfaction && (
         <div className="chart-card">
           <h3>遠見雜誌 2026 施政滿意度 — 嘉義市</h3>
           <div style={{ padding: '16px 0' }}>
@@ -158,7 +156,7 @@ export default function Competitiveness() {
       )}
 
       {/* 天下 rankings table */}
-      <div className="chart-card">
+      {hasAnyData && <div className="chart-card">
         <h3>天下雜誌 永續幸福城市 2025 — 非六都排名</h3>
         <DataTable
           columns={[
@@ -171,10 +169,10 @@ export default function Competitiveness() {
           searchable={false}
           highlightRow={row => row.county === '嘉義市'}
         />
-      </div>
+      </div>}
 
       {/* 天下 dimensions table */}
-      {chiayiDims.length > 0 && (
+      {hasAnyData && chiayiDims.length > 0 && (
         <div className="chart-card">
           <h3>嘉義市各面向得分（天下雜誌）</h3>
           <DataTable
@@ -192,12 +190,12 @@ export default function Competitiveness() {
       )}
 
       {/* Data source */}
-      <div className="card" style={{ fontSize: 13, color: '#64748b' }}>
+      {hasAnyData && <div className="card" style={{ fontSize: 13, color: '#64748b' }}>
         <strong>資料來源：</strong>
         天下雜誌第 832 期「2025 永續幸福城市大調查」（樣本 14,764 份）；
         遠見雜誌「2026 縣市長施政滿意度調查」。
         本頁資料為手動整理，非即時更新。
-      </div>
+      </div>}
     </>
   )
 }

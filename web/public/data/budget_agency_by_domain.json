@@ -1,0 +1,79 @@
+[
+  {
+    "policy_domain": "治理與行政",
+    "policy_domain_en": "Governance & Administration",
+    "amount": 14439851,
+    "agency_count": 4,
+    "high": 2,
+    "medium": 2,
+    "low": 0,
+    "none": 0,
+    "percentage": 68.4
+  },
+  {
+    "policy_domain": "公共安全",
+    "policy_domain_en": "Public Safety",
+    "amount": 2325825,
+    "agency_count": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0,
+    "none": 0,
+    "percentage": 11
+  },
+  {
+    "policy_domain": "衛生與健康",
+    "policy_domain_en": "Health & Wellness",
+    "amount": 1282350,
+    "agency_count": 1,
+    "high": 1,
+    "medium": 0,
+    "low": 0,
+    "none": 0,
+    "percentage": 6.1
+  },
+  {
+    "policy_domain": "環境與永續",
+    "policy_domain_en": "Environment & Sustainability",
+    "amount": 1209829,
+    "agency_count": 1,
+    "high": 1,
+    "medium": 0,
+    "low": 0,
+    "none": 0,
+    "percentage": 5.7
+  },
+  {
+    "policy_domain": "其他",
+    "policy_domain_en": "Other",
+    "amount": 825053,
+    "agency_count": 2,
+    "high": 0,
+    "medium": 0,
+    "low": 2,
+    "none": 0,
+    "percentage": 3.9
+  },
+  {
+    "policy_domain": "教育與文化",
+    "policy_domain_en": "Education & Culture",
+    "amount": 777885,
+    "agency_count": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0,
+    "none": 0,
+    "percentage": 3.7
+  },
+  {
+    "policy_domain": "財政管理",
+    "policy_domain_en": "Fiscal Management",
+    "amount": 264207,
+    "agency_count": 1,
+    "high": 1,
+    "medium": 0,
+    "low": 0,
+    "none": 0,
+    "percentage": 1.3
+  }
+]

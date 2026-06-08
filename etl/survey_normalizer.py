@@ -1,4 +1,6 @@
 """Normalizer for city survey data (天下雜誌 + 遠見雜誌)."""
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 

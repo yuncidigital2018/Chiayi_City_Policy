@@ -1,10 +1,11 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 import { Bar, Line } from 'react-chartjs-2'
-import { useData, formatNumber } from '../hooks/useData'
+import { useData, formatNumber, formatChange, parseGrowthPct } from '../hooks/useData'
 import { KPICard } from '../components/Card'
 import ChartWrapper from '../components/ChartWrapper'
 import StatusMessage from '../components/StatusMessage'
+import SegmentedControl from '../components/SegmentedControl'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
@@ -45,6 +46,7 @@ function classifyPyramidShape(ageData) {
 export default function Population() {
   const { data: ageGender, loading: agLoading, error: agError } = useData('population_age_gender.json')
   const { data: population, loading: popLoading, error: popError } = useData('population_annual.json')
+  const [trendMetric, setTrendMetric] = useState('total')
 
   const loading = agLoading || popLoading
   const error = agError || popError
@@ -55,7 +57,43 @@ export default function Population() {
   const shape = classifyPyramidShape(ageGender)
   const latestPop = population?.[population.length - 1] || {}
   const prevPop = population?.[population.length - 2] || {}
-  const popChange = Number(latestPop.total_population) - Number(prevPop.total_population)
+  const popChange = latestPop.total_population && prevPop.total_population
+    ? Number(latestPop.total_population) - Number(prevPop.total_population)
+    : null
+  const latestGrowth = parseGrowthPct(latestPop.growth_pct)
+  const populationChanges = population?.map((p, i) => ({
+    ...p,
+    annual_change: i === 0
+      ? null
+      : Number(p.total_population) - Number(population[i - 1].total_population),
+  })) || []
+  const popChangeType = popChange == null ? undefined : (popChange >= 0 ? 'positive' : 'negative')
+  const growthType = latestGrowth == null ? undefined : (latestGrowth >= 0 ? 'positive' : 'negative')
+
+  const trendLabels = populationChanges.map(p => `${p.year}年`)
+  const trendConfig = {
+    total: {
+      label: '總人口',
+      values: populationChanges.map(p => Number(p.total_population)),
+      color: '#2563eb',
+      chart: 'line',
+      tick: formatNumber,
+    },
+    change: {
+      label: '較上年增減',
+      values: populationChanges.map(p => p.annual_change),
+      color: '#ef4444',
+      chart: 'bar',
+      tick: formatNumber,
+    },
+    growth: {
+      label: '年度成長率',
+      values: populationChanges.map(p => parseGrowthPct(p.growth_pct)),
+      color: '#f59e0b',
+      chart: 'line',
+      tick: value => `${value}%`,
+    },
+  }[trendMetric]
 
   return (
     <>
@@ -69,8 +107,8 @@ export default function Population() {
         <KPICard
           label="總人口"
           value={formatNumber(latestPop.total_population)}
-          change={`${popChange >= 0 ? '+' : ''}${formatNumber(popChange)} 較上年`}
-          changeType={popChange >= 0 ? 'positive' : 'negative'}
+          change={`${formatChange(popChange)} 較上年`}
+          changeType={popChangeType}
           color="primary"
         />
         <KPICard
@@ -80,9 +118,10 @@ export default function Population() {
           color="red"
         />
         <KPICard
-          label="幼年人口比"
-          value={`${shape.youngPct || '—'}%`}
-          change="0-14 歲"
+          label="年度成長率"
+          value={latestGrowth == null ? '—' : `${latestGrowth.toFixed(3)}%`}
+          change="總人口較上年"
+          changeType={growthType}
           color="amber"
         />
         <KPICard
@@ -92,6 +131,17 @@ export default function Population() {
           color="purple"
         />
       </div>
+
+      <SegmentedControl
+        label="時間序列"
+        value={trendMetric}
+        onChange={setTrendMetric}
+        options={[
+          { value: 'total', label: '總人口' },
+          { value: 'change', label: '年度增減' },
+          { value: 'growth', label: '成長率' },
+        ]}
+      />
 
       {/* Pyramid shape analysis */}
       <ChartWrapper title="人口金字塔型態判定" empty={!ageGender?.length}>
@@ -153,30 +203,65 @@ export default function Population() {
           />
         </ChartWrapper>
 
-        <ChartWrapper title="人口長期趨勢" empty={!population?.length}>
-          <Line
-            data={{
-              labels: population?.map(p => `${p.year}年`) || [],
-              datasets: [{
-                label: '總人口',
-                data: population?.map(p => Number(p.total_population)) || [],
-                borderColor: '#2563eb',
-                backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                fill: true,
-                tension: 0.3,
-              }]
-            }}
-            options={{ responsive: true, plugins: { legend: { display: false } } }}
-          />
+        <ChartWrapper title="人口時間序列" empty={!population?.length}>
+          {trendConfig.chart === 'bar' ? (
+            <Bar
+              data={{
+                labels: trendLabels,
+                datasets: [{
+                  label: trendConfig.label,
+                  data: trendConfig.values,
+                  backgroundColor: trendConfig.values.map(value => Number(value) >= 0 ? '#10b981' : '#ef4444'),
+                  borderRadius: 4,
+                }]
+              }}
+              options={{
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { ticks: { callback: trendConfig.tick } } },
+              }}
+            />
+          ) : (
+            <Line
+              data={{
+                labels: trendLabels,
+                datasets: [{
+                  label: trendConfig.label,
+                  data: trendConfig.values,
+                  borderColor: trendConfig.color,
+                  backgroundColor: `${trendConfig.color}20`,
+                  fill: true,
+                  tension: 0.3,
+                }]
+              }}
+              options={{
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { ticks: { callback: trendConfig.tick } } },
+              }}
+            />
+          )}
         </ChartWrapper>
 
-        <ChartWrapper title="人口增減結構" empty={!population?.length}>
-          <Bar
+        <ChartWrapper title="男女人口趨勢" empty={!population?.length}>
+          <Line
             data={{
-              labels: population?.map(p => `${p.year}年`) || [],
+              labels: trendLabels,
               datasets: [
-                { label: '自然增減', data: population?.map(p => Number(p.natural_increase)) || [], backgroundColor: '#10b981', borderRadius: 4 },
-                { label: '社會增減', data: population?.map(p => Number(p.social_increase)) || [], backgroundColor: '#f59e0b', borderRadius: 4 },
+                {
+                  label: '男',
+                  data: populationChanges.map(p => Number(p.male)),
+                  borderColor: '#2563eb',
+                  backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                  tension: 0.3,
+                },
+                {
+                  label: '女',
+                  data: populationChanges.map(p => Number(p.female)),
+                  borderColor: '#ec4899',
+                  backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                  tension: 0.3,
+                },
               ]
             }}
             options={{ responsive: true, plugins: { legend: { position: 'top' } } }}

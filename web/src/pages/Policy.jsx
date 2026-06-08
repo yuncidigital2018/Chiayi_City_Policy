@@ -81,8 +81,8 @@ export default function Policy() {
         </div>
         <div className="kpi-card green">
           <div className="kpi-label">總預算</div>
-          <div className="kpi-value">{formatBudget(totalAmount)}</div>
-          <div className="kpi-change">新台幣千元</div>
+          <div className="kpi-value">{formatBudget(totalAmount, { includeUnit: true })}</div>
+          <div className="kpi-change">115 年度</div>
         </div>
         <div className="kpi-card amber">
           <div className="kpi-label">高信心度</div>

@@ -3,6 +3,8 @@
 Run after the pipeline to compare current vs previous processed data.
 Outputs a JSON summary to stdout for use by CI or notification systems.
 """
+from __future__ import annotations
+
 import json
 import logging
 import hashlib

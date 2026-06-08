@@ -1,0 +1,178 @@
+[
+  {
+    "rank": 1,
+    "county": "新北市",
+    "year": 114,
+    "population": 4044831,
+    "area_km2": 2052.5667,
+    "density": 1970.6
+  },
+  {
+    "rank": 2,
+    "county": "臺中市",
+    "year": 114,
+    "population": 2868465,
+    "area_km2": 2214.8968,
+    "density": 1295.1
+  },
+  {
+    "rank": 3,
+    "county": "高雄市",
+    "year": 114,
+    "population": 2718545,
+    "area_km2": 2952.1226,
+    "density": 920.9
+  },
+  {
+    "rank": 4,
+    "county": "臺北市",
+    "year": 114,
+    "population": 2439507,
+    "area_km2": 271.79970000000003,
+    "density": 8975.4
+  },
+  {
+    "rank": 5,
+    "county": "桃園市",
+    "year": 114,
+    "population": 2355106,
+    "area_km2": 1220.954,
+    "density": 1928.9
+  },
+  {
+    "rank": 6,
+    "county": "臺南市",
+    "year": 114,
+    "population": 1852477,
+    "area_km2": 2191.6531,
+    "density": 845.2
+  },
+  {
+    "rank": 7,
+    "county": "彰化縣",
+    "year": 114,
+    "population": 1210206,
+    "area_km2": 1074.396,
+    "density": 1126.4
+  },
+  {
+    "rank": 8,
+    "county": "屏東縣",
+    "year": 114,
+    "population": 782256,
+    "area_km2": 2775.6003,
+    "density": 281.8
+  },
+  {
+    "rank": 9,
+    "county": "雲林縣",
+    "year": 114,
+    "population": 650989,
+    "area_km2": 1290.8326,
+    "density": 504.3
+  },
+  {
+    "rank": 10,
+    "county": "新竹縣",
+    "year": 114,
+    "population": 597235,
+    "area_km2": 1427.5369,
+    "density": 418.4
+  },
+  {
+    "rank": 11,
+    "county": "苗栗縣",
+    "year": 114,
+    "population": 531172,
+    "area_km2": 1820.3148999999999,
+    "density": 291.8
+  },
+  {
+    "rank": 12,
+    "county": "嘉義縣",
+    "year": 114,
+    "population": 473181,
+    "area_km2": 1903.6367,
+    "density": 248.6
+  },
+  {
+    "rank": 13,
+    "county": "南投縣",
+    "year": 114,
+    "population": 467881,
+    "area_km2": 4106.436,
+    "density": 113.9
+  },
+  {
+    "rank": 14,
+    "county": "新竹市",
+    "year": 114,
+    "population": 455740,
+    "area_km2": 104.1526,
+    "density": 4375.7
+  },
+  {
+    "rank": 15,
+    "county": "宜蘭縣",
+    "year": 114,
+    "population": 449336,
+    "area_km2": 2143.6251,
+    "density": 209.6
+  },
+  {
+    "rank": 16,
+    "county": "基隆市",
+    "year": 114,
+    "population": 359836,
+    "area_km2": 132.75889999999998,
+    "density": 2710.4
+  },
+  {
+    "rank": 17,
+    "county": "花蓮縣",
+    "year": 114,
+    "population": 312807,
+    "area_km2": 4628.5714,
+    "density": 67.6
+  },
+  {
+    "rank": 18,
+    "county": "嘉義市",
+    "year": 114,
+    "population": 261592,
+    "area_km2": 60.0256,
+    "density": 4358
+  },
+  {
+    "rank": 19,
+    "county": "臺東縣",
+    "year": 114,
+    "population": 208320,
+    "area_km2": 3515.2526,
+    "density": 59.3
+  },
+  {
+    "rank": 20,
+    "county": "金門縣",
+    "year": 114,
+    "population": 139313,
+    "area_km2": 151.656,
+    "density": 918.6
+  },
+  {
+    "rank": 21,
+    "county": "澎湖縣",
+    "year": 114,
+    "population": 106716,
+    "area_km2": 126.8641,
+    "density": 841.2
+  },
+  {
+    "rank": 22,
+    "county": "連江縣",
+    "year": 114,
+    "population": 13621,
+    "area_km2": 28.8,
+    "density": 473
+  }
+]

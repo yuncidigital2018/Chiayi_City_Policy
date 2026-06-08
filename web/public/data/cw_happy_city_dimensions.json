@@ -1,0 +1,98 @@
+[
+  {
+    "year": 2025,
+    "dimension": "經濟",
+    "county": "連江縣",
+    "score": 4.02,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍"
+  },
+  {
+    "year": 2025,
+    "dimension": "經濟",
+    "county": "嘉義市",
+    "score": null,
+    "rank_in_non_six": null,
+    "note": "中段"
+  },
+  {
+    "year": 2025,
+    "dimension": "環境",
+    "county": "金門縣",
+    "score": 3.29,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍"
+  },
+  {
+    "year": 2025,
+    "dimension": "環境",
+    "county": "嘉義市",
+    "score": null,
+    "rank_in_non_six": null,
+    "note": "中段"
+  },
+  {
+    "year": 2025,
+    "dimension": "施政",
+    "county": "連江縣",
+    "score": 4.04,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍"
+  },
+  {
+    "year": 2025,
+    "dimension": "施政",
+    "county": "嘉義市",
+    "score": null,
+    "rank_in_non_six": null,
+    "note": "中段"
+  },
+  {
+    "year": 2025,
+    "dimension": "文教",
+    "county": "新竹市",
+    "score": 3.4,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍"
+  },
+  {
+    "year": 2025,
+    "dimension": "文教",
+    "county": "嘉義市",
+    "score": null,
+    "rank_in_non_six": null,
+    "note": "中段"
+  },
+  {
+    "year": 2025,
+    "dimension": "社福",
+    "county": "台東縣",
+    "score": 3.53,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍"
+  },
+  {
+    "year": 2025,
+    "dimension": "社福",
+    "county": "嘉義市",
+    "score": null,
+    "rank_in_non_six": null,
+    "note": "中段"
+  },
+  {
+    "year": 2025,
+    "dimension": "醫衛健康",
+    "county": "嘉義市",
+    "score": 3.7,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍！"
+  },
+  {
+    "year": 2025,
+    "dimension": "多元共融",
+    "county": "嘉義市",
+    "score": 3.43,
+    "rank_in_non_six": 1,
+    "note": "非六都冠軍！"
+  }
+]

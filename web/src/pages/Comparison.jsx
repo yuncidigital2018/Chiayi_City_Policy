@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
-import { Bar, Line } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import { useData, formatNumber } from '../hooks/useData'
 import { KPICard } from '../components/Card'
 import ChartWrapper from '../components/ChartWrapper'
@@ -14,7 +14,6 @@ const OTHER_COLOR = '#cfd8dc'
 
 export default function Comparison() {
   const { data: countyData, loading, error } = useData('county_population_comparison.json')
-  const { data: popAnnual } = useData('population_annual.json')
   const [sortBy, setSortBy] = useState('population')
 
   if (loading) return <StatusMessage type="loading" />

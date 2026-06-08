@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 /**
  * Card — 通用容器元件
  *
@@ -18,6 +20,7 @@ export default function Card({
   variant = 'default',
   color,
   title,
+  to,
   className = '',
   children,
   ...props
@@ -31,10 +34,24 @@ export default function Card({
     className,
   ].filter(Boolean).join(' ')
 
-  return (
-    <div className={classes} {...props}>
+  const content = (
+    <>
       {title && <h3>{title}</h3>}
       {children}
+    </>
+  )
+
+  if (to) {
+    return (
+      <Link to={to} className={`${classes} card-link`} {...props}>
+        {content}
+      </Link>
+    )
+  }
+
+  return (
+    <div className={classes} {...props}>
+      {content}
     </div>
   )
 }
@@ -42,9 +59,9 @@ export default function Card({
 /**
  * KPICard — KPI 數字卡片（語義化封裝）
  */
-export function KPICard({ label, value, change, changeType, color = 'primary' }) {
+export function KPICard({ label, value, change, changeType, color = 'primary', to }) {
   return (
-    <Card variant="kpi" color={color}>
+    <Card variant="kpi" color={color} to={to}>
       <div className="kpi-label">{label}</div>
       <div className="kpi-value">{value}</div>
       {change !== undefined && (

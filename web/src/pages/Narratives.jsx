@@ -1,4 +1,4 @@
-import { useData, formatNumber, formatChange, formatBudget } from '../hooks/useData'
+import { useData, formatNumber, formatBudget, parseGrowthPct } from '../hooks/useData'
 import StatusMessage from '../components/StatusMessage'
 
 export default function Narratives() {
@@ -14,13 +14,16 @@ export default function Narratives() {
 
   const latest = population?.[population.length - 1] || {}
   const first = population?.[0] || {}
-  const totalExp = expFunc?.reduce((s, e) => s + Number(e.amount), 0) || 0
+  const expL1 = expFunc?.filter(e => Number(e.level) === 1) || []
+  const totalExp = expL1.reduce((s, e) => s + Number(e.amount), 0)
   const totalRev = revenue?.reduce((s, r) => s + Number(r.amount), 0) || 0
 
-  const topExpense = [...(expFunc || [])].sort((a, b) => Number(b.amount) - Number(a.amount))[0]
+  const topExpense = [...expL1].sort((a, b) => Number(b.amount) - Number(a.amount))[0]
   const topRevenue = [...(revenue || [])].sort((a, b) => Number(b.amount) - Number(a.amount))[0]
 
   const popChange = Number(latest.total_population) - Number(first.total_population)
+  const popChangeLabel = popChange >= 0 ? '增加' : '減少'
+  const latestGrowth = parseGrowthPct(latest.growth_pct)
   const popYears = first.year && latest.year ? `${first.year} ~ ${latest.year}` : '歷年'
 
   return (
@@ -35,26 +38,26 @@ export default function Narratives() {
         <p>
           嘉義市總人口從 {popYears} 年間，
           從 {formatNumber(first.total_population)} 人
-          下降至 {formatNumber(latest.total_population)} 人，
-          共減少 {formatChange(popChange)} 人。
+          變化至 {formatNumber(latest.total_population)} 人，
+          共{popChangeLabel} {formatNumber(Math.abs(popChange))} 人。
         </p>
         <p>
-          自然增減為 {formatChange(latest.natural_increase)}（出生 − 死亡），
-          社會增減為 {formatChange(latest.social_increase)}（遷入 − 遷出），
-          兩者皆為負值，顯示嘉義市面臨人口外流與少子化的雙重挑戰。
+          最新年度成長率為 {latestGrowth == null ? '—' : `${latestGrowth.toFixed(3)}%`}。
+          目前年度人口表尚未納入出生、死亡、遷入、遷出欄位，因此本頁先以總人口變化判讀城市規模趨勢；
+          若要分析少子化或遷徙原因，需補齊戶籍登記分析表。
         </p>
       </div>
 
       <div className="card">
         <h2>財政結構：教育與社會福利為主</h2>
         <p>
-          115 年度歲出總額為 {formatBudget(totalExp)} 千元，
+          115 年度歲出總額為 {formatBudget(totalExp, { includeUnit: true })}，
           其中最大支出項目為「{topExpense?.function_category}」，
-          金額 {formatBudget(topExpense?.amount)} 千元，
+          金額 {formatBudget(topExpense?.amount, { includeUnit: true })}，
           佔總歲出 {(Number(topExpense?.amount) / totalExp * 100).toFixed(1)}%。
         </p>
         <p>
-          歲入總額為 {formatBudget(totalRev)} 千元，
+          歲入總額為 {formatBudget(totalRev, { includeUnit: true })}，
           主要來源為「{topRevenue?.source_category}」。
           {totalRev >= totalExp
             ? `歲入大於歲出，財政尚有賸餘。`

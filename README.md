@@ -16,6 +16,7 @@
 ```
 ├── config/
 │   ├── datasources.yml           # 資料來源設定（API、scraper、歷年資料）
+│   ├── data_catalog.json         # processed table 契約與前端資料目錄來源
 │   ├── policy_domain_map.csv     # 政事別 → 政策領域映射（30 筆）
 │   └── agency_policy_map.csv     # 機關 → 政策領域映射（13 筆）
 ├── data/
@@ -52,6 +53,10 @@ python -m etl.main run
 # 分類映射
 python -m etl.main classify
 
+# 城市競爭力資料（天下 + 遠見）
+python scripts/scrape_city_surveys.py
+python -m etl.main normalize
+
 # 前端建置
 cd web && npm run build
 
@@ -87,7 +92,14 @@ cd web && npm run dev
 - **色系：** primary #2563eb / success #10b981 / danger #ef4444 / warning #f59e0b
 - **字階：** h1 24px / h2 20px / h3 15px / body 14px / caption 12px
 - **間距：** 4px base grid
-- **元件：** Card, KPICard, DataTable, ChartWrapper, StatusMessage, Sidebar, Breadcrumb
+- **元件：** Card, KPICard, DataTable, ChartWrapper, StatusMessage, Sidebar, Breadcrumb, DataQualityBar, SegmentedControl
+
+### 資料契約
+
+- `config/data_catalog.json` 是 processed CSV 的單一契約來源。
+- `npm run build` 會將 processed CSV 轉成 `web/public/data/*.json`，並同步產出 `web/public/data/catalog.json`。
+- 預算 `amount` 欄位單位為「千元」；前端格式化為億元時以 `amount / 100000` 換算。
+- `budget_expenditure_by_function` 的 `level=1` 為合計層、`level=2` 為明細層，跨層不可直接加總。
 
 ## 開發狀態
 
@@ -99,6 +111,7 @@ cd web && npm run dev
 | Phase 4 | ✅ | 設計系統與元件庫 |
 | Phase 5 | ✅ | 頁面逐一重構（7 頁完成，6 頁待資料來源） |
 | Phase 6 | ✅ | 建置驗收與部署 |
+| Phase 9 | ✅ | 資料契約、互動探索、金額單位修正 |
 
 ## 部署
 
