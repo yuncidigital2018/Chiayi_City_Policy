@@ -93,14 +93,14 @@
 
 ### Dashboard (`/`)
 - **它回答：** 「嘉義市現在怎麼樣？」
-- **內容：** 6 個 KPI 卡片（人口、自然增減、社會增減、歲入、歲出、性別比）+ 4 個迷你圖表
+- **內容：** 6 個 KPI 卡片（人口、年度增減、成長率、歲入、歲出、性別比）+ 4 個迷你圖表
 - **互動：** 點 KPI 卡片 → 跳轉對應詳細頁
 - **資料來源：** population_annual.json, budget_revenue_by_source.json, budget_expenditure_by_function.json
 
 ### Population (`/population`)
 - **它回答：** 「人口結構如何變化？」
-- **內容：** 年齡金字塔、老化指數、人口趨勢、自然/社會增減
-- **互動：** 年份切換、金字塔 tooltip
+- **內容：** 年齡金字塔、老化指數、人口趨勢、年度人口增減、成長率
+- **互動：** 時間序列切換、金字塔 tooltip
 - **資料來源：** population_age_gender.json, population_annual.json
 
 ### Comparison (`/population/comparison`)
