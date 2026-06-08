@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import Breadcrumb from './components/Breadcrumb'
+import DataQualityBar from './components/DataQualityBar'
 import Dashboard from './pages/Dashboard'
 import Population from './pages/Population'
 import Budget from './pages/Budget'
@@ -17,6 +18,7 @@ export default function App() {
       <Sidebar />
       <div className="main-area">
         <Breadcrumb />
+        <DataQualityBar />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Dashboard />} />

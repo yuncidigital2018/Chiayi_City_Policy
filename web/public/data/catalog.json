@@ -1,0 +1,617 @@
+{
+  "version": 1,
+  "amountUnit": "thousand_ntd",
+  "datasets": [
+    {
+      "id": "population_annual",
+      "title": "歷年總人口",
+      "domain": "population",
+      "input": "population_annual.csv",
+      "output": "population_annual.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "嘉義市戶政服務網",
+      "pages": [
+        "/",
+        "/population",
+        "/narratives"
+      ],
+      "fields": [
+        "year",
+        "total_population",
+        "male",
+        "female",
+        "households",
+        "growth_pct"
+      ],
+      "notes": "目前未包含出生、死亡、遷入、遷出；自然/社會增減需由戶籍登記分析表補齊。",
+      "status": "ok",
+      "rows": 35,
+      "columns": [
+        "year",
+        "total_population",
+        "male",
+        "female",
+        "households",
+        "growth_pct"
+      ],
+      "missingFields": [],
+      "bytes": 5326
+    },
+    {
+      "id": "population_age_gender",
+      "title": "年齡性別結構",
+      "domain": "population",
+      "input": "population_age_gender.csv",
+      "output": "population_age_gender.json",
+      "required": true,
+      "cadence": "snapshot",
+      "source": "嘉義市戶政服務網",
+      "pages": [
+        "/population"
+      ],
+      "fields": [
+        "age_group",
+        "male",
+        "female",
+        "total",
+        "age_midpoint"
+      ],
+      "status": "ok",
+      "rows": 20,
+      "columns": [
+        "age_group",
+        "male",
+        "female",
+        "total",
+        "age_midpoint"
+      ],
+      "missingFields": [],
+      "bytes": 2371
+    },
+    {
+      "id": "population_village_monthly",
+      "title": "區里月人口",
+      "domain": "population",
+      "input": "population_village_monthly.csv",
+      "output": "population_village_monthly.json",
+      "required": true,
+      "cadence": "monthly",
+      "source": "嘉義市戶政服務網",
+      "pages": [
+        "/population"
+      ],
+      "fields": [
+        "year",
+        "month",
+        "district",
+        "village",
+        "households",
+        "male",
+        "female",
+        "population"
+      ],
+      "status": "ok",
+      "rows": 84,
+      "columns": [
+        "year",
+        "month",
+        "district",
+        "village",
+        "households",
+        "male",
+        "female",
+        "population"
+      ],
+      "missingFields": [],
+      "bytes": 15120
+    },
+    {
+      "id": "county_population_comparison",
+      "title": "跨縣市人口比較",
+      "domain": "population",
+      "input": "county_population_comparison.csv",
+      "output": "county_population_comparison.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "內政部戶政司",
+      "pages": [
+        "/population/comparison"
+      ],
+      "fields": [
+        "rank",
+        "county",
+        "year",
+        "population",
+        "area_km2",
+        "density"
+      ],
+      "status": "ok",
+      "rows": 22,
+      "columns": [
+        "rank",
+        "county",
+        "year",
+        "population",
+        "area_km2",
+        "density"
+      ],
+      "missingFields": [],
+      "bytes": 3160
+    },
+    {
+      "id": "budget_revenue_by_source",
+      "title": "歲入來源別",
+      "domain": "budget",
+      "input": "budget_revenue_by_source.csv",
+      "output": "budget_revenue_by_source.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "Open Chiayi",
+      "pages": [
+        "/",
+        "/budget",
+        "/narratives"
+      ],
+      "fields": [
+        "fiscal_year",
+        "source_category",
+        "amount"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 10,
+      "columns": [
+        "fiscal_year",
+        "source_category",
+        "amount"
+      ],
+      "missingFields": [],
+      "bytes": 976
+    },
+    {
+      "id": "budget_expenditure_by_function",
+      "title": "歲出政事別",
+      "domain": "budget",
+      "input": "budget_expenditure_by_function.csv",
+      "output": "budget_expenditure_by_function.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "Open Chiayi",
+      "pages": [
+        "/",
+        "/budget",
+        "/narratives"
+      ],
+      "fields": [
+        "fiscal_year",
+        "level",
+        "parent_code",
+        "code",
+        "function_category",
+        "recurring",
+        "capital",
+        "amount"
+      ],
+      "amountField": "amount",
+      "notes": "level 1 為合計層，level 2 為明細層；跨層加總會重複計算。",
+      "status": "ok",
+      "rows": 30,
+      "columns": [
+        "fiscal_year",
+        "level",
+        "parent_code",
+        "code",
+        "function_category",
+        "recurring",
+        "capital",
+        "amount"
+      ],
+      "missingFields": [],
+      "bytes": 6004
+    },
+    {
+      "id": "budget_expenditure_by_agency",
+      "title": "歲出機關別",
+      "domain": "budget",
+      "input": "budget_expenditure_by_agency.csv",
+      "output": "budget_expenditure_by_agency.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "Open Chiayi",
+      "pages": [
+        "/budget"
+      ],
+      "fields": [
+        "fiscal_year",
+        "agency_name",
+        "amount"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 13,
+      "columns": [
+        "fiscal_year",
+        "agency_name",
+        "amount"
+      ],
+      "missingFields": [],
+      "bytes": 1363
+    },
+    {
+      "id": "budget_by_policy_domain",
+      "title": "政策領域彙總",
+      "domain": "budget",
+      "input": "budget_by_policy_domain.csv",
+      "output": "budget_by_policy_domain.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "政策分類器",
+      "pages": [
+        "/budget/policy",
+        "/budget"
+      ],
+      "fields": [
+        "policy_domain",
+        "policy_domain_en",
+        "domain_order",
+        "recurring",
+        "capital",
+        "amount",
+        "high_confidence",
+        "medium_confidence",
+        "low_confidence",
+        "item_count",
+        "percentage",
+        "confidence"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 14,
+      "columns": [
+        "policy_domain",
+        "policy_domain_en",
+        "domain_order",
+        "recurring",
+        "capital",
+        "amount",
+        "high_confidence",
+        "medium_confidence",
+        "low_confidence",
+        "item_count",
+        "percentage",
+        "confidence"
+      ],
+      "missingFields": [],
+      "bytes": 4685
+    },
+    {
+      "id": "budget_expenditure_classified",
+      "title": "政事別政策分類明細",
+      "domain": "budget",
+      "input": "budget_expenditure_classified.csv",
+      "output": "budget_expenditure_classified.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "政策分類器",
+      "pages": [
+        "/budget/policy"
+      ],
+      "fields": [
+        "fiscal_year",
+        "level",
+        "parent_code",
+        "code",
+        "function_category",
+        "recurring",
+        "capital",
+        "amount",
+        "policy_domain",
+        "policy_domain_en",
+        "domain_order",
+        "confidence"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 30,
+      "columns": [
+        "fiscal_year",
+        "level",
+        "parent_code",
+        "code",
+        "function_category",
+        "recurring",
+        "capital",
+        "amount",
+        "policy_domain",
+        "policy_domain_en",
+        "domain_order",
+        "confidence"
+      ],
+      "missingFields": [],
+      "bytes": 10026
+    },
+    {
+      "id": "budget_agency_classified",
+      "title": "機關政策分類明細",
+      "domain": "budget",
+      "input": "budget_agency_classified.csv",
+      "output": "budget_agency_classified.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "政策分類器",
+      "pages": [
+        "/budget/policy"
+      ],
+      "fields": [
+        "fiscal_year",
+        "agency_name",
+        "amount",
+        "policy_domain",
+        "policy_domain_en",
+        "agency_confidence",
+        "reason"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 13,
+      "columns": [
+        "fiscal_year",
+        "agency_name",
+        "amount",
+        "policy_domain",
+        "policy_domain_en",
+        "agency_confidence",
+        "reason"
+      ],
+      "missingFields": [],
+      "bytes": 3390
+    },
+    {
+      "id": "budget_agency_by_domain",
+      "title": "機關政策領域彙總",
+      "domain": "budget",
+      "input": "budget_agency_by_domain.csv",
+      "output": "budget_agency_by_domain.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "政策分類器",
+      "pages": [
+        "/budget/policy"
+      ],
+      "fields": [
+        "policy_domain",
+        "policy_domain_en",
+        "amount",
+        "agency_count",
+        "high",
+        "medium",
+        "low",
+        "none",
+        "percentage"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 7,
+      "columns": [
+        "policy_domain",
+        "policy_domain_en",
+        "amount",
+        "agency_count",
+        "high",
+        "medium",
+        "low",
+        "none",
+        "percentage"
+      ],
+      "missingFields": [],
+      "bytes": 1553
+    },
+    {
+      "id": "fund_operating",
+      "title": "作業基金",
+      "domain": "fund",
+      "input": "fund_operating.csv",
+      "output": "fund_operating.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "嘉義市政府主計處",
+      "pages": [
+        "/budget/funds"
+      ],
+      "fields": [
+        "fund_type",
+        "item",
+        "fund_name",
+        "amount"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 28,
+      "columns": [
+        "fund_type",
+        "item",
+        "fund_name",
+        "amount"
+      ],
+      "missingFields": [],
+      "bytes": 3447
+    },
+    {
+      "id": "fund_business",
+      "title": "營業基金",
+      "domain": "fund",
+      "input": "fund_business.csv",
+      "output": "fund_business.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "嘉義市政府主計處",
+      "pages": [
+        "/budget/funds"
+      ],
+      "fields": [
+        "fund_type",
+        "item",
+        "fund_name",
+        "amount"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 73,
+      "columns": [
+        "fund_type",
+        "item",
+        "fund_name",
+        "amount"
+      ],
+      "missingFields": [],
+      "bytes": 10149
+    },
+    {
+      "id": "fund_affairs",
+      "title": "政事型基金",
+      "domain": "fund",
+      "input": "fund_affairs.csv",
+      "output": "fund_affairs.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "嘉義市政府主計處",
+      "pages": [
+        "/budget/funds"
+      ],
+      "fields": [
+        "fund_type",
+        "fund_name",
+        "item",
+        "amount",
+        "category"
+      ],
+      "amountField": "amount",
+      "status": "ok",
+      "rows": 30,
+      "columns": [
+        "fund_type",
+        "fund_name",
+        "item",
+        "amount",
+        "category"
+      ],
+      "missingFields": [],
+      "bytes": 5092
+    },
+    {
+      "id": "cw_happy_city_rankings",
+      "title": "天下永續幸福城市排名",
+      "domain": "competitiveness",
+      "input": "cw_happy_city_rankings.csv",
+      "output": "cw_happy_city_rankings.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "天下雜誌",
+      "pages": [
+        "/competitiveness"
+      ],
+      "fields": [
+        "year",
+        "group",
+        "rank",
+        "county",
+        "total_score",
+        "source"
+      ],
+      "status": "ok",
+      "rows": 22,
+      "columns": [
+        "year",
+        "group",
+        "rank",
+        "county",
+        "total_score",
+        "source"
+      ],
+      "missingFields": [],
+      "bytes": 3892
+    },
+    {
+      "id": "cw_happy_city_dimensions",
+      "title": "天下永續幸福城市面向",
+      "domain": "competitiveness",
+      "input": "cw_happy_city_dimensions.csv",
+      "output": "cw_happy_city_dimensions.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "天下雜誌",
+      "pages": [
+        "/competitiveness"
+      ],
+      "fields": [
+        "year",
+        "dimension",
+        "county",
+        "score",
+        "rank_in_non_six",
+        "note"
+      ],
+      "status": "ok",
+      "rows": 12,
+      "columns": [
+        "year",
+        "dimension",
+        "county",
+        "score",
+        "rank_in_non_six",
+        "note"
+      ],
+      "missingFields": [],
+      "bytes": 1860
+    },
+    {
+      "id": "gvm_mayor_satisfaction",
+      "title": "遠見縣市長施政滿意度",
+      "domain": "competitiveness",
+      "input": "gvm_mayor_satisfaction.csv",
+      "output": "gvm_mayor_satisfaction.json",
+      "required": true,
+      "cadence": "annual",
+      "source": "遠見雜誌",
+      "pages": [
+        "/competitiveness"
+      ],
+      "fields": [
+        "year",
+        "county",
+        "mayor",
+        "overall_satisfaction",
+        "star_rating",
+        "avg_dimension_score",
+        "rank_national",
+        "note",
+        "source"
+      ],
+      "status": "ok",
+      "rows": 5,
+      "columns": [
+        "year",
+        "county",
+        "mayor",
+        "overall_satisfaction",
+        "star_rating",
+        "avg_dimension_score",
+        "dimension_教育",
+        "dimension_環保",
+        "dimension_警政治安",
+        "dimension_道路與交通",
+        "dimension_消防與公共安全",
+        "dimension_醫療衛生",
+        "dimension_觀光休閒",
+        "dimension_經濟就業",
+        "rank_national",
+        "note",
+        "source"
+      ],
+      "missingFields": [],
+      "bytes": 2929
+    }
+  ],
+  "generatedAt": "2026-06-08T02:58:24.910Z"
+}

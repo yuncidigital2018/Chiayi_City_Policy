@@ -5,6 +5,8 @@ Modules:
 - classify_agency(): agency_name → policy_domain (from agency_policy_map.csv)
 - generate_policy_domain_summary(): aggregate by domain with confidence stats
 """
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 

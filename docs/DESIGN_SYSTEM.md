@@ -75,7 +75,7 @@
 | Token | Value | 用途 |
 |-------|-------|------|
 | `--radius-sm` | 6px | 按鈕、badge |
-| `--radius` | 12px | 卡片、輸入框 |
+| `--radius` | 8px | 卡片、輸入框、工作型儀表板容器 |
 | `--radius-full` | 9999px | 膠囊形 |
 
 ---
@@ -99,3 +99,12 @@
 | StatusMessage | `components/StatusMessage.jsx` | Loading/Error/Empty 狀態 |
 | Sidebar | `components/Sidebar.jsx` | 側邊導覽（Phase 3） |
 | Breadcrumb | `components/Breadcrumb.jsx` | 麵包屑（Phase 3） |
+| DataQualityBar | `components/DataQualityBar.jsx` | 全站資料狀態與 schema 健康摘要 |
+| SegmentedControl | `components/SegmentedControl.jsx` | 頁內分析視角切換 |
+
+## 資料狀態與互動規範
+
+- 入口型 KPI 可使用 `KPICard to="/path"` 連往對應分析頁。
+- 涉及多種判讀視角的頁面使用 `SegmentedControl`，例如人口時間序列與財政歲出視角。
+- 所有資料表由 `config/data_catalog.json` 定義契約，build 後產出 `public/data/catalog.json`。
+- 預算金額資料欄位單位為「千元」，前端顯示億元時以 `amount / 100000` 計算。

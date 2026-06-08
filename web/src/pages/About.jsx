@@ -1,6 +1,11 @@
+import { useData, formatNumber } from '../hooks/useData'
+
 export default function About() {
+  const { data: catalog } = useData('catalog.json')
+  const datasets = catalog?.datasets || []
+
   return (
-    <div className="narrative-content">
+    <div className="narrative-content wide-content">
       <div className="page-header">
         <h1>ℹ️ 關於本系統</h1>
         <p>嘉義市人口與財政開放資料系統</p>
@@ -44,6 +49,41 @@ export default function About() {
           </tbody>
         </table>
       </div>
+
+      {datasets.length > 0 && (
+        <div className="card">
+          <h2>資料表目錄</h2>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>資料表</th>
+                <th>領域</th>
+                <th style={{ textAlign: 'right' }}>列數</th>
+                <th style={{ textAlign: 'right' }}>欄位</th>
+                <th>狀態</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datasets.map(dataset => (
+                <tr key={dataset.id}>
+                  <td>
+                    <strong>{dataset.title}</strong>
+                    <div className="text-muted">{dataset.id}</div>
+                  </td>
+                  <td>{dataset.domain}</td>
+                  <td style={{ textAlign: 'right' }}>{formatNumber(dataset.rows)}</td>
+                  <td style={{ textAlign: 'right' }}>{formatNumber(dataset.columns?.length)}</td>
+                  <td>
+                    <span className={`dataset-status ${dataset.status === 'ok' ? 'ok' : 'warning'}`}>
+                      {dataset.status === 'ok' ? 'OK' : dataset.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <div className="card">
         <h2>分類方法</h2>

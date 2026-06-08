@@ -8,6 +8,8 @@ Usage:
     python -m etl.main run            # Full pipeline: fetch → normalize → generate
     python -m etl.main fetch --force  # Force re-fetch (ignore cache)
 """
+from __future__ import annotations
+
 import logging
 import sys
 from pathlib import Path
@@ -70,7 +72,10 @@ def fetch(force: bool, source: str | None):
 def normalize(all_tables: bool):
     """Normalize raw data into processed tables."""
     logger.info("Running normalization...")
-    results = run_normalization()
+    processed_paths = run_normalization()
+    fund_paths = run_fund_normalization()
+    survey_paths = run_survey_normalization()
+    results = {**processed_paths, **fund_paths, **survey_paths}
 
     success = sum(1 for v in results.values() if v is not None)
     skipped = len(results) - success
@@ -99,7 +104,7 @@ def generate():
 def run_pipeline(force: bool, skip_fetch: bool, skip_normalize: bool, skip_generate: bool):
     """Run full pipeline: fetch → normalize → generate."""
     raw_paths = None
-    processed_paths = None
+    all_processed = {}
 
     if not skip_fetch:
         logger.info("=== Phase 1: Fetch ===")
@@ -243,4 +248,3 @@ def classify():
 
 if __name__ == "__main__":
     cli()
-

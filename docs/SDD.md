@@ -141,8 +141,9 @@
 2. **Data Fetcher 模組** — 讀取設定、HTTP 下載、儲存到 `data/raw/`
 3. **Data Normalizer / ETL 模組** — 欄位對應、型別轉換、輸出到 `data/processed/`
 4. **Markdown Generator 模組** — Jinja2 模板生成 Markdown 到 `content/`
-5. **Web App / Frontend 模組** — 從 processed JSON 讀取資料，提供 `/`、`/population`、`/budget`、`/narratives`
+5. **Web App / Frontend 模組** — 從 processed JSON 與 `catalog.json` 讀取資料，提供 `/`、`/population`、`/population/comparison`、`/budget`、`/budget/policy`、`/budget/funds`、`/competitiveness`、`/narratives`、`/about`
 6. **Scheduler / DevOps 模組** — CI/CD 或 crontab 觸發 pipeline
+7. **Data Catalog / Contract 模組** — `config/data_catalog.json` 定義每張 processed table 的欄位、單位、來源、必要性與使用頁面；前端 build 產出 `web/public/data/catalog.json`
 
 ### 4.4 資料模型（簡化）
 
@@ -153,8 +154,10 @@
 | total_population | int | 總人口 |
 | male | int | 男性 |
 | female | int | 女性 |
-| natural_increase | int | 自然增減 |
-| social_increase | int | 社會增減 |
+| households | int | 戶數 |
+| growth_pct | str | 較上年成長率 |
+
+> 註：自然增減、社會增減尚未進入現行 processed schema；若要判讀出生/死亡或遷入/遷出，需補齊戶籍登記分析表 normalizer。
 
 #### PopulationVillageMonthly
 | 欄位 | 類型 | 說明 |
@@ -186,8 +189,14 @@
 | 欄位 | 類型 | 說明 |
 |------|------|------|
 | fiscal_year | int | 會計年度 |
+| level | int | 層級，1 為合計層、2 為明細層 |
+| parent_code | str | 父層代碼 |
 | function_category | str | 教育、社福、建設等 |
+| recurring | int | 經常門金額（千元） |
+| capital | int | 資本門金額（千元） |
 | amount | int | 金額（千元） |
+
+> 註：`amount` 單位為「千元」。前端顯示億元時需除以 100,000；level 1 與 level 2 不可跨層加總，否則會重複計算。
 
 #### BudgetExpenditureByAgency
 | 欄位 | 類型 | 說明 |
@@ -237,9 +246,9 @@
 - [x] 修正 index.html title
 - [x] 補上 favicon.svg
 - [x] 更新 SDD checkbox
-- [ ] 新增 etl/validator.py
-- [ ] ETL 加 logging
-- [ ] fetcher 加 retry
+- [x] 新增 etl/validator.py
+- [x] ETL 加 logging
+- [x] fetcher 加 retry
 
 ### Phase 7：測試覆蓋 ✅
 - [x] normalizer unit tests (33 tests)
@@ -252,3 +261,15 @@
 - [x] 前端比較頁（排名圖表 + 排序切換）
 - [x] 資料異動偵測（change_detector.py + snapshot）
 - [ ] 多縣市架構抽象化
+
+### Phase 9：資料契約與互動優化 ✅
+- [x] 新增 `config/data_catalog.json` 作為資料契約來源
+- [x] build-time 產出 `web/public/data/catalog.json`
+- [x] 修正預算千元轉億元公式與 level 1/2 重複加總問題
+- [x] 首頁 KPI 改為可點擊導覽入口
+- [x] 人口頁新增時間序列切換（總人口／年度增減／成長率）
+- [x] 財政頁新增歲出視角切換（政事別／政策領域／機關別）
+- [x] About 頁新增資料表目錄與 schema 狀態
+- [x] 城市競爭力 processed CSV 補齊
+- [x] `python -m etl.main normalize` 同步執行一般、基金與城市調查 normalizer
+- [x] Python 3.9 annotations 相容性修正

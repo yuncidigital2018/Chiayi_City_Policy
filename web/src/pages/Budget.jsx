@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
-import { Bar, Doughnut, Line } from 'react-chartjs-2'
+import { Bar, Doughnut } from 'react-chartjs-2'
 import { useData, formatNumber, formatBudget } from '../hooks/useData'
 import { KPICard } from '../components/Card'
 import ChartWrapper from '../components/ChartWrapper'
 import DataTable from '../components/DataTable'
 import StatusMessage from '../components/StatusMessage'
+import SegmentedControl from '../components/SegmentedControl'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
@@ -46,14 +47,14 @@ function ExpenditureTree({ data, totalExp }) {
         </tr>
       </thead>
       <tbody>
-        {tree.map((item, idx) => {
+        {tree.map((item) => {
           const key = item.key
           const children = childrenMap[key] || []
           const isExpanded = expanded[key]
           const pct = totalExp > 0 ? (Number(item.amount) / totalExp * 100).toFixed(1) : 0
 
           return (
-            <>
+            <Fragment key={key}>
               <tr key={key} className="budget-l1" onClick={() => toggle(key)}>
                 <td>{isExpanded ? '▾' : '▸'} {item.function_category}</td>
                 <td style={{ textAlign: 'right' }}>{formatBudget(item.recurring)}</td>
@@ -65,7 +66,7 @@ function ExpenditureTree({ data, totalExp }) {
                 const cPct = totalExp > 0 ? (Number(child.amount) / totalExp * 100).toFixed(1) : 0
                 return (
                   <tr key={`${key}-${ci}`} className="budget-l2">
-                    <td style={{ paddingLeft: 24 }}>　{child.function_category}</td>
+                    <td style={{ paddingLeft: 24 }}>{child.function_category}</td>
                     <td style={{ textAlign: 'right' }}>{formatBudget(child.recurring)}</td>
                     <td style={{ textAlign: 'right' }}>{formatBudget(child.capital)}</td>
                     <td style={{ textAlign: 'right' }}>{formatBudget(child.amount)}</td>
@@ -73,7 +74,7 @@ function ExpenditureTree({ data, totalExp }) {
                   </tr>
                 )
               })}
-            </>
+            </Fragment>
           )
         })}
       </tbody>
@@ -84,9 +85,12 @@ function ExpenditureTree({ data, totalExp }) {
 export default function Budget() {
   const { data: revenue, loading: revLoading, error: revError } = useData('budget_revenue_by_source.json')
   const { data: expenditure, loading: expLoading, error: expError } = useData('budget_expenditure_by_function.json')
+  const { data: policyDomains, loading: policyLoading, error: policyError } = useData('budget_by_policy_domain.json')
+  const { data: agencies, loading: agencyLoading, error: agencyError } = useData('budget_expenditure_by_agency.json')
+  const [viewMode, setViewMode] = useState('function')
 
-  const loading = revLoading || expLoading
-  const error = revError || expError
+  const loading = revLoading || expLoading || policyLoading || agencyLoading
+  const error = revError || expError || policyError || agencyError
 
   if (loading) return <StatusMessage type="loading" />
   if (error) return <StatusMessage type="error" message={error} />
@@ -94,6 +98,29 @@ export default function Budget() {
   const totalRev = revenue?.reduce((s, r) => s + Number(r.amount), 0) || 0
   const totalExp = expenditure?.filter(e => Number(e.level) === 1).reduce((s, e) => s + Number(e.amount), 0) || 0
   const surplus = totalRev - totalExp
+  const expenditureL1 = expenditure?.filter(e => Number(e.level) === 1) || []
+  const sortedPolicyDomains = [...(policyDomains || [])].sort((a, b) => Number(b.amount) - Number(a.amount))
+  const sortedAgencies = [...(agencies || [])].sort((a, b) => Number(b.amount) - Number(a.amount))
+  const viewConfig = {
+    function: {
+      title: '歲出政事別',
+      rows: expenditureL1,
+      labelKey: 'function_category',
+      valueKey: 'amount',
+    },
+    policy: {
+      title: '政策領域分布',
+      rows: sortedPolicyDomains,
+      labelKey: 'policy_domain',
+      valueKey: 'amount',
+    },
+    agency: {
+      title: '機關別歲出排名',
+      rows: sortedAgencies,
+      labelKey: 'agency_name',
+      valueKey: 'amount',
+    },
+  }[viewMode]
 
   return (
     <>
@@ -106,24 +133,35 @@ export default function Budget() {
       <div className="kpi-grid">
         <KPICard
           label="歲入總額"
-          value={formatBudget(totalRev)}
-          change="新台幣千元"
+          value={formatBudget(totalRev, { includeUnit: true })}
+          change="115 年度"
           color="green"
         />
         <KPICard
           label="歲出總額"
-          value={formatBudget(totalExp)}
-          change="新台幣千元"
+          value={formatBudget(totalExp, { includeUnit: true })}
+          change="L1 政事別合計"
           color="primary"
         />
         <KPICard
           label="賸餘/短絀"
-          value={formatBudget(surplus)}
+          value={formatBudget(surplus, { includeUnit: true })}
           change={surplus >= 0 ? '賸餘' : '短絀'}
           changeType={surplus >= 0 ? 'positive' : 'negative'}
           color={surplus >= 0 ? 'green' : 'red'}
         />
       </div>
+
+      <SegmentedControl
+        label="歲出視角"
+        value={viewMode}
+        onChange={setViewMode}
+        options={[
+          { value: 'function', label: '政事別' },
+          { value: 'policy', label: '政策領域' },
+          { value: 'agency', label: '機關別' },
+        ]}
+      />
 
       {/* Charts */}
       <div className="chart-grid">
@@ -140,13 +178,13 @@ export default function Budget() {
           />
         </ChartWrapper>
 
-        <ChartWrapper title="歲出政事別" empty={!expenditure?.length}>
+        <ChartWrapper title={viewConfig.title} empty={!viewConfig.rows.length}>
           <Bar
             data={{
-              labels: expenditure?.filter(e => Number(e.level) === 1).map(e => e.function_category) || [],
+              labels: viewConfig.rows.map(row => row[viewConfig.labelKey]),
               datasets: [{
                 label: '金額（千元）',
-                data: expenditure?.filter(e => Number(e.level) === 1).map(e => Number(e.amount)) || [],
+                data: viewConfig.rows.map(row => Number(row[viewConfig.valueKey])),
                 backgroundColor: CAT_COLORS,
                 borderRadius: 6,
               }]
@@ -162,10 +200,47 @@ export default function Budget() {
       </div>
 
       {/* Expenditure tree table */}
-      <div className="chart-card full-width-card">
+      {viewMode === 'function' && <div className="chart-card full-width-card">
         <h3>歲出政事別明細</h3>
         <ExpenditureTree data={expenditure} totalExp={totalExp} />
-      </div>
+      </div>}
+
+      {viewMode === 'policy' && <div className="chart-card full-width-card">
+        <h3>政策領域明細</h3>
+        <DataTable
+          columns={[
+            { key: 'policy_domain', label: '政策領域' },
+            { key: 'amount', label: '金額（千元）', align: 'right', render: row => formatNumber(row.amount) },
+            { key: 'percentage', label: '占比', align: 'right', render: row => `${row.percentage}%` },
+            { key: 'confidence', label: '信心度' },
+            { key: 'item_count', label: '項目數', align: 'right' },
+          ]}
+          data={sortedPolicyDomains}
+          pageSize={0}
+          searchable={false}
+          emptyMessage="暫無政策領域資料"
+        />
+      </div>}
+
+      {viewMode === 'agency' && <div className="chart-card full-width-card">
+        <h3>機關別歲出明細</h3>
+        <DataTable
+          columns={[
+            { key: 'agency_name', label: '機關' },
+            { key: 'amount', label: '金額（千元）', align: 'right', render: row => formatNumber(row.amount) },
+            {
+              key: 'percentage',
+              label: '占比',
+              align: 'right',
+              render: row => `${(Number(row.amount) / totalExp * 100).toFixed(1)}%`,
+            },
+          ]}
+          data={sortedAgencies}
+          pageSize={0}
+          searchable={false}
+          emptyMessage="暫無機關別資料"
+        />
+      </div>}
 
       {/* Revenue table */}
       <div className="chart-card full-width-card">

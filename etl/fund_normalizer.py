@@ -1,4 +1,6 @@
 """Fund data normalizer — normalize 作業/營業/政事型基金綜計表."""
+from __future__ import annotations
+
 import logging
 import pandas as pd
 from pathlib import Path

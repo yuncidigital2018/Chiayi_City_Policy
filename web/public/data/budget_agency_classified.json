@@ -1,0 +1,119 @@
+[
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市議會主管",
+    "amount": 239641,
+    "policy_domain": "治理與行政",
+    "policy_domain_en": "Governance & Administration",
+    "agency_confidence": "high",
+    "reason": "立法機關"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府主管",
+    "amount": 13579650,
+    "policy_domain": "治理與行政",
+    "policy_domain_en": "Governance & Administration",
+    "agency_confidence": "high",
+    "reason": "行政主管機關"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府警察局主管",
+    "amount": 1599433,
+    "policy_domain": "公共安全",
+    "policy_domain_en": "Public Safety",
+    "agency_confidence": "high",
+    "reason": "警察業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府衛生局主管",
+    "amount": 1282350,
+    "policy_domain": "衛生與健康",
+    "policy_domain_en": "Health & Wellness",
+    "agency_confidence": "high",
+    "reason": "衛生業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府環境保護局主管",
+    "amount": 1209829,
+    "policy_domain": "環境與永續",
+    "policy_domain_en": "Environment & Sustainability",
+    "agency_confidence": "high",
+    "reason": "環保業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府教育處主管",
+    "amount": 95522,
+    "policy_domain": "教育與文化",
+    "policy_domain_en": "Education & Culture",
+    "agency_confidence": "high",
+    "reason": "教育業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府民政處主管",
+    "amount": 502705,
+    "policy_domain": "治理與行政",
+    "policy_domain_en": "Governance & Administration",
+    "agency_confidence": "medium",
+    "reason": "民政含多項業務"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府地政處主管",
+    "amount": 117855,
+    "policy_domain": "治理與行政",
+    "policy_domain_en": "Governance & Administration",
+    "agency_confidence": "medium",
+    "reason": "地政屬行政支援"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府消防局主管",
+    "amount": 726392,
+    "policy_domain": "公共安全",
+    "policy_domain_en": "Public Safety",
+    "agency_confidence": "high",
+    "reason": "消防業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府文化局主管",
+    "amount": 682363,
+    "policy_domain": "教育與文化",
+    "policy_domain_en": "Education & Culture",
+    "agency_confidence": "high",
+    "reason": "文化業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "嘉義市政府財政稅務局主管",
+    "amount": 264207,
+    "policy_domain": "財政管理",
+    "policy_domain_en": "Fiscal Management",
+    "agency_confidence": "high",
+    "reason": "財稅業務明確"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "統籌支撥科目",
+    "amount": 785053,
+    "policy_domain": "其他",
+    "policy_domain_en": "Other",
+    "agency_confidence": "low",
+    "reason": "統籌分配需細分才能歸類"
+  },
+  {
+    "fiscal_year": 115,
+    "agency_name": "第二預備金",
+    "amount": 40000,
+    "policy_domain": "其他",
+    "policy_domain_en": "Other",
+    "agency_confidence": "low",
+    "reason": "預備金無特定政策領域"
+  }
+]

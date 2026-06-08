@@ -3,6 +3,8 @@
 API: https://www.ris.gov.tw/rs-opendata/api/v1/datastore/ODRP048/{year}
 Returns: site_id, people_total, area, population_density for all 鄉鎮市區 nationwide.
 """
+from __future__ import annotations
+
 import logging
 import re
 from pathlib import Path
